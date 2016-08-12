@@ -16,14 +16,14 @@
     <!-- HEADER -->
     <div id="header_wrap" class="outer">
         <header class="inner">
-          <a id="forkme_banner" href="https://github.com/tomasbjerre/violation-comments-to-github-jenkins-plugin">View on GitHub</a>
+          <a id="forkme_banner" href="https://github.com/jenkinsci/violation-comments-to-github-plugin">View on GitHub</a>
 
           <h1 id="project_title">Violation-comments-to-GitHub-jenkins-plugin</h1>
           <h2 id="project_tagline">Jenkins plugin that comments GitHub pull requests with code analyzer comments.</h2>
 
             <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/tomasbjerre/violation-comments-to-github-jenkins-plugin/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/tomasbjerre/violation-comments-to-github-jenkins-plugin/tarball/master">Download this project as a tar.gz file</a>
+              <a class="zip_download_link" href="https://github.com/jenkinsci/violation-comments-to-github-plugin/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/jenkinsci/violation-comments-to-github-plugin/tarball/master">Download this project as a tar.gz file</a>
             </section>
         </header>
     </div>
@@ -34,9 +34,7 @@
         <h1>
 <a id="violation-comments-to-github-jenkins-plugin" class="anchor" href="#violation-comments-to-github-jenkins-plugin" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Violation Comments to GitHub Jenkins Plugin</h1>
 
-<p>Travis CI: <a href="https://travis-ci.org/tomasbjerre/violation-comments-to-github-jenkins-plugin"><img src="https://travis-ci.org/tomasbjerre/violation-comments-to-github-jenkins-plugin.svg?branch=master" alt="Build Status"></a></p>
-
-<p>CloudBees: <a href="https://jenkins.ci.cloudbees.com/job/plugins/job/violation-comments-to-github-plugin/"><img src="https://jenkins.ci.cloudbees.com/job/plugins/job/violation-comments-to-github-plugin/badge/icon" alt="Build Status"></a></p>
+<p><a href="https://jenkins.ci.cloudbees.com/job/plugins/job/violation-comments-to-github-plugin/"><img src="https://jenkins.ci.cloudbees.com/job/plugins/job/violation-comments-to-github-plugin/badge/icon" alt="Build Status"></a></p>
 
 <p>This is a Jenkins plugin for <a href="https://github.com/tomasbjerre/violation-comments-to-github-lib">Violation Comments to GitHub Lib</a>. This plugin will find report files from static code analysis and comment GitHub pull requests with the content.</p>
 
@@ -45,13 +43,14 @@
 <p>It supports:</p>
 
 <ul>
+<li><a href="http://developer.android.com/tools/help/lint.html"><em>AndoidLint</em></a></li>
 <li><a href="http://checkstyle.sourceforge.net/"><em>Checkstyle</em></a></li>
 <li><a href="https://github.com/theandrewdavis/cpplint"><em>CPPLint</em></a></li>
 <li><a href="http://cppcheck.sourceforge.net/"><em>CPPCheck</em></a></li>
 <li><a href="https://github.com/CSSLint/csslint"><em>CSSLint</em></a></li>
 <li><a href="http://findbugs.sourceforge.net/"><em>Findbugs</em></a></li>
 <li>
-<a href="http://flake8.readthedocs.org/en/latest/"><em>Flake8</em></a> (<a href="https://www.pylint.org/"><em>PyLint</em></a>, <a href="https://github.com/PyCQA/pycodestyle"><em>Pep8</em></a>)</li>
+<a href="http://flake8.readthedocs.org/en/latest/"><em>Flake8</em></a> (<a href="https://www.pylint.org/"><em>PyLint</em></a>, <a href="https://github.com/PyCQA/pycodestyle"><em>Pep8</em></a>, <a href="https://pypi.python.org/pypi/mccabe"><em>Mccabe</em></a>, <a href="https://pypi.python.org/pypi/pyflakes"><em>PyFlakes</em></a>)</li>
 <li><a href="http://jshint.com/"><em>JSHint</em></a></li>
 <li>
 <em>Lint</em> A common XML format, used by different linters.</li>
@@ -77,15 +76,96 @@
 
 <p>When installed, a post build action will be available.</p>
 
-<p><img src="https://github.com/tomasbjerre/violation-comments-to-github-jenkins-plugin/blob/master/sandbox/jenkins-postbuildmenu.png" alt="Post build action menu"></p>
+<p><img src="https://github.com/jenkinsci/violation-comments-to-github-jenkins-plugin/blob/master/sandbox/jenkins-postbuildmenu.png" alt="Post build action menu"></p>
 
 <p>The configuration looks like this.</p>
 
-<p><img src="https://github.com/tomasbjerre/violation-comments-to-github-jenkins-plugin/blob/master/sandbox/jenkins-postbuildaction.png" alt="Post build action"></p>
+<p><img src="https://github.com/jenkinsci/violation-comments-to-github-jenkins-plugin/blob/master/sandbox/jenkins-postbuildaction.png" alt="Post build action"></p>
 
 <p>The pull request will be commented like this.</p>
 
-<p><img src="https://github.com/tomasbjerre/violation-comments-to-github-jenkins-plugin/blob/master/sandbox/findbugs-github-pr-file-comment.png" alt="Post build action"></p>
+<p><img src="https://github.com/jenkinsci/violation-comments-to-github-jenkins-plugin/blob/master/sandbox/github-pr-diff-comment.png" alt="Pull request comment"></p>
+
+<h2>
+<a id="job-dsl-plugin" class="anchor" href="#job-dsl-plugin" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Job DSL Plugin</h2>
+
+<p>This plugin can be used with the Job DSL Plugin.</p>
+
+<pre><code>job('example') {
+ publishers {
+  violationsToGitHubRecorder {
+   config {
+    gitHubUrl("https://api.github.com/")
+    repositoryOwner("tomasbjerre")
+    repositoryName("violations-test")
+    pullRequestId("2")
+    useOAuth2Token(false)
+    oAuth2Token("")
+    useUsernamePasswordCredentials(false)
+    usernamePasswordCredentialsId("")
+    useUsernamePassword(true)
+    username("")
+    password("")
+    createSingleFileComments(true)
+    createCommentWithAllSingleFileComments(true)
+    commentOnlyChangedContent(true)
+    violationConfigs {
+     violationConfig {
+      reporter("FINDBUGS")
+      pattern(".*/findbugs/.*\\.xml\$")
+     }
+    }
+   }
+  }
+ }
+}
+</code></pre>
+
+<h2>
+<a id="pipeline-plugin" class="anchor" href="#pipeline-plugin" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Pipeline Plugin</h2>
+
+<p>This plugin can be used with the Pipeline Plugin:</p>
+
+<pre><code>node {
+
+ checkout([
+  $class: 'GitSCM', 
+  branches: [[ name: '*/master' ]], 
+  doGenerateSubmoduleConfigurations: false,
+  extensions: [],
+  submoduleCfg: [],
+  userRemoteConfigs: [[ url: 'https://github.com/tomasbjerre/violations-test.git' ]]
+ ])
+
+ sh '''
+ ./gradlew build
+ '''
+
+ step([
+  $class: 'ViolationsToGitHubRecorder', 
+  config: [
+   gitHubUrl: 'https://api.github.com/', 
+   repositoryOwner: 'tomasbjerre', 
+   repositoryName: 'violations-test', 
+   pullRequestId: '2', 
+   useOAuth2Token: false, 
+   oAuth2Token: '', 
+   useUsernamePassword: true, 
+   username: 'admin', 
+   password: 'admin', 
+   useUsernamePasswordCredentials: false, 
+   usernamePasswordCredentialsId: '',
+   createCommentWithAllSingleFileComments: true, 
+   createSingleFileComments: true, 
+   commentOnlyChangedContent: true, 
+   violationConfigs: [
+    [ pattern: '.*/checkstyle/.*\\.xml$', reporter: 'CHECKSTYLE' ], 
+    [ pattern: '.*/findbugs/.*\\.xml$', reporter: 'FINDBUGS' ], 
+   ]
+  ]
+ ])
+}
+</code></pre>
 
 <h1>
 <a id="plugin-development" class="anchor" href="#plugin-development" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Plugin development</h1>
@@ -104,7 +184,7 @@
     <!-- FOOTER  -->
     <div id="footer_wrap" class="outer">
       <footer class="inner">
-        <p class="copyright">Violation-comments-to-GitHub-jenkins-plugin maintained by <a href="https://github.com/tomasbjerre">tomasbjerre</a></p>
+        <p class="copyright">Violation-comments-to-GitHub-jenkins-plugin maintained by <a href="https://github.com/jenkinsci">jenkinsci</a></p>
         <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
