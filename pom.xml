@@ -103,7 +103,7 @@
 			<plugin>
 				<groupId>se.bjurr.gitchangelog</groupId>
 				<artifactId>git-changelog-maven-plugin</artifactId>
-				<version>1.23</version>
+				<version>1.38</version>
 				<executions>
 					<execution>
 						<id>GenerateGitChangelog</id>
@@ -177,7 +177,7 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 		<dependency>
 			<groupId>se.bjurr.violations</groupId>
 			<artifactId>violation-comments-to-github-lib</artifactId>
-			<version>1.12</version>
+			<version>1.13</version>
 		</dependency>
 
 		<dependency>

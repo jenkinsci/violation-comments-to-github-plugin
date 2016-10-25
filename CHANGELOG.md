@@ -3,6 +3,64 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 ## Unreleased
 ### No issue
 
+**Print entire stacktrace in Jenkins log**
+
+
+[33601b335a16a1c](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/33601b335a16a1c) Tomas Bjerre *2016-10-24 20:18:41*
+
+
+## 1.21
+### No issue
+
+**PyLint parser**
+
+
+[7daa784bb27901d](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/7daa784bb27901d) Tomas Bjerre *2016-10-24 19:03:08*
+
+
+## 1.20
+### No issue
+
+**Supporting StyleCop and fixing FxCop**
+
+
+[86728e21ca6007c](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/86728e21ca6007c) Tomas Bjerre *2016-10-03 17:25:58*
+
+**doc**
+
+
+[25dc27205914a41](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/25dc27205914a41) Tomas Bjerre *2016-10-01 13:32:13*
+
+
+## 1.19
+### No issue
+
+**FXCop**
+
+
+[d5f7f2b17f3d3ce](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/d5f7f2b17f3d3ce) Tomas Bjerre *2016-10-01 11:57:53*
+
+
+## 1.18
+### No issue
+
+**Distribution management in pom**
+
+
+[1207f7a8c721dbd](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/1207f7a8c721dbd) Tomas Bjerre *2016-09-25 08:37:51*
+
+
+## 1.17
+### GitHub [#6](https://github.com/jenkinsci/violation-comments-to-github-plugin/issues/6) Use OAuth2 token from credentials
+
+**Enabling using OAuth2 token from credentials #6**
+
+
+[3a5cc413a172fb5](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/3a5cc413a172fb5) Tomas Bjerre *2016-09-25 08:31:43*
+
+
+### No issue
+
 **doc**
 
 
