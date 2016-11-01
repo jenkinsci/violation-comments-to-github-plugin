@@ -1,6 +1,38 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
-## Unreleased
+## 1.25
+### No issue
+
+**Markdown in comments and not commenting unchanged files**
+
+
+[c201ad1d5ef41f7](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/c201ad1d5ef41f7) Tomas Bjerre *2016-10-27 17:13:16*
+
+
+## 1.24
+### No issue
+
+**Handling CSS Lint reports without line or evidence**
+
+
+[3c0a3d980c5147a](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/3c0a3d980c5147a) Tomas Bjerre *2016-10-26 16:04:09*
+
+
+## 1.23
+### No issue
+
+**Changing rule format in PyLint to CODE(codeName)**
+
+
+[dd0a22941cfc489](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/dd0a22941cfc489) Tomas Bjerre *2016-10-25 18:33:23*
+
+**doc**
+
+
+[120e3dc6f693cea](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/120e3dc6f693cea) Tomas Bjerre *2016-10-24 20:27:17*
+
+
+## 1.22
 ### No issue
 
 **Print entire stacktrace in Jenkins log**
@@ -293,14 +325,5 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 
 
 [0cf33a158c76844](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/0cf33a158c76844) Tomas Bjerre *2016-03-07 19:15:25*
-
-
-## 1.0
-### No issue
-
-**Initial**
-
-
-[f8b2993bc4d3a0c](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/f8b2993bc4d3a0c) Tomas Bjerre *2016-03-07 18:46:48*
 
 
