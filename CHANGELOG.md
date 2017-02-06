@@ -1,5 +1,41 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
+## 1.29
+### No issue
+
+**Correcting distribution management repo**
+
+
+[162ce5134361273](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/162ce5134361273) Tomas Bjerre *2017-02-06 18:14:09*
+
+
+## 1.28
+### No issue
+
+**Adding MyPy and PyDocStyle parsers**
+
+
+[63049ee7afe212b](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/63049ee7afe212b) Tomas Bjerre *2017-02-06 17:57:36*
+
+
+## 1.27
+### No issue
+
+**Codenarc, Cpd, Gendarme, Jcereport, Simian, ZptLint**
+
+
+[26ba3bf8ec325be](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/26ba3bf8ec325be) Tomas Bjerre *2016-11-06 07:11:21*
+
+
+## 1.26
+### No issue
+
+**Bugfix, the big comment now includes only changed parts**
+
+
+[69810d73a4ec3d9](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/69810d73a4ec3d9) Tomas Bjerre *2016-11-01 19:06:04*
+
+
 ## 1.25
 ### No issue
 
