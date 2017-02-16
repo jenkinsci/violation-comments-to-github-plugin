@@ -16,7 +16,7 @@
 	</properties>
 
 	<artifactId>violation-comments-to-github</artifactId>
-	<version>1.33-SNAPSHOT</version>
+	<version>1.34-SNAPSHOT</version>
 	<packaging>hpi</packaging>
 	<name>Jenkins Violation Comments to GitHub Plugin</name>
 	<description>Finds violations reported by code analyzers and comments GitHub pull requests with them.</description>
