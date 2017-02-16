@@ -1,7 +1,12 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
-## Unreleased
+## 1.30
 ### No issue
+
+**Finding findbugsmessages and correcting codenarc**
+
+
+[1be9a11200fd667](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/1be9a11200fd667) Tomas Bjerre *2017-02-16 21:11:56*
 
 **doc**
 
