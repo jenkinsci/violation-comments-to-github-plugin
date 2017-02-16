@@ -1,5 +1,14 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
+## 1.31
+### GitHub #195 
+
+**Clarifying 'state' option in notification GUI #195**
+
+
+[047e01eae1e79db](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/047e01eae1e79db) Tomas Bjerre *2017-02-16 21:15:13*
+
+
 ## 1.30
 ### No issue
 
