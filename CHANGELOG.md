@@ -1,5 +1,23 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
+## Unreleased
+### No issue
+
+**doc**
+
+
+[16d55eaec17b022](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/16d55eaec17b022) Tomas Bjerre *2017-02-18 22:08:30*
+
+
+## 1.36
+### No issue
+
+**CLang, RubyCop, GoLint, GoVet, PHPMD, PHPCS**
+
+
+[94a505d3a67aa6f](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/94a505d3a67aa6f) Tomas Bjerre *2017-02-18 22:05:31*
+
+
 ## 1.32
 ### No issue
 
