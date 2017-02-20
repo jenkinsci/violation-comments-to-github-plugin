@@ -6,6 +6,8 @@ This is a Jenkins plugin for [Violation Comments to GitHub Lib](https://github.c
 
 You can have a look at [violations-test](https://github.com/tomasbjerre/violations-test/pull/2) to see what the result may look like.
 
+It uses [Violation Comments to GitHub Server Lib](https://github.com/tomasbjerre/violation-comments-to-github-lib) and supports the same formats as [Violations Lib](https://github.com/tomasbjerre/violations-lib).
+
 It supports:
  * [_AndoidLint_](http://developer.android.com/tools/help/lint.html)
  * [_Checkstyle_](http://checkstyle.sourceforge.net/)
