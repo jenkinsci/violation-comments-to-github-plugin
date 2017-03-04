@@ -51,7 +51,7 @@ There is also:
 
 Available in Jenkins [here](https://wiki.jenkins-ci.org/display/JENKINS/Violation+Comments+to+GitHub+Plugin).
 
-You will need to the **pull request id** for the pull request that was built. You may want to have a look at [GitHub Pull Request Builder Plugin](https://wiki.jenkins-ci.org/display/JENKINS/GitHub+pull+request+builder+plugin), it provides the environment variable `ghprbPullId`.
+You will need to the **pull request id** for the pull request that was built. You may want to have a look at [Generic Webhook Trigger plugin](https://github.com/tomasbjerre/generic-webhook-trigger-plugin) or [GitHub Pull Request Builder Plugin](https://wiki.jenkins-ci.org/display/JENKINS/GitHub+pull+request+builder+plugin), it provides the environment variable `ghprbPullId`.
 
 # Screenshots
 
