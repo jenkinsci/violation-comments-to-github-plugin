@@ -51,7 +51,23 @@ There is also:
 
 Available in Jenkins [here](https://wiki.jenkins-ci.org/display/JENKINS/Violation+Comments+to+GitHub+Plugin).
 
-You will need to the **pull request id** for the pull request that was built. You may want to have a look at [Generic Webhook Trigger plugin](https://github.com/tomasbjerre/generic-webhook-trigger-plugin) or [GitHub Pull Request Builder Plugin](https://wiki.jenkins-ci.org/display/JENKINS/GitHub+pull+request+builder+plugin), it provides the environment variable `ghprbPullId`.
+You will need to the **pull request id** for the pull request that was built. You may want to have a look at [Generic Webhook Trigger plugin](https://github.com/jenkinsci/generic-webhook-trigger-plugin) or [GitHub Pull Request Builder Plugin](https://wiki.jenkins-ci.org/display/JENKINS/GitHub+pull+request+builder+plugin), it provides the environment variable `ghprbPullId`.
+
+You must perform the merge before doing the analysis for the lines to match the lines in the pull request.
+
+```
+Shell script build step
+git clone $TOREPO
+cd *
+git reset --hard $TO
+git status
+git remote add from $FROMREPO
+git fetch from
+git merge $FROM
+git --no-pager log --max-count=10 --graph --abbrev-commit
+
+your build command here!
+``` 
 
 # Screenshots
 
