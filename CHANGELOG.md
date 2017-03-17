@@ -1,13 +1,13 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
-## Unreleased
+## 1.38
 ### GitHub [#10](https://github.com/jenkinsci/violation-comments-to-github-plugin/issues/10) Specify minimum severity to comment
 
 **Allowing filter comments on severity #10**
 
  * Also defaulting to api.github.com if field is empty. #9 
 
-[9557719ebc3ac97](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/9557719ebc3ac97) Tomas Bjerre *2017-03-17 16:27:54*
+[5958d9a80ddf1b2](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/5958d9a80ddf1b2) Tomas Bjerre *2017-03-17 18:02:47*
 
 
 ### GitHub [#9](https://github.com/jenkinsci/violation-comments-to-github-plugin/issues/9) Malformed URL Exception if gitHubUrl not included in config
@@ -16,7 +16,7 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 
  * Also defaulting to api.github.com if field is empty. #9 
 
-[9557719ebc3ac97](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/9557719ebc3ac97) Tomas Bjerre *2017-03-17 16:27:54*
+[5958d9a80ddf1b2](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/5958d9a80ddf1b2) Tomas Bjerre *2017-03-17 18:02:47*
 
 
 ### No issue

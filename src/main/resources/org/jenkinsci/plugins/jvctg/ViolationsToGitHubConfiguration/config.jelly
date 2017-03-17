@@ -38,11 +38,15 @@
   </f:entry>
 
   <f:entry name="minSeverity" title="Comment only if severity at least" field="minSeverity">
-    <select name="minSeverity">
-        <f:option value="INFO" selected="${config.minSeverity == 'INFO'}">INFO</f:option>
-        <f:option value="WARN" selected="${config.minSeverity == 'WARN'}">WARN</f:option>
-        <f:option value="ERROR" selected="${config.minSeverity == 'ERROR'}">ERROR</f:option>
-    </select>
+   <j:set var="selectedMinSeverity" value=""/>
+   <j:if test="${instance != null}">
+    <j:set var="selectedMinSeverity" value="${instance.minSeverity}"/>
+   </j:if>
+   <select name="minSeverity">
+    <f:option value="INFO" selected="${selectedMinSeverity == 'INFO'}">INFO</f:option>
+    <f:option value="WARN" selected="${selectedMinSeverity == 'WARN'}">WARN</f:option>
+    <f:option value="ERROR" selected="${selectedMinSeverity == 'ERROR'}">ERROR</f:option>
+   </select>
   </f:entry>
 
  </f:section>
