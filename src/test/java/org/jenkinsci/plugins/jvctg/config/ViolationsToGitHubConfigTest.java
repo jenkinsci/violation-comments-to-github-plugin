@@ -8,10 +8,11 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 public class ViolationsToGitHubConfigTest {
 
- @Test
- public void testThatCopyConstructorCopiesEverything() {
-  ViolationsToGitHubConfig original = new PodamFactoryImpl().manufacturePojo(ViolationsToGitHubConfig.class);
-  ViolationsToGitHubConfig actual = new ViolationsToGitHubConfig(original);
-  assertEquals(original, actual);
- }
+  @Test
+  public void testThatCopyConstructorCopiesEverything() {
+    ViolationsToGitHubConfig original =
+        new PodamFactoryImpl().manufacturePojo(ViolationsToGitHubConfig.class);
+    ViolationsToGitHubConfig actual = new ViolationsToGitHubConfig(original);
+    assertEquals(original, actual);
+  }
 }

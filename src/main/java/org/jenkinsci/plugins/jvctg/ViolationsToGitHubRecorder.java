@@ -22,46 +22,50 @@ import org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfig;
 import org.kohsuke.stapler.DataBoundConstructor;
 
 public class ViolationsToGitHubRecorder extends Recorder implements SimpleBuildStep {
- @Extension
- public static final BuildStepDescriptor<Publisher> DESCRIPTOR = new ViolationsToGitHubDescriptor();
- private ViolationsToGitHubConfig config;
+  @Extension
+  public static final BuildStepDescriptor<Publisher> DESCRIPTOR =
+      new ViolationsToGitHubDescriptor();
 
- public ViolationsToGitHubRecorder() {
- }
+  private ViolationsToGitHubConfig config;
 
- @DataBoundConstructor
- public ViolationsToGitHubRecorder(ViolationsToGitHubConfig config) {
-  this.config = config;
- }
+  public ViolationsToGitHubRecorder() {}
 
- public ViolationsToGitHubConfig getConfig() {
-  return this.config;
- }
+  @DataBoundConstructor
+  public ViolationsToGitHubRecorder(ViolationsToGitHubConfig config) {
+    this.config = config;
+  }
 
- @Override
- public BuildStepDescriptor<Publisher> getDescriptor() {
-  return DESCRIPTOR;
- }
+  public ViolationsToGitHubConfig getConfig() {
+    return this.config;
+  }
 
- @Override
- public BuildStepMonitor getRequiredMonitorService() {
-  return NONE;
- }
+  @Override
+  public BuildStepDescriptor<Publisher> getDescriptor() {
+    return DESCRIPTOR;
+  }
 
- @Override
- public void perform(@Nonnull Run<?, ?> build, @Nonnull FilePath filePath, @Nonnull Launcher launcher,
-   @Nonnull TaskListener listener) throws InterruptedException, IOException {
+  @Override
+  public BuildStepMonitor getRequiredMonitorService() {
+    return NONE;
+  }
 
-  ViolationsToGitHubConfig combinedConfig = new ViolationsToGitHubConfig(this.config);
-  ViolationsToGitHubConfiguration defaults = ViolationsToGitHubConfiguration.get();
+  @Override
+  public void perform(
+      @Nonnull Run<?, ?> build,
+      @Nonnull FilePath filePath,
+      @Nonnull Launcher launcher,
+      @Nonnull TaskListener listener)
+      throws InterruptedException, IOException {
 
-  combinedConfig.applyDefaults(defaults);
+    ViolationsToGitHubConfig combinedConfig = new ViolationsToGitHubConfig(this.config);
+    ViolationsToGitHubConfiguration defaults = ViolationsToGitHubConfiguration.get();
 
-  jvctsPerform(combinedConfig, filePath, build, listener);
- }
+    combinedConfig.applyDefaults(defaults);
 
- public void setConfig(ViolationsToGitHubConfig config) {
-  this.config = config;
- }
+    jvctsPerform(combinedConfig, filePath, build, listener);
+  }
 
+  public void setConfig(ViolationsToGitHubConfig config) {
+    this.config = config;
+  }
 }

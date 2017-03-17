@@ -94,6 +94,8 @@ job('example') {
     pullRequestId("2")
     useOAuth2Token(false)
     oAuth2Token("")
+    useOAuth2TokenCredentialsIdCredentials(false)
+    oAuth2TokenCredentialsId("")
     useUsernamePasswordCredentials(false)
     usernamePasswordCredentialsId("")
     useUsernamePassword(true)
@@ -102,6 +104,7 @@ job('example') {
     createSingleFileComments(true)
     createCommentWithAllSingleFileComments(true)
     commentOnlyChangedContent(true)
+    minSeverity('INFO')
     violationConfigs {
      violationConfig {
       reporter("FINDBUGS")
@@ -151,6 +154,7 @@ node {
    createCommentWithAllSingleFileComments: true, 
    createSingleFileComments: true, 
    commentOnlyChangedContent: true, 
+   minSeverity: 'INFO',
    violationConfigs: [
     [ pattern: '.*/checkstyle/.*\\.xml$', reporter: 'CHECKSTYLE' ], 
     [ pattern: '.*/findbugs/.*\\.xml$', reporter: 'FINDBUGS' ], 

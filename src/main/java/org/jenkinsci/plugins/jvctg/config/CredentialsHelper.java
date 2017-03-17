@@ -27,48 +27,54 @@ import com.google.common.base.Optional;
 
 public class CredentialsHelper {
 
- public static ListBoxModel doFillOAuth2TokenCredentialsIdItems() {
-  List<StringCredentials> credentials = getAllCredentials(StringCredentials.class);
-  ListBoxModel listBoxModel = new StandardListBoxModel()//
-    .includeEmptyValue()//
-    .withAll(credentials);
-  return listBoxModel;
- }
-
- public static ListBoxModel doFillUsernamePasswordCredentialsIdItems() {
-  List<StandardUsernamePasswordCredentials> credentials = getAllCredentials(StandardUsernamePasswordCredentials.class);
-  AbstractIdCredentialsListBoxModel<StandardUsernameListBoxModel, StandardUsernameCredentials> listBoxModel = new StandardUsernameListBoxModel()
-    .includeEmptyValue();
-  for (StandardUsernamePasswordCredentials credential : credentials) {
-   listBoxModel.with(credential);
-  }
-  return listBoxModel;
- }
-
- public static Optional<StringCredentials> findOAuth2TokenCredentials(String oAuth2TokenCredentialsId) {
-  if (isNullOrEmpty(oAuth2TokenCredentialsId)) {
-   return absent();
+  public static ListBoxModel doFillOAuth2TokenCredentialsIdItems() {
+    List<StringCredentials> credentials = getAllCredentials(StringCredentials.class);
+    ListBoxModel listBoxModel =
+        new StandardListBoxModel() //
+            .includeEmptyValue() //
+            .withAll(credentials);
+    return listBoxModel;
   }
 
-  return fromNullable(firstOrNull(getAllCredentials(StringCredentials.class), allOf(withId(oAuth2TokenCredentialsId))));
- }
-
- public static Optional<StandardUsernamePasswordCredentials> findUsernamePasswordCredentials(
-   String usernamePasswordCredentialsId) {
-  if (isNullOrEmpty(usernamePasswordCredentialsId)) {
-   return absent();
+  public static ListBoxModel doFillUsernamePasswordCredentialsIdItems() {
+    List<StandardUsernamePasswordCredentials> credentials =
+        getAllCredentials(StandardUsernamePasswordCredentials.class);
+    AbstractIdCredentialsListBoxModel<StandardUsernameListBoxModel, StandardUsernameCredentials>
+        listBoxModel = new StandardUsernameListBoxModel().includeEmptyValue();
+    for (StandardUsernamePasswordCredentials credential : credentials) {
+      listBoxModel.with(credential);
+    }
+    return listBoxModel;
   }
 
-  return fromNullable(firstOrNull(getAllCredentials(StandardUsernamePasswordCredentials.class),
-    allOf(withId(usernamePasswordCredentialsId))));
- }
+  public static Optional<StringCredentials> findOAuth2TokenCredentials(
+      String oAuth2TokenCredentialsId) {
+    if (isNullOrEmpty(oAuth2TokenCredentialsId)) {
+      return absent();
+    }
 
- private static <C extends Credentials> List<C> getAllCredentials(Class<C> type) {
-  ItemGroup<?> itemGroup = null;
-  Authentication authentication = SYSTEM;
-  DomainRequirement domainRequirement = null;
+    return fromNullable(
+        firstOrNull(
+            getAllCredentials(StringCredentials.class), allOf(withId(oAuth2TokenCredentialsId))));
+  }
 
-  return lookupCredentials(type, itemGroup, authentication, domainRequirement);
- }
+  public static Optional<StandardUsernamePasswordCredentials> findUsernamePasswordCredentials(
+      String usernamePasswordCredentialsId) {
+    if (isNullOrEmpty(usernamePasswordCredentialsId)) {
+      return absent();
+    }
 
+    return fromNullable(
+        firstOrNull(
+            getAllCredentials(StandardUsernamePasswordCredentials.class),
+            allOf(withId(usernamePasswordCredentialsId))));
+  }
+
+  private static <C extends Credentials> List<C> getAllCredentials(Class<C> type) {
+    ItemGroup<?> itemGroup = null;
+    Authentication authentication = SYSTEM;
+    DomainRequirement domainRequirement = null;
+
+    return lookupCredentials(type, itemGroup, authentication, domainRequirement);
+  }
 }
