@@ -81,34 +81,76 @@ The pull request will be commented like this.
 
 ## Job DSL Plugin
 
-This plugin can be used with the Job DSL Plugin.
+This plugin can be used with the Job DSL Plugin. In this example the [GitHub Pull Request Builder Plugin](https://wiki.jenkins-ci.org/display/JENKINS/GitHub+pull+request+builder+plugin) is used to trigger, merge and provide environment variables needed.
 
 ```
-job('example') {
+job('GitHub_PR_Builder') {
+ concurrentBuild()
+ quietPeriod(0)
+ scm {
+  git {
+   remote {
+    github('tomasbjerre/violations-test')
+    refspec('+refs/pull/*:refs/remotes/origin/pr/*')
+   }
+   branch('${sha1}')
+  }
+ }
+
+ triggers {
+  githubPullRequest {
+   cron('* * * * *')
+   permitAll()
+   extensions {
+    buildStatus {
+     completedStatus('SUCCESS', 'There were no errors, go have a cup of coffee...')
+     completedStatus('FAILURE', 'There were errors, for info, please see...')
+     completedStatus('ERROR', 'There was an error in the infrastructure, please contact...')
+    }
+   }
+  }
+ }
+
+ steps {
+  shell('''
+./gradlew build
+  ''')
+ }
+
  publishers {
   violationsToGitHubRecorder {
    config {
     gitHubUrl("https://api.github.com/")
     repositoryOwner("tomasbjerre")
     repositoryName("violations-test")
-    pullRequestId("2")
+    pullRequestId("\$ghprbPullId")
+
     useOAuth2Token(false)
     oAuth2Token("")
-    useOAuth2TokenCredentialsIdCredentials(false)
-    oAuth2TokenCredentialsId("")
+
+    useOAuth2TokenCredentialsIdCredentials(true)
+    oAuth2TokenCredentialsId("githubtoken")
+
     useUsernamePasswordCredentials(false)
     usernamePasswordCredentialsId("")
-    useUsernamePassword(true)
+
+    useUsernamePassword(false)
     username("")
     password("")
+    
     createSingleFileComments(true)
     createCommentWithAllSingleFileComments(true)
     commentOnlyChangedContent(true)
     minSeverity('INFO')
+    
     violationConfigs {
      violationConfig {
       reporter("FINDBUGS")
       pattern(".*/findbugs/.*\\.xml\$")
+     }
+     violationConfig {
+      reporter("CHECKSTYLE")
+      pattern(".*/checkstyle/.*\\.xml\$")
      }
     }
    }

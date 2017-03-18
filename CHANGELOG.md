@@ -1,5 +1,14 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
+## Unreleased
+### No issue
+
+**Persisting severity filter on global config**
+
+
+[2ac73dd3215c141](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/2ac73dd3215c141) Tomas Bjerre *2017-03-17 20:57:55*
+
+
 ## 1.38
 ### GitHub [#10](https://github.com/jenkinsci/violation-comments-to-github-plugin/issues/10) Specify minimum severity to comment
 
