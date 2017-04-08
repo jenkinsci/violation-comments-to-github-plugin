@@ -3,6 +3,29 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 ## Unreleased
 ### No issue
 
+**Generic example**
+
+
+[f16ab19f7888522](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/f16ab19f7888522) Tomas Bjerre *2017-04-08 17:34:55*
+
+
+## 1.40
+### No issue
+
+**Klocwork parser**
+
+
+[a75d54b6eab37ea](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/a75d54b6eab37ea) Tomas Bjerre *2017-03-30 17:51:52*
+
+**doc**
+
+
+[2906a7e367e2729](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/2906a7e367e2729) Tomas Bjerre *2017-03-18 19:08:54*
+
+
+## 1.39
+### No issue
+
 **Persisting severity filter on global config**
 
 

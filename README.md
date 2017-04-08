@@ -160,6 +160,140 @@ job('GitHub_PR_Builder') {
 }
 ```
 
+Here is another example using [Generic Webhook Trigger plugin](https://github.com/jenkinsci/generic-webhook-trigger-plugin). You will need to add a webhook in GitHub and point it to `http://JENKINS_URL/generic-webhook-trigger/invoke`. You may want to combine this with [HTTP Request Plugin](https://wiki.jenkins-ci.org/display/JENKINS/HTTP+Request+Plugin) to comment the pull requests with a link to the job. And also [Conditional BuildStep Plugin](https://wiki.jenkins-ci.org/display/JENKINS/Conditional+BuildStep+Plugin) to have different comments depending on build status.
+
+```
+job('GitHub_PR_Builder Generic') {
+ concurrentBuild()
+ quietPeriod(0)
+ parameters {
+  stringParam('PULL_REQUEST_HEAD_URL', '')
+  stringParam('PULL_REQUEST_BASE_URL', '')
+  stringParam('PULL_REQUEST_HEAD_REF', '')
+  stringParam('PULL_REQUEST_BASE_REF', '')
+ }
+ scm {
+  git {
+   remote {
+    name('origin')
+    url('$PULL_REQUEST_BASE_URL')
+   }
+   remote {
+    name('upstream')
+    url('$PULL_REQUEST_HEAD_URL')
+   }
+   branch('$PULL_REQUEST_HEAD_REF')
+   extensions {
+    mergeOptions {
+     remote('upstream')
+     branch('$PULL_REQUEST_BASE_REF')
+    }
+   }
+  }
+ }
+ triggers {
+  genericTrigger {
+   genericVariables {
+    genericVariable {
+     key("PULL_REQUEST_HEAD_URL")
+     value("\$.pull_request.head.repo.clone_url")
+     expressionType("JSONPath")
+     regexpFilter("")
+    }
+    genericVariable {
+     key("PULL_REQUEST_HEAD_REF")
+     value("\$.pull_request.head.ref")
+     expressionType("JSONPath")
+     regexpFilter("")
+    }
+    genericVariable {
+     key("PULL_REQUEST_BASE_URL")
+     value("\$.pull_request.base.repo.clone_url")
+     expressionType("JSONPath")
+     regexpFilter("")
+    }
+    genericVariable {
+     key("PULL_REQUEST_BASE_REF")
+     value("\$.pull_request.base.ref")
+     expressionType("JSONPath")
+     regexpFilter("")
+    }
+    genericVariable {
+     key("PULL_REQUEST_BASE_OWNER")
+     value("\$.pull_request.base.repo.owner.login")
+     expressionType("JSONPath")
+     regexpFilter("")
+    }
+    genericVariable {
+     key("PULL_REQUEST_BASE_REPO")
+     value("\$.pull_request.base.repo.name")
+     expressionType("JSONPath")
+     regexpFilter("")
+    }
+    genericVariable {
+     key("PULL_REQUEST_ID")
+     value("\$.number")
+     expressionType("JSONPath")
+     regexpFilter("")
+    }
+    genericVariable {
+     key("ACTION")
+     value("\$.action")
+     expressionType("JSONPath")
+     regexpFilter("")
+    }
+   }
+   regexpFilterText("\$ACTION")
+   regexpFilterExpression("opened|reopened|synchronize")
+  }
+ }
+
+ steps {
+  shell('./gradlew build')
+ }
+
+ publishers {
+  violationsToGitHubRecorder {
+   config {
+    gitHubUrl("https://api.github.com/")
+    repositoryOwner("\$PULL_REQUEST_BASE_OWNER")
+    repositoryName("\$PULL_REQUEST_BASE_REPO")
+    pullRequestId("\$PULL_REQUEST_ID")
+
+    useOAuth2Token(true)
+    oAuth2Token("oh no!")
+
+    useOAuth2TokenCredentialsIdCredentials(true)
+    oAuth2TokenCredentialsId("githubtoken")
+
+    useUsernamePasswordCredentials(false)
+    usernamePasswordCredentialsId("")
+
+    useUsernamePassword(false)
+    username("")
+    password("")
+    
+    createSingleFileComments(true)
+    createCommentWithAllSingleFileComments(true)
+    commentOnlyChangedContent(true)
+    minSeverity('INFO')
+    
+    violationConfigs {
+     violationConfig {
+      reporter("FINDBUGS")
+      pattern(".*/findbugs/.*\\.xml\$")
+     }
+     violationConfig {
+      reporter("CHECKSTYLE")
+      pattern(".*/checkstyle/.*\\.xml\$")
+     }
+    }
+   }
+  }
+ }
+}
+```
+
 ## Pipeline Plugin
 
 This plugin can be used with the Pipeline Plugin:
