@@ -1,12 +1,17 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
-## Unreleased
+## 1.41
 ### No issue
+
+**SbtScalac**
+
+
+[bbe723b0b3d4bd5](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/bbe723b0b3d4bd5) Tomas Bjerre *2017-04-10 18:39:47*
 
 **Generic example**
 
 
-[f16ab19f7888522](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/f16ab19f7888522) Tomas Bjerre *2017-04-08 17:34:55*
+[97f30bb5329202e](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/97f30bb5329202e) Tomas Bjerre *2017-04-09 08:20:18*
 
 
 ## 1.40
