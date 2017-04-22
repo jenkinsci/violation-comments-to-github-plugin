@@ -303,44 +303,45 @@ This plugin can be used with the Pipeline Plugin:
 
 ```
 node {
+ def mvnHome = tool 'Maven 3.3.9'
+ deleteDir()
+ 
+ stage('Merge') {
+  sh "git init"
+  sh "git fetch --no-tags --progress git@git:group/reponame.git +refs/heads/*:refs/remotes/origin/* --depth=200"
+  sh "git checkout origin/${env.targetBranch}"
+  sh "git merge origin/${env.sourceBranch}"
+  sh "git log --graph --abbrev-commit --max-count=10"
+ }
 
- checkout([
-  $class: 'GitSCM', 
-  branches: [[ name: '*/master' ]], 
-  doGenerateSubmoduleConfigurations: false,
-  extensions: [],
-  submoduleCfg: [],
-  userRemoteConfigs: [[ url: 'https://github.com/tomasbjerre/violations-test.git' ]]
- ])
+ stage('Static code analysis') {
+  sh "${mvnHome}/bin/mvn package -DskipTests -Dmaven.test.failure.ignore=false -Dsurefire.skip=true -Dmaven.compile.fork=true -Dmaven.javadoc.skip=true"
 
- sh '''
- ./gradlew build
- '''
-
- step([
-  $class: 'ViolationsToGitHubRecorder', 
-  config: [
-   gitHubUrl: 'https://api.github.com/', 
-   repositoryOwner: 'tomasbjerre', 
-   repositoryName: 'violations-test', 
-   pullRequestId: '2', 
-   useOAuth2Token: false, 
-   oAuth2Token: '', 
-   useUsernamePassword: true, 
-   username: 'admin', 
-   password: 'admin', 
-   useUsernamePasswordCredentials: false, 
-   usernamePasswordCredentialsId: '',
-   createCommentWithAllSingleFileComments: true, 
-   createSingleFileComments: true, 
-   commentOnlyChangedContent: true, 
-   minSeverity: 'INFO',
-   violationConfigs: [
-    [ pattern: '.*/checkstyle/.*\\.xml$', reporter: 'CHECKSTYLE' ], 
-    [ pattern: '.*/findbugs/.*\\.xml$', reporter: 'FINDBUGS' ], 
+  step([
+   $class: 'ViolationsToGitHubRecorder', 
+   config: [
+    gitHubUrl: 'https://api.github.com/', 
+    repositoryOwner: 'tomasbjerre', 
+    repositoryName: 'violations-test', 
+    pullRequestId: '2', 
+    useOAuth2Token: false, 
+    oAuth2Token: '', 
+    useUsernamePassword: true, 
+    username: 'admin', 
+    password: 'admin', 
+    useUsernamePasswordCredentials: false, 
+    usernamePasswordCredentialsId: '',
+    createCommentWithAllSingleFileComments: true, 
+    createSingleFileComments: true, 
+    commentOnlyChangedContent: true, 
+    minSeverity: 'INFO',
+    violationConfigs: [
+     [ pattern: '.*/checkstyle/.*\\.xml$', reporter: 'CHECKSTYLE' ], 
+     [ pattern: '.*/findbugs/.*\\.xml$', reporter: 'FINDBUGS' ], 
+    ]
    ]
-  ]
- ])
+  ])
+ }
 }
 ```
 
