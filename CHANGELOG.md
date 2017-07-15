@@ -3,10 +3,19 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 ## Unreleased
 ### No issue
 
+**doc**
+
+
+[27cd2691ee43cd3](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/27cd2691ee43cd3) Tomas Bjerre *2017-07-15 13:11:45*
+
+
+## 1.43
+### No issue
+
 **Violations-lib 1.29 with reporter field**
 
 
-[909603d8a70153b](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/909603d8a70153b) Tomas Bjerre *2017-07-15 12:45:42*
+[0bc098b75f17a2d](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/0bc098b75f17a2d) Tomas Bjerre *2017-07-15 13:05:23*
 
 **Updating doc on Infer**
 
