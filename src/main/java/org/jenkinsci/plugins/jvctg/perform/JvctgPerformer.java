@@ -25,10 +25,17 @@ import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.
 import static se.bjurr.violations.comments.github.lib.ViolationCommentsToGitHubApi.violationCommentsToGitHubApi;
 import static se.bjurr.violations.lib.ViolationsReporterApi.violationsReporterApi;
 import static se.bjurr.violations.lib.parsers.FindbugsParser.setFindbugsMessagesXml;
+import hudson.EnvVars;
+import hudson.FilePath;
+import hudson.FilePath.FileCallable;
+import hudson.model.TaskListener;
+import hudson.model.Run;
+import hudson.remoting.VirtualChannel;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.MalformedURLException;
@@ -40,20 +47,14 @@ import org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfig;
 import org.jenkinsci.plugins.plaincredentials.StringCredentials;
 import org.jenkinsci.remoting.RoleChecker;
 
+import se.bjurr.violations.lib.model.SEVERITY;
+import se.bjurr.violations.lib.model.Violation;
+import se.bjurr.violations.lib.util.Filtering;
+
 import com.cloudbees.plugins.credentials.common.StandardUsernamePasswordCredentials;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Optional;
 import com.google.common.io.CharStreams;
-
-import hudson.EnvVars;
-import hudson.FilePath;
-import hudson.FilePath.FileCallable;
-import hudson.model.Run;
-import hudson.model.TaskListener;
-import hudson.remoting.VirtualChannel;
-import se.bjurr.violations.lib.model.SEVERITY;
-import se.bjurr.violations.lib.model.Violation;
-import se.bjurr.violations.lib.util.Filtering;
 
 public class JvctgPerformer {
 
@@ -74,7 +75,8 @@ public class JvctgPerformer {
       if (!isNullOrEmpty(violationConfig.getPattern())) {
         List<Violation> parsedViolations =
             violationsReporterApi() //
-                .findAll(violationConfig.getReporter()) //
+                .findAll(violationConfig.getParser()) //
+                .withReporter(violationConfig.getReporter()) //
                 .inFolder(workspace.getAbsolutePath()) //
                 .withPattern(violationConfig.getPattern()) //
                 .violations();
@@ -169,6 +171,7 @@ public class JvctgPerformer {
       final ViolationConfig p = new ViolationConfig();
       p.setPattern(environment.expand(violationConfig.getPattern()));
       p.setReporter(violationConfig.getReporter());
+      p.setParser(violationConfig.getParser());
       expanded.getViolationConfigs().add(p);
     }
     return expanded;
@@ -221,48 +224,36 @@ public class JvctgPerformer {
 
   private static void logConfiguration(
       final ViolationsToGitHubConfig config, final Run<?, ?> build, final TaskListener listener) {
-    listener.getLogger().println(FIELD_GITHUBURL + ": " + config.getGitHubUrl());
-    listener.getLogger().println(FIELD_REPOSITORYOWNER + ": " + config.getRepositoryOwner());
-    listener.getLogger().println(FIELD_REPOSITORYNAME + ": " + config.getRepositoryName());
-    listener.getLogger().println(FIELD_PULLREQUESTID + ": " + config.getPullRequestId());
+    PrintStream logger = listener.getLogger();
+    logger.println(FIELD_GITHUBURL + ": " + config.getGitHubUrl());
+    logger.println(FIELD_REPOSITORYOWNER + ": " + config.getRepositoryOwner());
+    logger.println(FIELD_REPOSITORYNAME + ": " + config.getRepositoryName());
+    logger.println(FIELD_PULLREQUESTID + ": " + config.getPullRequestId());
 
-    listener
-        .getLogger()
-        .println(
-            FIELD_USERNAMEPASSWORDCREDENTIALSID
-                + ": "
-                + !isNullOrEmpty(config.getUsernamePasswordCredentialsId()));
-    listener.getLogger().println(FIELD_USERNAME + ": " + !isNullOrEmpty(config.getUsername()));
-    listener.getLogger().println(FIELD_PASSWORD + ": " + !isNullOrEmpty(config.getPassword()));
-    listener
-        .getLogger()
-        .println(
-            FIELD_USEOAUTH2TOKENCREDENTIALS
-                + ": "
-                + !isNullOrEmpty(config.getoAuth2TokenCredentialsId()));
-    listener
-        .getLogger()
-        .println(FIELD_OAUTH2TOKEN + ": " + !isNullOrEmpty(config.getOAuth2Token()));
+    logger.println(
+        FIELD_USERNAMEPASSWORDCREDENTIALSID
+            + ": "
+            + !isNullOrEmpty(config.getUsernamePasswordCredentialsId()));
+    logger.println(FIELD_USERNAME + ": " + !isNullOrEmpty(config.getUsername()));
+    logger.println(FIELD_PASSWORD + ": " + !isNullOrEmpty(config.getPassword()));
+    logger.println(
+        FIELD_USEOAUTH2TOKENCREDENTIALS
+            + ": "
+            + !isNullOrEmpty(config.getoAuth2TokenCredentialsId()));
+    logger.println(FIELD_OAUTH2TOKEN + ": " + !isNullOrEmpty(config.getOAuth2Token()));
 
-    listener
-        .getLogger()
-        .println(FIELD_CREATESINGLEFILECOMMENTS + ": " + config.getCreateSingleFileComments());
-    listener
-        .getLogger()
-        .println(
-            FIELD_CREATECOMMENTWITHALLSINGLEFILECOMMENTS
-                + ": "
-                + config.getCreateCommentWithAllSingleFileComments());
-    listener
-        .getLogger()
-        .println(FIELD_COMMENTONLYCHANGEDCONTENT + ": " + config.getCommentOnlyChangedContent());
+    logger.println(FIELD_CREATESINGLEFILECOMMENTS + ": " + config.getCreateSingleFileComments());
+    logger.println(
+        FIELD_CREATECOMMENTWITHALLSINGLEFILECOMMENTS
+            + ": "
+            + config.getCreateCommentWithAllSingleFileComments());
+    logger.println(FIELD_COMMENTONLYCHANGEDCONTENT + ": " + config.getCommentOnlyChangedContent());
 
-    listener.getLogger().println(FIELD_MINSEVERITY + ": " + config.getMinSeverity());
+    logger.println(FIELD_MINSEVERITY + ": " + config.getMinSeverity());
 
     for (final ViolationConfig violationConfig : config.getViolationConfigs()) {
-      listener
-          .getLogger()
-          .println(violationConfig.getReporter() + " with pattern " + violationConfig.getPattern());
+      logger.println(
+          violationConfig.getReporter() + " with pattern " + violationConfig.getPattern());
     }
   }
 

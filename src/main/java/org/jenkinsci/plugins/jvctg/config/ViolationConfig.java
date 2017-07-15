@@ -4,19 +4,21 @@ import java.io.Serializable;
 
 import org.kohsuke.stapler.DataBoundConstructor;
 
-import se.bjurr.violations.lib.reports.Reporter;
+import se.bjurr.violations.lib.reports.Parser;
 
 public class ViolationConfig implements Serializable {
   private static final long serialVersionUID = 9009372864417543781L;
 
   private String pattern;
-  private Reporter reporter;
+  private String reporter;
+  private Parser parser;
 
   public ViolationConfig() {}
 
   @DataBoundConstructor
-  public ViolationConfig(Reporter reporter, String pattern) {
+  public ViolationConfig(Parser parser, String reporter, String pattern) {
     this.reporter = reporter;
+    this.parser = parser;
     this.pattern = pattern;
   }
 
@@ -24,7 +26,7 @@ public class ViolationConfig implements Serializable {
     return this.pattern;
   }
 
-  public Reporter getReporter() {
+  public String getReporter() {
     return this.reporter;
   }
 
@@ -32,12 +34,26 @@ public class ViolationConfig implements Serializable {
     this.pattern = pattern;
   }
 
-  public void setReporter(Reporter reporter) {
+  public void setReporter(String reporter) {
     this.reporter = reporter;
+  }
+
+  public Parser getParser() {
+    return parser;
+  }
+
+  public void setParser(Parser parser) {
+    this.parser = parser;
   }
 
   @Override
   public String toString() {
-    return "ViolationConfig [pattern=" + this.pattern + ", reporter=" + this.reporter + "]";
+    return "ViolationConfig [pattern="
+        + pattern
+        + ", reporter="
+        + reporter
+        + ", parser="
+        + parser
+        + "]";
   }
 }

@@ -4,7 +4,7 @@ import static com.google.common.collect.Lists.newArrayList;
 
 import java.util.List;
 
-import se.bjurr.violations.lib.reports.Reporter;
+import se.bjurr.violations.lib.reports.Parser;
 
 public class ViolationsToGitHubConfigHelper {
   public static final String FIELD_COMMENTONLYCHANGEDCONTENT = "commentOnlyChangedContent";
@@ -16,8 +16,8 @@ public class ViolationsToGitHubConfigHelper {
   public static final String FIELD_OAUTH2TOKENCREDENTIALSID = "oAuth2TokenCredentialsId";
   public static final String FIELD_PASSWORD = "password";
   public static final String FIELD_PATTERN = "pattern";
-  public static final String FIELD_PULLREQUESTID = "pullRequestId";
   public static final String FIELD_REPORTER = "reporter";
+  public static final String FIELD_PULLREQUESTID = "pullRequestId";
   public static final String FIELD_REPOSITORYNAME = "repositoryName";
   public static final String FIELD_REPOSITORYOWNER = "repositoryOwner";
   public static final String FIELD_USEOAUTH2TOKEN = "useOAuth2Token";
@@ -38,9 +38,9 @@ public class ViolationsToGitHubConfigHelper {
 
   public static List<ViolationConfig> getAllViolationConfigs() {
     List<ViolationConfig> violationConfigs = newArrayList();
-    for (Reporter reporter : Reporter.values()) {
+    for (Parser parser : Parser.values()) {
       ViolationConfig violationConfig = new ViolationConfig();
-      violationConfig.setReporter(reporter);
+      violationConfig.setParser(parser);
       violationConfigs.add(violationConfig);
     }
     return violationConfigs;

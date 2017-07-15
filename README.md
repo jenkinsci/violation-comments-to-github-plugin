@@ -151,11 +151,13 @@ job('GitHub_PR_Builder') {
     
     violationConfigs {
      violationConfig {
-      reporter("FINDBUGS")
+      parser("FINDBUGS")
+      reporter("Findbugs")
       pattern(".*/findbugs/.*\\.xml\$")
      }
      violationConfig {
-      reporter("CHECKSTYLE")
+      parser("CHECKSTYLE")
+      reporter("Checkstyle")
       pattern(".*/checkstyle/.*\\.xml\$")
      }
     }
@@ -285,11 +287,13 @@ job('GitHub_PR_Builder Generic') {
     
     violationConfigs {
      violationConfig {
-      reporter("FINDBUGS")
+      parser("FINDBUGS")
+      reporter("Findbugs")
       pattern(".*/findbugs/.*\\.xml\$")
      }
      violationConfig {
-      reporter("CHECKSTYLE")
+      parser("CHECKSTYLE")
+      reporter("Checkstyle")
       pattern(".*/checkstyle/.*\\.xml\$")
      }
     }
@@ -338,8 +342,9 @@ node {
     commentOnlyChangedContent: true, 
     minSeverity: 'INFO',
     violationConfigs: [
-     [ pattern: '.*/checkstyle/.*\\.xml$', reporter: 'CHECKSTYLE' ], 
-     [ pattern: '.*/findbugs/.*\\.xml$', reporter: 'FINDBUGS' ], 
+     [ pattern: '.*/checkstyle-result\\.xml$', parser: 'CHECKSTYLE', reporter: 'Checkstyle' ], 
+     [ pattern: '.*/findbugsXml\\.xml$', parser: 'FINDBUGS', reporter: 'Findbugs' ], 
+     [ pattern: '.*/pmd\\.xml$', parser: 'PMD', reporter: 'PMD' ], 
     ]
    ]
   ])

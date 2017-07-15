@@ -466,8 +466,9 @@ public class ViolationsToGitHubConfig implements Serializable {
         ViolationsToGitHubConfigHelper.getAllViolationConfigs();
     for (ViolationConfig candidate : allViolationConfigs) {
       for (ViolationConfig input : violationConfigs) {
-        if (candidate.getReporter() == input.getReporter()) {
+        if (candidate.getParser() == input.getParser()) {
           candidate.setPattern(input.getPattern());
+          candidate.setReporter(input.getReporter());
         }
       }
     }

@@ -11,6 +11,7 @@ import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.
 import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.FIELD_PASSWORD;
 import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.FIELD_PATTERN;
 import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.FIELD_PULLREQUESTID;
+import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.FIELD_REPORTER;
 import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.FIELD_REPOSITORYNAME;
 import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.FIELD_REPOSITORYOWNER;
 import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.FIELD_USEOAUTH2TOKEN;
@@ -20,18 +21,20 @@ import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.
 import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.FIELD_USEUSERNAMEPASSWORD;
 import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.FIELD_USEUSERNAMEPASSWORDCREDENTIALS;
 import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.createNewConfig;
-
-import java.util.List;
-
-import org.jenkinsci.plugins.jvctg.config.CredentialsHelper;
-import org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfig;
-import org.kohsuke.stapler.StaplerRequest;
-
 import hudson.model.AbstractProject;
 import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.Publisher;
 import hudson.util.ListBoxModel;
+
+import java.util.List;
+
 import net.sf.json.JSONObject;
+
+import org.jenkinsci.plugins.jvctg.config.CredentialsHelper;
+import org.jenkinsci.plugins.jvctg.config.ViolationConfig;
+import org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfig;
+import org.kohsuke.stapler.StaplerRequest;
+
 import se.bjurr.violations.lib.model.SEVERITY;
 
 public final class ViolationsToGitHubDescriptor extends BuildStepDescriptor<Publisher> {
@@ -114,8 +117,14 @@ public final class ViolationsToGitHubDescriptor extends BuildStepDescriptor<Publ
     config.setCommentOnlyChangedContent(
         formData.getString(FIELD_COMMENTONLYCHANGEDCONTENT).equalsIgnoreCase("true"));
     int i = 0;
-    for (String pattern : (List<String>) formData.get(FIELD_PATTERN)) {
-      config.getViolationConfigs().get(i++).setPattern(pattern);
+    List<String> patterns = (List<String>) formData.get(FIELD_PATTERN);
+    List<String> reporters = (List<String>) formData.get(FIELD_REPORTER);
+    for (String pattern : patterns) {
+      ViolationConfig violationConfig = config.getViolationConfigs().get(i);
+      violationConfig.setPattern(pattern);
+      String reporter = reporters.get(i);
+      violationConfig.setReporter(reporter);
+      i++;
     }
     ViolationsToGitHubRecorder publisher = new ViolationsToGitHubRecorder();
     publisher.setConfig(config);
