@@ -6,7 +6,7 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 **doc**
 
 
-[27cd2691ee43cd3](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/27cd2691ee43cd3) Tomas Bjerre *2017-07-15 13:11:45*
+[5e5b8c13bcb1358](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/5e5b8c13bcb1358) Tomas Bjerre *2017-07-15 13:12:08*
 
 
 ## 1.43

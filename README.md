@@ -355,9 +355,10 @@ node {
 # Plugin development
 More details on Jenkins plugin development is available [here](https://wiki.jenkins-ci.org/display/JENKINS/Plugin+tutorial).
 
-There is a ```/build.sh``` that will perform a full build and test the plugin. You may have a look at sandbox/settings.xml on how to configure your Maven settings.
+There is a ```/build.sh``` that will perform a full build and test the plugin.
 
-A release is created like this. You need to clone from jenkinsci-repo, with https and have username/password in settings.xml.
+If you have release-permissions this is how you do a release:
+
 ```
 mvn release:prepare release:perform
 ```
