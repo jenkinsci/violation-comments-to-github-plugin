@@ -58,7 +58,7 @@ import com.google.common.base.Optional;
 import com.google.common.io.CharStreams;
 
 public class JvctgPerformer {
-	  private static Logger LOG = Logger.getLogger(JvctgPerformer.class.getSimpleName());
+  private static Logger LOG = Logger.getLogger(JvctgPerformer.class.getSimpleName());
 
   @VisibleForTesting
   public static void doPerform(
@@ -170,18 +170,18 @@ public class JvctgPerformer {
     expanded.setoAuth2TokenCredentialsId(config.getoAuth2TokenCredentialsId());
 
     for (final ViolationConfig violationConfig : config.getViolationConfigs()) {
-        final String pattern = environment.expand(violationConfig.getPattern());
-        final String reporter = violationConfig.getReporter();
-        final Parser parser = violationConfig.getParser();
-        if (isNullOrEmpty(pattern) || isNullOrEmpty(reporter) || parser == null) {
-          LOG.fine("Ignoring violationConfig because of null/empty -values: " + violationConfig);
-          continue;
-        }
-        final ViolationConfig p = new ViolationConfig();
-        p.setPattern(pattern);
-        p.setReporter(reporter);
-        p.setParser(parser);
-        expanded.getViolationConfigs().add(p);
+      final String pattern = environment.expand(violationConfig.getPattern());
+      final String reporter = violationConfig.getReporter();
+      final Parser parser = violationConfig.getParser();
+      if (isNullOrEmpty(pattern) || isNullOrEmpty(reporter) || parser == null) {
+        LOG.fine("Ignoring violationConfig because of null/empty -values: " + violationConfig);
+        continue;
+      }
+      final ViolationConfig p = new ViolationConfig();
+      p.setPattern(pattern);
+      p.setReporter(reporter);
+      p.setParser(parser);
+      expanded.getViolationConfigs().add(p);
     }
     return expanded;
   }

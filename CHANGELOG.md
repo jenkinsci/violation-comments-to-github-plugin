@@ -3,6 +3,20 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 ## Unreleased
 ### No issue
 
+**doc**
+
+
+[10a0a40f9ecc133](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/10a0a40f9ecc133) Tomas Bjerre *2017-08-11 12:22:18*
+
+
+## 1.44
+### No issue
+
+**Ignoring violation configs with null config**
+
+
+[3841a5fd750f44b](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/3841a5fd750f44b) Tomas Bjerre *2017-08-11 11:39:26*
+
 **Cleaning**
 
 
