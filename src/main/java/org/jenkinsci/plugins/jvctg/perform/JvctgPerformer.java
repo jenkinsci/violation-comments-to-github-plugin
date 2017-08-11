@@ -49,6 +49,7 @@ import org.jenkinsci.remoting.RoleChecker;
 
 import se.bjurr.violations.lib.model.SEVERITY;
 import se.bjurr.violations.lib.model.Violation;
+import se.bjurr.violations.lib.reports.Parser;
 import se.bjurr.violations.lib.util.Filtering;
 
 import com.cloudbees.plugins.credentials.common.StandardUsernamePasswordCredentials;
@@ -57,6 +58,7 @@ import com.google.common.base.Optional;
 import com.google.common.io.CharStreams;
 
 public class JvctgPerformer {
+	  private static Logger LOG = Logger.getLogger(JvctgPerformer.class.getSimpleName());
 
   @VisibleForTesting
   public static void doPerform(
@@ -80,7 +82,7 @@ public class JvctgPerformer {
                 .inFolder(workspace.getAbsolutePath()) //
                 .withPattern(violationConfig.getPattern()) //
                 .violations();
-        SEVERITY minSeverity = config.getMinSeverity();
+        final SEVERITY minSeverity = config.getMinSeverity();
         if (minSeverity != null) {
           parsedViolations = Filtering.withAtLEastSeverity(parsedViolations, minSeverity);
         }
@@ -168,11 +170,18 @@ public class JvctgPerformer {
     expanded.setoAuth2TokenCredentialsId(config.getoAuth2TokenCredentialsId());
 
     for (final ViolationConfig violationConfig : config.getViolationConfigs()) {
-      final ViolationConfig p = new ViolationConfig();
-      p.setPattern(environment.expand(violationConfig.getPattern()));
-      p.setReporter(violationConfig.getReporter());
-      p.setParser(violationConfig.getParser());
-      expanded.getViolationConfigs().add(p);
+        final String pattern = environment.expand(violationConfig.getPattern());
+        final String reporter = violationConfig.getReporter();
+        final Parser parser = violationConfig.getParser();
+        if (isNullOrEmpty(pattern) || isNullOrEmpty(reporter) || parser == null) {
+          LOG.fine("Ignoring violationConfig because of null/empty -values: " + violationConfig);
+          continue;
+        }
+        final ViolationConfig p = new ViolationConfig();
+        p.setPattern(pattern);
+        p.setReporter(reporter);
+        p.setParser(parser);
+        expanded.getViolationConfigs().add(p);
     }
     return expanded;
   }
@@ -224,7 +233,7 @@ public class JvctgPerformer {
 
   private static void logConfiguration(
       final ViolationsToGitHubConfig config, final Run<?, ?> build, final TaskListener listener) {
-    PrintStream logger = listener.getLogger();
+    final PrintStream logger = listener.getLogger();
     logger.println(FIELD_GITHUBURL + ": " + config.getGitHubUrl());
     logger.println(FIELD_REPOSITORYOWNER + ": " + config.getRepositoryOwner());
     logger.println(FIELD_REPOSITORYNAME + ": " + config.getRepositoryName());

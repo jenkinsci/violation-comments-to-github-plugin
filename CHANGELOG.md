@@ -3,6 +3,11 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 ## Unreleased
 ### No issue
 
+**Cleaning**
+
+
+[e8952022fd39b08](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/e8952022fd39b08) Tomas Bjerre *2017-07-16 05:11:10*
+
 **doc**
 
 
