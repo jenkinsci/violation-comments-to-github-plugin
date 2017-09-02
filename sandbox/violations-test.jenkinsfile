@@ -1,0 +1,46 @@
+node {
+ deleteDir()
+
+ stage('Merge') {
+  sh "git init"
+  sh "git fetch --no-tags --progress https://github.com/tomasbjerre/violations-test.git +refs/heads/*:refs/remotes/origin/* --depth=200"
+  sh "git checkout origin/master"
+  sh "git merge origin/feature/addingcrap"
+  sh "git log --graph --abbrev-commit --max-count=10"
+ }
+ 
+ stage('Analyze') {
+  sh "./gradlew build"
+  sh "find"
+ }
+ 
+ stage('Report') {
+
+  step([
+   $class: 'ViolationsToGitHubRecorder', 
+   config: [
+    gitHubUrl: 'https://api.github.com/', 
+    repositoryOwner: 'tomasbjerre', 
+    repositoryName: 'violations-test', 
+    pullRequestId: '2', 
+    useOAuth2Token: true, 
+    oAuth2Token: 'asdasdasd', 
+    useUsernamePassword: false, 
+    username: 'admin', 
+    password: 'admin', 
+    useUsernamePasswordCredentials: false, 
+    usernamePasswordCredentialsId: '',
+    createCommentWithAllSingleFileComments: true, 
+    createSingleFileComments: true, 
+    commentOnlyChangedContent: true, 
+    minSeverity: 'INFO',
+    keepOldComments: false,
+    violationConfigs: [
+     [ pattern: '.*/checkstyle/.*\\.xml$', parser: 'CHECKSTYLE', reporter: 'Checkstyle' ], 
+     [ pattern: '.*/findbugs/.*\\.xml$', parser: 'FINDBUGS', reporter: 'Findbugs' ], 
+     [ pattern: '.*/pmd/.*\\.xml$', parser: 'PMD', reporter: 'PMD' ], 
+    ]
+   ]
+  ])
+ }
+}

@@ -33,6 +33,8 @@ public class ViolationsToGitHubConfig implements Serializable {
   private List<ViolationConfig> violationConfigs = newArrayList();
   private SEVERITY minSeverity;
 
+  private boolean keepOldComments;
+
   public ViolationsToGitHubConfig() {}
 
   @DataBoundConstructor
@@ -53,9 +55,10 @@ public class ViolationsToGitHubConfig implements Serializable {
       boolean useUsernamePasswordCredentials,
       boolean useUsernamePassword,
       String oAuth2TokenCredentialsId,
-      boolean useOAuth2TokenCredentialsIdCredentials,
-      SEVERITY minSeverity) {
-    List<ViolationConfig> allViolationConfigs = includeAllReporters(violationConfigs);
+      boolean useOAuth2TokenCredentials,
+      SEVERITY minSeverity,
+      boolean keepOldComments) {
+    final List<ViolationConfig> allViolationConfigs = includeAllReporters(violationConfigs);
 
     this.violationConfigs = allViolationConfigs;
     this.createSingleFileComments = createSingleFileComments;
@@ -73,8 +76,9 @@ public class ViolationsToGitHubConfig implements Serializable {
     this.useUsernamePasswordCredentials = useUsernamePasswordCredentials;
     this.useUsernamePassword = useUsernamePassword;
     this.oAuth2TokenCredentialsId = oAuth2TokenCredentialsId;
-    this.useOAuth2TokenCredentials = useOAuth2TokenCredentialsIdCredentials;
+    this.useOAuth2TokenCredentials = useOAuth2TokenCredentials;
     this.minSeverity = minSeverity;
+    this.keepOldComments = keepOldComments;
   }
 
   public ViolationsToGitHubConfig(ViolationsToGitHubConfig rhs) {
@@ -96,6 +100,7 @@ public class ViolationsToGitHubConfig implements Serializable {
     this.oAuth2TokenCredentialsId = rhs.oAuth2TokenCredentialsId;
     this.useOAuth2TokenCredentials = rhs.useOAuth2TokenCredentials;
     this.minSeverity = rhs.minSeverity;
+    this.keepOldComments = rhs.keepOldComments;
   }
 
   public void applyDefaults(ViolationsToGitHubConfiguration defaults) {
@@ -108,7 +113,7 @@ public class ViolationsToGitHubConfig implements Serializable {
     }
 
     if (isNullOrEmpty(this.oAuth2TokenCredentialsId)) {
-      this.oAuth2TokenCredentialsId = defaults.getoAuth2TokenCredentialsId();
+      this.oAuth2TokenCredentialsId = defaults.getOAuth2TokenCredentialsId();
     }
 
     if (isNullOrEmpty(this.username)) {
@@ -155,7 +160,7 @@ public class ViolationsToGitHubConfig implements Serializable {
     return this.oAuth2Token;
   }
 
-  public String getoAuth2TokenCredentialsId() {
+  public String getOAuth2TokenCredentialsId() {
     return this.oAuth2TokenCredentialsId;
   }
 
@@ -232,7 +237,7 @@ public class ViolationsToGitHubConfig implements Serializable {
     this.oAuth2Token = oAuth2Token;
   }
 
-  public void setoAuth2TokenCredentialsId(String oAuth2TokenCredentialsId) {
+  public void setOAuth2TokenCredentialsId(String oAuth2TokenCredentialsId) {
     this.oAuth2TokenCredentialsId = oAuth2TokenCredentialsId;
   }
 
@@ -318,6 +323,8 @@ public class ViolationsToGitHubConfig implements Serializable {
         + violationConfigs
         + ", minSeverity="
         + minSeverity
+        + ", keepOldComments="
+        + keepOldComments
         + "]";
   }
 
@@ -329,6 +336,7 @@ public class ViolationsToGitHubConfig implements Serializable {
     result = prime * result + (createCommentWithAllSingleFileComments ? 1231 : 1237);
     result = prime * result + (createSingleFileComments ? 1231 : 1237);
     result = prime * result + (gitHubUrl == null ? 0 : gitHubUrl.hashCode());
+    result = prime * result + (keepOldComments ? 1231 : 1237);
     result = prime * result + (minSeverity == null ? 0 : minSeverity.hashCode());
     result = prime * result + (oAuth2Token == null ? 0 : oAuth2Token.hashCode());
     result =
@@ -363,7 +371,7 @@ public class ViolationsToGitHubConfig implements Serializable {
     if (getClass() != obj.getClass()) {
       return false;
     }
-    ViolationsToGitHubConfig other = (ViolationsToGitHubConfig) obj;
+    final ViolationsToGitHubConfig other = (ViolationsToGitHubConfig) obj;
     if (commentOnlyChangedContent != other.commentOnlyChangedContent) {
       return false;
     }
@@ -378,6 +386,9 @@ public class ViolationsToGitHubConfig implements Serializable {
         return false;
       }
     } else if (!gitHubUrl.equals(other.gitHubUrl)) {
+      return false;
+    }
+    if (keepOldComments != other.keepOldComments) {
       return false;
     }
     if (minSeverity != other.minSeverity) {
@@ -462,10 +473,10 @@ public class ViolationsToGitHubConfig implements Serializable {
   }
 
   private List<ViolationConfig> includeAllReporters(List<ViolationConfig> violationConfigs) {
-    List<ViolationConfig> allViolationConfigs =
+    final List<ViolationConfig> allViolationConfigs =
         ViolationsToGitHubConfigHelper.getAllViolationConfigs();
-    for (ViolationConfig candidate : allViolationConfigs) {
-      for (ViolationConfig input : violationConfigs) {
+    for (final ViolationConfig candidate : allViolationConfigs) {
+      for (final ViolationConfig input : violationConfigs) {
         if (candidate.getParser() == input.getParser()) {
           candidate.setPattern(input.getPattern());
           candidate.setReporter(input.getReporter());
@@ -473,5 +484,13 @@ public class ViolationsToGitHubConfig implements Serializable {
       }
     }
     return allViolationConfigs;
+  }
+
+  public boolean isKeepOldComments() {
+    return keepOldComments;
+  }
+
+  public void setKeepOldComments(boolean keepOldComments) {
+    this.keepOldComments = keepOldComments;
   }
 }

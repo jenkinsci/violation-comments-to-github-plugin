@@ -13,6 +13,7 @@ import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.
 import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.FIELD_CREATECOMMENTWITHALLSINGLEFILECOMMENTS;
 import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.FIELD_CREATESINGLEFILECOMMENTS;
 import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.FIELD_GITHUBURL;
+import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.FIELD_KEEP_OLD_COMMENTS;
 import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.FIELD_MINSEVERITY;
 import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.FIELD_OAUTH2TOKEN;
 import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.FIELD_PASSWORD;
@@ -110,7 +111,7 @@ public class JvctgPerformer {
     listener
         .getLogger()
         .println(
-            "Will comment PR "
+            "PR: "
                 + config.getRepositoryOwner()
                 + "/"
                 + config.getRepositoryName()
@@ -132,6 +133,7 @@ public class JvctgPerformer {
               config.getCreateCommentWithAllSingleFileComments()) //
           .withCreateSingleFileComments(config.getCreateSingleFileComments()) //
           .withCommentOnlyChangedContent(config.getCommentOnlyChangedContent()) //
+          .withKeepOldComments(config.isKeepOldComments()) //
           .toPullRequest();
     } catch (final Exception e) {
       Logger.getLogger(JvctgPerformer.class.getName()).log(SEVERE, "", e);
@@ -167,8 +169,8 @@ public class JvctgPerformer {
     expanded.setUseOAuth2Token(config.isUseOAuth2Token());
     expanded.setoAuth2Token(environment.expand(config.getOAuth2Token()));
     expanded.setUseOAuth2TokenCredentials(config.isUseOAuth2TokenCredentials());
-    expanded.setoAuth2TokenCredentialsId(config.getoAuth2TokenCredentialsId());
-
+    expanded.setOAuth2TokenCredentialsId(config.getOAuth2TokenCredentialsId());
+    expanded.setKeepOldComments(config.isKeepOldComments());
     for (final ViolationConfig violationConfig : config.getViolationConfigs()) {
       final String pattern = environment.expand(violationConfig.getPattern());
       final String reporter = violationConfig.getReporter();
@@ -203,7 +205,7 @@ public class JvctgPerformer {
       setOAuth2TokenCredentials(configExpanded, listener);
 
       listener.getLogger().println("Running Jenkins Violation Comments To GitHub");
-      listener.getLogger().println("Will comment " + configExpanded.getPullRequestId());
+      listener.getLogger().println("PR " + configExpanded.getPullRequestId());
 
       fp.act(
           new FileCallable<Void>() {
@@ -248,7 +250,7 @@ public class JvctgPerformer {
     logger.println(
         FIELD_USEOAUTH2TOKENCREDENTIALS
             + ": "
-            + !isNullOrEmpty(config.getoAuth2TokenCredentialsId()));
+            + !isNullOrEmpty(config.getOAuth2TokenCredentialsId()));
     logger.println(FIELD_OAUTH2TOKEN + ": " + !isNullOrEmpty(config.getOAuth2Token()));
 
     logger.println(FIELD_CREATESINGLEFILECOMMENTS + ": " + config.getCreateSingleFileComments());
@@ -260,6 +262,8 @@ public class JvctgPerformer {
 
     logger.println(FIELD_MINSEVERITY + ": " + config.getMinSeverity());
 
+    logger.println(FIELD_KEEP_OLD_COMMENTS + ": " + config.isKeepOldComments());
+
     for (final ViolationConfig violationConfig : config.getViolationConfigs()) {
       logger.println(
           violationConfig.getReporter() + " with pattern " + violationConfig.getPattern());
@@ -269,7 +273,7 @@ public class JvctgPerformer {
   private static void setOAuth2TokenCredentials(
       final ViolationsToGitHubConfig configExpanded, final TaskListener listener) {
     if (configExpanded.isUseOAuth2TokenCredentials()) {
-      final String getoAuth2TokenCredentialsId = configExpanded.getoAuth2TokenCredentialsId();
+      final String getoAuth2TokenCredentialsId = configExpanded.getOAuth2TokenCredentialsId();
       if (!isNullOrEmpty(getoAuth2TokenCredentialsId)) {
         final Optional<StringCredentials> credentials =
             findOAuth2TokenCredentials(getoAuth2TokenCredentialsId);

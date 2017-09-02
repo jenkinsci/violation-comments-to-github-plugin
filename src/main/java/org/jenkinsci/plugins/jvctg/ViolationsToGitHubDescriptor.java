@@ -5,6 +5,7 @@ import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.
 import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.FIELD_CREATECOMMENTWITHALLSINGLEFILECOMMENTS;
 import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.FIELD_CREATESINGLEFILECOMMENTS;
 import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.FIELD_GITHUBURL;
+import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.FIELD_KEEP_OLD_COMMENTS;
 import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.FIELD_MINSEVERITY;
 import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.FIELD_OAUTH2TOKEN;
 import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.FIELD_OAUTH2TOKENCREDENTIALSID;
@@ -83,7 +84,7 @@ public final class ViolationsToGitHubDescriptor extends BuildStepDescriptor<Publ
   @Override
   public Publisher newInstance(StaplerRequest req, JSONObject formData)
       throws hudson.model.Descriptor.FormException {
-    ViolationsToGitHubConfig config = createNewConfig();
+    final ViolationsToGitHubConfig config = createNewConfig();
     config.setGitHubUrl(formData.getString(FIELD_GITHUBURL));
     config.setRepositoryOwner(formData.getString(FIELD_REPOSITORYOWNER));
     config.setRepositoryName(formData.getString(FIELD_REPOSITORYNAME));
@@ -96,14 +97,14 @@ public final class ViolationsToGitHubDescriptor extends BuildStepDescriptor<Publ
     config.setUseOAuth2Token(formData.getBoolean(FIELD_USEOAUTH2TOKEN));
     config.setoAuth2Token(formData.getString(FIELD_OAUTH2TOKEN));
     config.setUseOAuth2TokenCredentials(formData.getBoolean(FIELD_USEOAUTH2TOKENCREDENTIALS));
-    config.setoAuth2TokenCredentialsId(formData.getString(FIELD_OAUTH2TOKENCREDENTIALSID));
+    config.setOAuth2TokenCredentialsId(formData.getString(FIELD_OAUTH2TOKENCREDENTIALSID));
 
     config.setUseUsernamePasswordCredentials(
         formData.getBoolean(FIELD_USEUSERNAMEPASSWORDCREDENTIALS));
     config.setUsernamePasswordCredentialsId(
         formData.getString(FIELD_USERNAMEPASSWORDCREDENTIALSID));
 
-    String minSeverityString = formData.getString(FIELD_MINSEVERITY);
+    final String minSeverityString = formData.getString(FIELD_MINSEVERITY);
     if (!isNullOrEmpty(minSeverityString)) {
       config.setMinSeverity(SEVERITY.valueOf(minSeverityString));
     } else {
@@ -116,17 +117,18 @@ public final class ViolationsToGitHubDescriptor extends BuildStepDescriptor<Publ
         formData.getString(FIELD_CREATESINGLEFILECOMMENTS).equalsIgnoreCase("true"));
     config.setCommentOnlyChangedContent(
         formData.getString(FIELD_COMMENTONLYCHANGEDCONTENT).equalsIgnoreCase("true"));
+    config.setKeepOldComments(formData.getString(FIELD_KEEP_OLD_COMMENTS).equalsIgnoreCase("true"));
     int i = 0;
-    List<String> patterns = (List<String>) formData.get(FIELD_PATTERN);
-    List<String> reporters = (List<String>) formData.get(FIELD_REPORTER);
-    for (String pattern : patterns) {
-      ViolationConfig violationConfig = config.getViolationConfigs().get(i);
+    final List<String> patterns = (List<String>) formData.get(FIELD_PATTERN);
+    final List<String> reporters = (List<String>) formData.get(FIELD_REPORTER);
+    for (final String pattern : patterns) {
+      final ViolationConfig violationConfig = config.getViolationConfigs().get(i);
       violationConfig.setPattern(pattern);
-      String reporter = reporters.get(i);
+      final String reporter = reporters.get(i);
       violationConfig.setReporter(reporter);
       i++;
     }
-    ViolationsToGitHubRecorder publisher = new ViolationsToGitHubRecorder();
+    final ViolationsToGitHubRecorder publisher = new ViolationsToGitHubRecorder();
     publisher.setConfig(config);
     return publisher;
   }

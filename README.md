@@ -148,6 +148,7 @@ job('GitHub_PR_Builder') {
     createCommentWithAllSingleFileComments(true)
     commentOnlyChangedContent(true)
     minSeverity('INFO')
+    keepOldComments(false)
     
     violationConfigs {
      violationConfig {
@@ -284,6 +285,7 @@ job('GitHub_PR_Builder Generic') {
     createCommentWithAllSingleFileComments(true)
     commentOnlyChangedContent(true)
     minSeverity('INFO')
+    keepOldComments(false)
     
     violationConfigs {
      violationConfig {
@@ -341,6 +343,7 @@ node {
     createSingleFileComments: true, 
     commentOnlyChangedContent: true, 
     minSeverity: 'INFO',
+    keepOldComments: false,
     violationConfigs: [
      [ pattern: '.*/checkstyle-result\\.xml$', parser: 'CHECKSTYLE', reporter: 'Checkstyle' ], 
      [ pattern: '.*/findbugsXml\\.xml$', parser: 'FINDBUGS', reporter: 'Findbugs' ], 

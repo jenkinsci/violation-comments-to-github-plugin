@@ -9,7 +9,7 @@
 	</parent>
 
 	<properties>
-		<jenkins.version>2.1</jenkins.version>
+		<jenkins.version>2.7.4</jenkins.version>
 		<hpi-plugin.version>1.115</hpi-plugin.version>
 		<jenkins-test-harness.version>2.19</jenkins-test-harness.version>
 		<findbugs.failOnError>false</findbugs.failOnError>
@@ -194,7 +194,7 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 		<dependency>
 			<groupId>se.bjurr.violations</groupId>
 			<artifactId>violation-comments-to-github-lib</artifactId>
-			<version>1.31</version>
+			<version>1.33</version>
 		</dependency>
 
 		<dependency>

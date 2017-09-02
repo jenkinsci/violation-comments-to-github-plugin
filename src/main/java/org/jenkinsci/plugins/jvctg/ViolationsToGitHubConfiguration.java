@@ -63,7 +63,7 @@ public class ViolationsToGitHubConfiguration extends GlobalConfiguration impleme
     return this.oAuth2Token;
   }
 
-  public String getoAuth2TokenCredentialsId() {
+  public String getOAuth2TokenCredentialsId() {
     return this.oAuth2TokenCredentialsId;
   }
 
