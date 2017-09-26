@@ -3,6 +3,14 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 ## Unreleased
 ### No issue
 
+**Keeping comments and adjusting checkstyle**
+
+ * Checkstyle now allows empty source attribute. 
+ * Comments can optionaly be kept and not removed when new comments are added. 
+ * Will no longer re-create identical comments. 
+
+[ceb659857786c57](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/ceb659857786c57) Tomas Bjerre *2017-09-02 16:07:54*
+
 **doc**
 
 
