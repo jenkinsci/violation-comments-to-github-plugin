@@ -3,6 +3,15 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 ## Unreleased
 ### No issue
 
+**Allowing reporter to be unset**
+
+
+[bc2fba04bce49d2](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/bc2fba04bce49d2) Tomas Bjerre *2017-09-26 19:42:15*
+
+
+## 1.45
+### No issue
+
 **Keeping comments and adjusting checkstyle**
 
  * Checkstyle now allows empty source attribute. 
