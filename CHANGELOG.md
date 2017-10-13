@@ -3,6 +3,15 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 ## Unreleased
 ### No issue
 
+**Added handling for empty IssueType Description attributes for Resharper**
+
+
+[bda2539ad156ddc](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/bda2539ad156ddc) Tomas Bjerre *2017-10-09 16:54:33*
+
+
+## 1.46
+### No issue
+
 **Allowing reporter to be unset**
 
 
