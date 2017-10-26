@@ -1,6 +1,15 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
-## Unreleased
+## 1.48
+### No issue
+
+**Resharper WikiUrl**
+
+
+[d8c933355fdb03d](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/d8c933355fdb03d) Tomas Bjerre *2017-10-13 11:32:28*
+
+
+## 1.47
 ### No issue
 
 **Added handling for empty IssueType Description attributes for Resharper**
