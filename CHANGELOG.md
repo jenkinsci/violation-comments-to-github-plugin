@@ -1,5 +1,22 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
+## Unreleased
+### GitHub [#12](https://github.com/jenkinsci/violation-comments-to-github-plugin/issues/12) release notes haven&#39;t been updated
+
+**Doc #12**
+
+
+[8b0981ad78f8f28](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/8b0981ad78f8f28) Tomas Bjerre *2017-12-07 16:19:59*
+
+
+### GitHub [#15](https://github.com/jenkinsci/violation-comments-to-github-plugin/issues/15) Didn&#39;t find pmd violation while has pmd.xml
+
+**Accepting PMD files without ruleset-tag #15**
+
+
+[bab0cbdb72832d8](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/bab0cbdb72832d8) Tomas Bjerre *2017-12-07 16:20:05*
+
+
 ## 1.48
 ### No issue
 
