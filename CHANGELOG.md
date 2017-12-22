@@ -1,6 +1,15 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
 ## Unreleased
+### No issue
+
+**DocFX**
+
+
+[438aea17a1d84a7](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/438aea17a1d84a7) Tomas Bjerre *2017-12-21 14:35:58*
+
+
+## 1.49
 ### GitHub [#12](https://github.com/jenkinsci/violation-comments-to-github-plugin/issues/12) release notes haven&#39;t been updated
 
 **Doc #12**
