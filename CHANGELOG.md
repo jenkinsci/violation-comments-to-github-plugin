@@ -3,6 +3,15 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 ## Unreleased
 ### No issue
 
+**Bumping version to fix faulty release**
+
+
+[a6d075acb73b661](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/a6d075acb73b661) Tomas Bjerre *2017-12-22 19:58:19*
+
+
+## 1.51
+### No issue
+
 **DocFX parsing JSON with Gson, not ScriptEngine**
 
 
