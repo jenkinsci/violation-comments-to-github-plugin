@@ -274,7 +274,7 @@ job('GitHub_PR_Builder Generic') {
     useOAuth2Token(true)
     oAuth2Token("oh no!")
 
-    useOAuth2TokenCredentialsIdCredentials(true)
+    useOAuth2TokenCredentials(true)
     oAuth2TokenCredentialsId("githubtoken")
 
     useUsernamePasswordCredentials(false)
