@@ -3,6 +3,20 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 ## Unreleased
 ### No issue
 
+**Relocating to correct Java identifier**
+
+
+[6eb63e22ec73756](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/6eb63e22ec73756) Tomas Bjerre *2017-12-31 12:01:40*
+
+
+## 1.52
+### No issue
+
+**Fixing encoding issues**
+
+
+[15f9d221b8c4284](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/15f9d221b8c4284) Tomas Bjerre *2017-12-25 20:12:30*
+
 **Bumping version to fix faulty release**
 
 
