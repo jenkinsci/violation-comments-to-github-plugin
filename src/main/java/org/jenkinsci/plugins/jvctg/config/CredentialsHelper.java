@@ -8,28 +8,38 @@ import static com.google.common.base.Optional.absent;
 import static com.google.common.base.Optional.fromNullable;
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static hudson.security.ACL.SYSTEM;
-import hudson.model.ItemGroup;
-import hudson.util.ListBoxModel;
 
 import java.util.List;
 
 import org.acegisecurity.Authentication;
+import org.apache.commons.lang.StringUtils;
 import org.jenkinsci.plugins.plaincredentials.StringCredentials;
 
 import com.cloudbees.plugins.credentials.Credentials;
+import com.cloudbees.plugins.credentials.CredentialsMatchers;
+import com.cloudbees.plugins.credentials.CredentialsProvider;
+import com.cloudbees.plugins.credentials.CredentialsScope;
+import com.cloudbees.plugins.credentials.SystemCredentialsProvider;
 import com.cloudbees.plugins.credentials.common.AbstractIdCredentialsListBoxModel;
 import com.cloudbees.plugins.credentials.common.StandardListBoxModel;
 import com.cloudbees.plugins.credentials.common.StandardUsernameCredentials;
 import com.cloudbees.plugins.credentials.common.StandardUsernameListBoxModel;
 import com.cloudbees.plugins.credentials.common.StandardUsernamePasswordCredentials;
 import com.cloudbees.plugins.credentials.domains.DomainRequirement;
+import com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl;
 import com.google.common.base.Optional;
+
+import hudson.model.ItemGroup;
+import hudson.security.ACL;
+import hudson.util.ListBoxModel;
+import hudson.util.Secret;
+import jenkins.model.Jenkins;
 
 public class CredentialsHelper {
 
   public static ListBoxModel doFillOAuth2TokenCredentialsIdItems() {
-    List<StringCredentials> credentials = getAllCredentials(StringCredentials.class);
-    ListBoxModel listBoxModel =
+    final List<StringCredentials> credentials = getAllCredentials(StringCredentials.class);
+    final ListBoxModel listBoxModel =
         new StandardListBoxModel() //
             .includeEmptyValue() //
             .withAll(credentials);
@@ -37,18 +47,19 @@ public class CredentialsHelper {
   }
 
   public static ListBoxModel doFillUsernamePasswordCredentialsIdItems() {
-    List<StandardUsernamePasswordCredentials> credentials =
+    final List<StandardUsernamePasswordCredentials> credentials =
         getAllCredentials(StandardUsernamePasswordCredentials.class);
-    AbstractIdCredentialsListBoxModel<StandardUsernameListBoxModel, StandardUsernameCredentials>
+    final AbstractIdCredentialsListBoxModel<
+            StandardUsernameListBoxModel, StandardUsernameCredentials>
         listBoxModel = new StandardUsernameListBoxModel().includeEmptyValue();
-    for (StandardUsernamePasswordCredentials credential : credentials) {
+    for (final StandardUsernamePasswordCredentials credential : credentials) {
       listBoxModel.with(credential);
     }
     return listBoxModel;
   }
 
   public static Optional<StringCredentials> findOAuth2TokenCredentials(
-      String oAuth2TokenCredentialsId) {
+      final String oAuth2TokenCredentialsId) {
     if (isNullOrEmpty(oAuth2TokenCredentialsId)) {
       return absent();
     }
@@ -59,7 +70,7 @@ public class CredentialsHelper {
   }
 
   public static Optional<StandardUsernamePasswordCredentials> findUsernamePasswordCredentials(
-      String usernamePasswordCredentialsId) {
+      final String usernamePasswordCredentialsId) {
     if (isNullOrEmpty(usernamePasswordCredentialsId)) {
       return absent();
     }
@@ -70,11 +81,49 @@ public class CredentialsHelper {
             allOf(withId(usernamePasswordCredentialsId))));
   }
 
-  private static <C extends Credentials> List<C> getAllCredentials(Class<C> type) {
-    ItemGroup<?> itemGroup = null;
-    Authentication authentication = SYSTEM;
-    DomainRequirement domainRequirement = null;
+  private static <C extends Credentials> List<C> getAllCredentials(final Class<C> type) {
+    final ItemGroup<?> itemGroup = null;
+    final Authentication authentication = SYSTEM;
+    final DomainRequirement domainRequirement = null;
 
     return lookupCredentials(type, itemGroup, authentication, domainRequirement);
+  }
+
+  public static String migrateCredentials(final String username, final String password) {
+    String credentialsId = null;
+    final DomainRequirement domainRequirement = null;
+    final List<StandardUsernamePasswordCredentials> credentials =
+        CredentialsMatchers.filter(
+            CredentialsProvider.lookupCredentials(
+                StandardUsernamePasswordCredentials.class,
+                Jenkins.getInstance(),
+                ACL.SYSTEM,
+                domainRequirement),
+            CredentialsMatchers.withUsername(username));
+    for (final StandardUsernamePasswordCredentials cred : credentials) {
+      if (StringUtils.equals(password, Secret.toString(cred.getPassword()))) {
+        // If some credentials have the same username/password, use those.
+        credentialsId = cred.getId();
+        break;
+      }
+    }
+    if (StringUtils.isBlank(credentialsId)) {
+      // If we couldn't find any existing credentials,
+      // create new credentials with the principal and secret and use it.
+      final StandardUsernamePasswordCredentials newCredentials =
+          new UsernamePasswordCredentialsImpl(
+              CredentialsScope.SYSTEM,
+              null,
+              "Migrated by Violation comments to github",
+              username,
+              password);
+      SystemCredentialsProvider.getInstance().getCredentials().add(newCredentials);
+      credentialsId = newCredentials.getId();
+    }
+    if (StringUtils.isNotEmpty(credentialsId)) {
+      return credentialsId;
+    } else {
+      return null;
+    }
   }
 }

@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
 		<groupId>org.jenkins-ci.plugins</groupId>
 		<artifactId>plugin</artifactId>
-		<version>2.23</version>
+		<version>3.2</version>
 	</parent>
 
 	<properties>
+		<java.level>7</java.level>
 		<jenkins.version>2.7.4</jenkins.version>
-		<hpi-plugin.version>1.115</hpi-plugin.version>
-		<jenkins-test-harness.version>2.19</jenkins-test-harness.version>
 		<findbugs.failOnError>false</findbugs.failOnError>
+		<maven.javadoc.skip>true</maven.javadoc.skip>
 	</properties>
 
 	<artifactId>violation-comments-to-github</artifactId>
@@ -63,23 +64,8 @@
 		</pluginRepository>
 	</pluginRepositories>
 
-	<distributionManagement>
-		<repository>
-			<id>repo.jenkins-ci.org</id>
-			<url>https://repo.jenkins-ci.org/releases</url>
-		</repository>
-		<snapshotRepository>
-			<id>maven.jenkins-ci.org</id>
-			<url>https://repo.jenkins-ci.org/snapshots</url>
-		</snapshotRepository>
-	</distributionManagement>
-
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-release-plugin</artifactId>
-			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
@@ -90,19 +76,6 @@
 				<configuration>
 					<downloadSources>true</downloadSources>
 					<downloadJavadocs>true</downloadJavadocs>
-				</configuration>
-			</plugin>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
-				</configuration>
-			</plugin>
-			<plugin>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<configuration>
-					<skip>true</skip>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -172,15 +145,37 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>se.bjurr.violations</groupId>
+				<artifactId>violations-maven-plugin</artifactId>
+				<version>1.7</version>
+				<configuration>
+					<minSeverity>INFO</minSeverity>
+					<detailLevel>VERBOSE</detailLevel>
+					<maxViolations>99999999</maxViolations>
+					<printViolations>true</printViolations>
+					<violations>
+						<violation>
+							<parser>FINDBUGS</parser>
+							<reporter>Findbugs</reporter>
+							<folder>.</folder>
+							<pattern>.*/findbugsXml.*\.xml$</pattern>
+						</violation>
+					</violations>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>verify</phase>
+						<goals>
+							<goal>violations</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
 	<dependencies>
-		<dependency>
-			<groupId>org.jenkins-ci.main</groupId>
-			<artifactId>maven-plugin</artifactId>
-			<version>2.9</version>
-		</dependency>
 		<dependency>
 			<groupId>org.jenkins-ci.plugins</groupId>
 			<artifactId>credentials</artifactId>
@@ -196,11 +191,22 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 			<artifactId>violation-comments-to-github-lib</artifactId>
 			<version>1.44</version>
 		</dependency>
+		<dependency>
+			<groupId>org.jenkins-ci.plugins</groupId>
+			<artifactId>structs</artifactId>
+			<version>1.10</version>
+		</dependency>
 
 		<dependency>
 			<groupId>uk.co.jemos.podam</groupId>
 			<artifactId>podam</artifactId>
 			<version>6.0.2.RELEASE</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>4.1.6.RELEASE</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>

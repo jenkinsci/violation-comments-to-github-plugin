@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core"
+         xmlns:d="jelly:define"
+         xmlns:f="/lib/form"
+         xmlns:l="/lib/layout"
+         xmlns:st="jelly:stapler"
+         xmlns:t="/lib/hudson"
+         xmlns:c="/lib/credentials">
+
+  <f:optionalBlock checked="${!empty instance.usernamePasswordCredentialsId}" title="${usernamePasswordCredentialsId}Specify username/password from credentials" inline="true">
+    <f:entry title="Username / Password Crendential" field="usernamePasswordCredentialsId">
+        <c:select />
+        <f:description>
+            Will default to global config.
+        </f:description>
+    </f:entry>
+  </f:optionalBlock>
+
+  <f:optionalBlock checked="${!empty instance.oAuth2TokenCredentialsId}" title="Specify OAuth2 token from credentials" inline="true">
+    <f:entry title="OAuth2 token Crendential" field="oAuth2TokenCredentialsId">
+        <c:select />
+        <f:description>
+            Will default to global config.
+        </f:description>
+    </f:entry>
+  </f:optionalBlock>
+
+  <f:optionalBlock checked="${!empty instance.oAuth2Token}" title="Specify OAuth2 token here" inline="true">
+    <f:entry title="OAuth2 token" field="oAuth2Token">
+        <f:textbox />
+        <f:description>
+          Will default to global config.
+        </f:description>
+    </f:entry>
+  </f:optionalBlock>
+
+  <f:entry>
+   You may want to use one of these to get the values:
+   <ul>
+    <li><a target="_blank" href="https://wiki.jenkins.io/display/JENKINS/Generic+Webhook+Trigger+Plugin">Generic Webhook Trigger Plugin</a></li>
+    <li><a target="_blank" href="https://wiki.jenkins-ci.org/display/JENKINS/GitHub+pull+request+builder+plugin">GitHub Pull Request Builder</a></li>
+   </ul>
+  </f:entry>
+
+
+  <f:entry title="Base URL, will default to global config" field="gitHubUrl">
+    <f:textbox/>
+  </f:entry>
+  
+  <f:entry title="Repository owner (Like 'a' if repo is: https://github.com/a/b), will default to global config" field="repositoryOwner">
+    <f:textbox />
+  </f:entry>
+  
+  <f:entry title="Repository name (Like 'b' if repo is: https://github.com/a/b)" field="repositoryName">
+    <f:textbox />
+  </f:entry>
+
+  <f:entry title="Pull Request ID" field="pullRequestId">
+    <f:textbox />
+  </f:entry>
+
+  <f:entry title="Comment only if severity at least" field="minSeverity">
+    <f:select />
+  </f:entry>
+
+  <f:entry title="Keep old comments" field="keepOldComments">
+    <f:checkbox/>
+  </f:entry>
+
+  <f:entry title="Create one comment per violation" field="createSingleFileComments">
+    <f:checkbox default="true"/>
+  </f:entry>
+
+  <f:entry title="Create one big comment with all violations" field="createCommentWithAllSingleFileComments">
+    <f:checkbox />
+  </f:entry>
+
+  <f:entry title="Comment only changed part of files">
+    <f:checkbox field="commentOnlyChangedContent" />
+  </f:entry>
+    <f:entry>
+        <table class="xmlFilenamePatterns" cellspacing="5">
+            <tr>
+                <td align="left" colspan="2">
+                    <b>Violations configuration</b>
+                    <ul>
+                        <li>The <b>pattern</b> may be, for example, <i>.*/findbugs/.*\.xml$</i> to match xml-files, in a folder named findbugs, anywhere in workspace. You try <a href="https://jex.im/regulex/" target="_blank">Regulex</a> for creating your regexp.</li>
+                        <li>The <b>reporter</b> is optional. The parser name will be used if no reporter specified. It is intended to be the name of the tool reporting the violations. For example if Detekt is used to produce a checkstyle-report, then you may specify Detekt in the reporter field.</li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+    </f:entry>
+
+    <f:entry title="Parsers">
+        <f:repeatableProperty field="violationConfigs">
+            <f:entry title="">
+                <div align="right">
+                    <f:repeatableDeleteButton/>
+                </div>
+            </f:entry>
+        </f:repeatableProperty>
+    </f:entry>
+
+</j:jelly>

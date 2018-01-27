@@ -61,12 +61,23 @@ There is also:
 
 Available in Jenkins [here](https://wiki.jenkins-ci.org/display/JENKINS/Violation+Comments+to+GitHub+Plugin).
 
-You will need to the **pull request id** for the pull request that was built. You may want to have a look at [Generic Webhook Trigger plugin](https://github.com/jenkinsci/generic-webhook-trigger-plugin) or [GitHub Pull Request Builder Plugin](https://wiki.jenkins-ci.org/display/JENKINS/GitHub+pull+request+builder+plugin), it provides the environment variable `ghprbPullId`.
 
-You must perform the merge before doing the analysis for the lines to match the lines in the pull request.
+## Notify Jenkins from Bitbucket Server
+
+You will need to the **pull request id** for the pull request that was built. 
+
+* You may trigger with a [webhook](https://confluence.atlassian.com/bitbucketserver/managing-webhooks-in-bitbucket-server-938025878.html) in Bitbucket Server. And consume it with [Generic Webhook Trigger plugin](https://github.com/jenkinsci/generic-webhook-trigger-plugin) to get the variables you need.
+
+* Or, trigger with [GitHub Pull Request Builder Plugin](https://wiki.jenkins-ci.org/display/JENKINS/GitHub+pull+request+builder+plugin), it provides the environment variable `ghprbPullId`.
+
+## Merge
+
+**You must perform the merge before build**. If you don't perform the merge, the reported violations will refer to other lines then those in the pull request. The merge can be done with a shell script like this.
 
 ```
-Shell script build step
+echo ---
+echo --- Merging from $FROM in $FROMREPO to $TO in $TOREPO
+echo ---
 git clone $TOREPO
 cd *
 git reset --hard $TO
@@ -76,8 +87,8 @@ git fetch from
 git merge $FROM
 git --no-pager log --max-count=10 --graph --abbrev-commit
 
-your build command here!
-``` 
+Your build command here!
+```
 
 # Screenshots
 
@@ -135,18 +146,10 @@ job('GitHub_PR_Builder') {
     repositoryName("violations-test")
     pullRequestId("\$ghprbPullId")
 
-    useOAuth2Token(false)
+    // Only specify one of these!
     oAuth2Token("")
-
-    useOAuth2TokenCredentialsIdCredentials(true)
     oAuth2TokenCredentialsId("githubtoken")
-
-    useUsernamePasswordCredentials(false)
     usernamePasswordCredentialsId("")
-
-    useUsernamePassword(false)
-    username("")
-    password("")
     
     createSingleFileComments(true)
     createCommentWithAllSingleFileComments(true)
@@ -272,19 +275,11 @@ job('GitHub_PR_Builder Generic') {
     repositoryName("\$PULL_REQUEST_BASE_REPO")
     pullRequestId("\$PULL_REQUEST_ID")
 
-    useOAuth2Token(true)
+    // Only specify one of these!
     oAuth2Token("oh no!")
-
-    useOAuth2TokenCredentials(true)
     oAuth2TokenCredentialsId("githubtoken")
-
-    useUsernamePasswordCredentials(false)
     usernamePasswordCredentialsId("")
 
-    useUsernamePassword(false)
-    username("")
-    password("")
-    
     createSingleFileComments(true)
     createCommentWithAllSingleFileComments(true)
     commentOnlyChangedContent(true)
@@ -336,13 +331,12 @@ node {
     repositoryOwner: 'tomasbjerre', 
     repositoryName: 'violations-test', 
     pullRequestId: '2', 
-    useOAuth2Token: false, 
-    oAuth2Token: '', 
-    useUsernamePassword: true, 
-    username: 'admin', 
-    password: 'admin', 
-    useUsernamePasswordCredentials: false, 
-    usernamePasswordCredentialsId: '',
+
+    // Only specify one of these!
+    oAuth2Token: '',
+    oAuth2TokenCredentialsId: '',
+    usernamePasswordCredentialsId: 'githubtoken',
+
     createCommentWithAllSingleFileComments: true, 
     createSingleFileComments: true, 
     commentOnlyChangedContent: true, 

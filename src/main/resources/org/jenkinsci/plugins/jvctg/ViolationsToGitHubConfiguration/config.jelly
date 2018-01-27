@@ -9,44 +9,43 @@
          xmlns:c="/lib/credentials">
  <f:section title="GitHub Violations Server Defaults">
 
-  <f:entry title="Username/Password Crendential" field="usernamePasswordCredentialsId">
-    <c:select />
-  </f:entry>
+  <f:optionalBlock checked="${!empty instance.usernamePasswordCredentialsId}" title="Specify username/password from credentials" inline="true">
+    <f:entry title="Username / Password Crendential" field="usernamePasswordCredentialsId">
+        <c:select />
+        <f:description>
+            Will default to global config.
+        </f:description>
+    </f:entry>
+  </f:optionalBlock>
 
-  <f:entry title="Username" field="username">
-    <f:textbox value="${config.username}" />
-  </f:entry>
+  <f:optionalBlock checked="${!empty instance.oAuth2TokenCredentialsId}" title="Specify OAuth2 token from credentials" inline="true">
+    <f:entry title="OAuth2 token Crendential" field="oAuth2TokenCredentialsId">
+        <c:select />
+        <f:description>
+            Will default to global config.
+        </f:description>
+    </f:entry>
+  </f:optionalBlock>
 
-  <f:entry title="Password" field="password">
-    <f:password value="${config.password}" />
-  </f:entry>
-
-  <f:entry title="OAuth2 token Crendential" field="oAuth2TokenCredentialsId">
-    <c:select />
-  </f:entry>
-
-  <f:entry title="OAuth2 token" field="oAuth2Token">
-    <f:password value="${config.oAuth2Token}" />
-  </f:entry>
+  <f:optionalBlock checked="${!empty instance.oAuth2Token}" title="Specify OAuth2 token here" inline="true">
+    <f:entry title="OAuth2 token" field="oAuth2Token">
+        <f:textbox />
+        <f:description>
+          Will default to global config.
+        </f:description>
+    </f:entry>
+  </f:optionalBlock>
 
   <f:entry title="Base URL (Default is: https://api.github.com/)" field="gitHubUrl">
-    <f:textbox value="${gitHubUrl}" />
+    <f:textbox />
   </f:entry>
 
   <f:entry title="Repository owner (Like 'a' if repo is: https://github.com/a/b)" field="repositoryOwner">
     <f:textbox />
   </f:entry>
 
-  <f:entry name="minSeverity" title="Comment only if severity at least" field="minSeverity">
-   <j:set var="selectedMinSeverity" value=""/>
-   <j:if test="${instance != null}">
-    <j:set var="selectedMinSeverity" value="${instance.minSeverity}"/>
-   </j:if>
-   <select name="minSeverity">
-    <f:option value="INFO" selected="${selectedMinSeverity == 'INFO'}">INFO</f:option>
-    <f:option value="WARN" selected="${selectedMinSeverity == 'WARN'}">WARN</f:option>
-    <f:option value="ERROR" selected="${selectedMinSeverity == 'ERROR'}">ERROR</f:option>
-   </select>
+  <f:entry title="Comment only if severity at least" field="minSeverity">
+   <f:select />
   </f:entry>
 
  </f:section>

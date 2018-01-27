@@ -1,8 +1,13 @@
 package org.jenkinsci.plugins.jvctg;
 
+import static org.jenkinsci.plugins.jvctg.config.CredentialsHelper.migrateCredentials;
+
 import java.io.Serializable;
 
+import org.apache.commons.lang.StringUtils;
 import org.jenkinsci.plugins.jvctg.config.CredentialsHelper;
+import org.kohsuke.accmod.Restricted;
+import org.kohsuke.accmod.restrictions.NoExternalUse;
 import org.kohsuke.stapler.DataBoundSetter;
 import org.kohsuke.stapler.StaplerRequest;
 
@@ -12,7 +17,6 @@ import jenkins.model.GlobalConfiguration;
 import net.sf.json.JSONObject;
 import se.bjurr.violations.lib.model.SEVERITY;
 
-/** Created by magnayn on 07/04/2016. */
 @Extension
 public class ViolationsToGitHubConfiguration extends GlobalConfiguration implements Serializable {
 
@@ -29,22 +33,31 @@ public class ViolationsToGitHubConfiguration extends GlobalConfiguration impleme
 
   public String gitHubUrl;
   public String oAuth2Token;
-  public String password;
+  @Deprecated public transient String password;
   public String repositoryOwner;
-  public String username;
+  @Deprecated public transient String username;
   private String oAuth2TokenCredentialsId;
   private String usernamePasswordCredentialsId;
-  private SEVERITY minSeverity;
+  private SEVERITY minSeverity = SEVERITY.INFO;
 
   public ViolationsToGitHubConfiguration() {
     load();
   }
 
   @Override
-  public boolean configure(StaplerRequest req, JSONObject json) throws FormException {
+  public boolean configure(final StaplerRequest req, final JSONObject json) throws FormException {
     req.bindJSON(this, json);
     save();
     return true;
+  }
+
+  @Restricted(NoExternalUse.class)
+  public ListBoxModel doFillMinSeverityItems() {
+    final ListBoxModel items = new ListBoxModel();
+    for (final SEVERITY severity : SEVERITY.values()) {
+      items.add(severity.name());
+    }
+    return items;
   }
 
   public ListBoxModel doFillOAuth2TokenCredentialsIdItems() {
@@ -67,16 +80,8 @@ public class ViolationsToGitHubConfiguration extends GlobalConfiguration impleme
     return this.oAuth2TokenCredentialsId;
   }
 
-  public String getPassword() {
-    return this.password;
-  }
-
   public String getRepositoryOwner() {
     return this.repositoryOwner;
-  }
-
-  public String getUsername() {
-    return this.username;
   }
 
   public String getUsernamePasswordCredentialsId() {
@@ -88,43 +93,42 @@ public class ViolationsToGitHubConfiguration extends GlobalConfiguration impleme
   }
 
   @DataBoundSetter
-  public void setMinSeverity(SEVERITY minSeverity) {
+  public void setMinSeverity(final SEVERITY minSeverity) {
     this.minSeverity = minSeverity;
   }
 
   @DataBoundSetter
-  public void setGitHubUrl(String gitHubUrl) {
+  public void setGitHubUrl(final String gitHubUrl) {
     this.gitHubUrl = gitHubUrl;
   }
 
   @DataBoundSetter
-  public void setoAuth2Token(String oAuth2Token) {
+  public void setoAuth2Token(final String oAuth2Token) {
     this.oAuth2Token = oAuth2Token;
   }
 
   @DataBoundSetter
-  public void setoAuth2TokenCredentialsId(String oAuth2TokenCredentialsId) {
+  public void setoAuth2TokenCredentialsId(final String oAuth2TokenCredentialsId) {
     this.oAuth2TokenCredentialsId = oAuth2TokenCredentialsId;
   }
 
   @DataBoundSetter
-  public void setPassword(String password) {
-    this.password = password;
-  }
-
-  @DataBoundSetter
-  public void setRepositoryOwner(String repositoryOwner) {
+  public void setRepositoryOwner(final String repositoryOwner) {
     this.repositoryOwner = repositoryOwner;
   }
 
   @DataBoundSetter
-  public void setUsername(String username) {
-    this.username = username;
+  public void setUsernamePasswordCredentialsId(final String usernamePasswordCredentialsId) {
+    this.usernamePasswordCredentialsId = usernamePasswordCredentialsId;
   }
 
-  @DataBoundSetter
-  public void setUsernamePasswordCredentialsId(String usernamePasswordCredentialsId) {
-    this.usernamePasswordCredentialsId = usernamePasswordCredentialsId;
+  private Object readResolve() {
+    if (StringUtils.isBlank(usernamePasswordCredentialsId)
+        && username != null
+        && password != null) {
+      usernamePasswordCredentialsId = migrateCredentials(username, password);
+    }
+    return this;
   }
 
   @Override
@@ -137,9 +141,7 @@ public class ViolationsToGitHubConfiguration extends GlobalConfiguration impleme
     result =
         prime * result
             + (oAuth2TokenCredentialsId == null ? 0 : oAuth2TokenCredentialsId.hashCode());
-    result = prime * result + (password == null ? 0 : password.hashCode());
     result = prime * result + (repositoryOwner == null ? 0 : repositoryOwner.hashCode());
-    result = prime * result + (username == null ? 0 : username.hashCode());
     result =
         prime * result
             + (usernamePasswordCredentialsId == null
@@ -149,7 +151,7 @@ public class ViolationsToGitHubConfiguration extends GlobalConfiguration impleme
   }
 
   @Override
-  public boolean equals(Object obj) {
+  public boolean equals(final Object obj) {
     if (this == obj) {
       return true;
     }
@@ -159,7 +161,7 @@ public class ViolationsToGitHubConfiguration extends GlobalConfiguration impleme
     if (getClass() != obj.getClass()) {
       return false;
     }
-    ViolationsToGitHubConfiguration other = (ViolationsToGitHubConfiguration) obj;
+    final ViolationsToGitHubConfiguration other = (ViolationsToGitHubConfiguration) obj;
     if (gitHubUrl == null) {
       if (other.gitHubUrl != null) {
         return false;
@@ -184,25 +186,11 @@ public class ViolationsToGitHubConfiguration extends GlobalConfiguration impleme
     } else if (!oAuth2TokenCredentialsId.equals(other.oAuth2TokenCredentialsId)) {
       return false;
     }
-    if (password == null) {
-      if (other.password != null) {
-        return false;
-      }
-    } else if (!password.equals(other.password)) {
-      return false;
-    }
     if (repositoryOwner == null) {
       if (other.repositoryOwner != null) {
         return false;
       }
     } else if (!repositoryOwner.equals(other.repositoryOwner)) {
-      return false;
-    }
-    if (username == null) {
-      if (other.username != null) {
-        return false;
-      }
-    } else if (!username.equals(other.username)) {
       return false;
     }
     if (usernamePasswordCredentialsId == null) {

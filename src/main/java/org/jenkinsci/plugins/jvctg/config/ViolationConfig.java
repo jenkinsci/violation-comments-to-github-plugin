@@ -2,13 +2,21 @@ package org.jenkinsci.plugins.jvctg.config;
 
 import java.io.Serializable;
 
+import javax.annotation.Nonnull;
+
+import org.kohsuke.accmod.Restricted;
+import org.kohsuke.accmod.restrictions.NoExternalUse;
 import org.kohsuke.stapler.DataBoundConstructor;
 
+import hudson.Extension;
+import hudson.model.AbstractDescribableImpl;
+import hudson.model.Descriptor;
+import hudson.util.ListBoxModel;
 import se.bjurr.violations.lib.reports.Parser;
 
-public class ViolationConfig implements Serializable {
-  private static final long serialVersionUID = 9009372864417543781L;
-
+public class ViolationConfig extends AbstractDescribableImpl<ViolationConfig>
+    implements Serializable {
+  private static final long serialVersionUID = 6664329842273455651L;
   private String pattern;
   private String reporter;
   private Parser parser;
@@ -16,10 +24,42 @@ public class ViolationConfig implements Serializable {
   public ViolationConfig() {}
 
   @DataBoundConstructor
-  public ViolationConfig(Parser parser, String reporter, String pattern) {
+  public ViolationConfig(final String reporter, final String pattern, final Parser parser) {
     this.reporter = reporter;
-    this.parser = parser;
     this.pattern = pattern;
+    this.parser = parser;
+  }
+
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final ViolationConfig other = (ViolationConfig) obj;
+    if (parser != other.parser) {
+      return false;
+    }
+    if (pattern == null) {
+      if (other.pattern != null) {
+        return false;
+      }
+    } else if (!pattern.equals(other.pattern)) {
+      return false;
+    }
+    if (reporter == null) {
+      if (other.reporter != null) {
+        return false;
+      }
+    } else if (!reporter.equals(other.reporter)) {
+      return false;
+    }
+    return true;
   }
 
   public String getPattern() {
@@ -33,20 +73,30 @@ public class ViolationConfig implements Serializable {
     return this.reporter;
   }
 
-  public void setPattern(String pattern) {
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + (parser == null ? 0 : parser.hashCode());
+    result = prime * result + (pattern == null ? 0 : pattern.hashCode());
+    result = prime * result + (reporter == null ? 0 : reporter.hashCode());
+    return result;
+  }
+
+  public void setPattern(final String pattern) {
     this.pattern = pattern;
   }
 
-  public void setReporter(String reporter) {
-    this.reporter = reporter;
+  public void setParser(final Parser parser) {
+    this.parser = parser;
   }
 
   public Parser getParser() {
     return parser;
   }
 
-  public void setParser(Parser parser) {
-    this.parser = parser;
+  public void setReporter(final String reporter) {
+    this.reporter = reporter;
   }
 
   @Override
@@ -58,5 +108,23 @@ public class ViolationConfig implements Serializable {
         + ", parser="
         + parser
         + "]";
+  }
+
+  @Extension
+  public static class DescriptorImpl extends Descriptor<ViolationConfig> {
+    @Nonnull
+    @Override
+    public String getDisplayName() {
+      return "Violations Parser Config";
+    }
+
+    @Restricted(NoExternalUse.class)
+    public ListBoxModel doFillParserItems() {
+      final ListBoxModel items = new ListBoxModel();
+      for (final Parser parser : Parser.values()) {
+        items.add(parser.name());
+      }
+      return items;
+    }
   }
 }
