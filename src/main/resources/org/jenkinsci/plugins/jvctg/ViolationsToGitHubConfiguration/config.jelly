@@ -12,18 +12,12 @@
   <f:optionalBlock checked="${!empty instance.usernamePasswordCredentialsId}" title="Specify username/password from credentials" inline="true">
     <f:entry title="Username / Password Crendential" field="usernamePasswordCredentialsId">
         <c:select />
-        <f:description>
-            Will default to global config.
-        </f:description>
     </f:entry>
   </f:optionalBlock>
 
   <f:optionalBlock checked="${!empty instance.oAuth2TokenCredentialsId}" title="Specify OAuth2 token from credentials" inline="true">
     <f:entry title="OAuth2 token Crendential" field="oAuth2TokenCredentialsId">
         <c:select />
-        <f:description>
-            Will default to global config.
-        </f:description>
     </f:entry>
   </f:optionalBlock>
 

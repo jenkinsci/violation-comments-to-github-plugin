@@ -1,6 +1,6 @@
 # Violation Comments to GitHub Jenkins Plugin
 
-[![Build Status](https://jenkins.ci.cloudbees.com/job/plugins/job/violation-comments-to-github-plugin/badge/icon)](https://jenkins.ci.cloudbees.com/job/plugins/job/violation-comments-to-github-plugin/)
+[![Build Status](https://ci.jenkins.io/job/Plugins/job/violation-comments-to-github-plugin/job/master/badge/icon)](https://ci.jenkins.io/job/Plugins/job/violation-comments-to-github-plugin)
 
 This is a Jenkins plugin for [Violation Comments to GitHub Lib](https://github.com/tomasbjerre/violation-comments-to-github-lib). This plugin will find report files from static code analysis and comment GitHub pull requests with the content.
 
@@ -62,11 +62,11 @@ There is also:
 Available in Jenkins [here](https://wiki.jenkins-ci.org/display/JENKINS/Violation+Comments+to+GitHub+Plugin).
 
 
-## Notify Jenkins from Bitbucket Server
+## Notify Jenkins from GitHub
 
 You will need to the **pull request id** for the pull request that was built. 
 
-* You may trigger with a [webhook](https://confluence.atlassian.com/bitbucketserver/managing-webhooks-in-bitbucket-server-938025878.html) in Bitbucket Server. And consume it with [Generic Webhook Trigger plugin](https://github.com/jenkinsci/generic-webhook-trigger-plugin) to get the variables you need.
+* You may trigger with a [webhook](https://developer.github.com/v3/activity/events/types/#pullrequestevent) in GitHub. And consume it with [Generic Webhook Trigger plugin](https://github.com/jenkinsci/generic-webhook-trigger-plugin) to get the variables you need.
 
 * Or, trigger with [GitHub Pull Request Builder Plugin](https://wiki.jenkins-ci.org/display/JENKINS/GitHub+pull+request+builder+plugin), it provides the environment variable `ghprbPullId`.
 

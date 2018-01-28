@@ -1,6 +1,6 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
-## Unreleased
+## 1.55
 ### No issue
 
 **Refactoring**
@@ -8,7 +8,7 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
  * Refactoring jelly templates and code close to that. 
  * Avoiding storing username/password in xml, as part of the job. Forcing credentials. 
 
-[d46681326f2aabe](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/d46681326f2aabe) Tomas Bjerre *2018-01-28 12:45:33*
+[1027e084098bec1](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/1027e084098bec1) Tomas Bjerre *2018-01-28 12:47:29*
 
 
 ## 1.54
