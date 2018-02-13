@@ -1,5 +1,14 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
+## Unreleased
+### No issue
+
+**PCLint**
+
+
+[2698768fc4b20f1](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/2698768fc4b20f1) Tomas Bjerre *2018-02-13 19:29:30*
+
+
 ## 1.55
 ### No issue
 
