@@ -2,12 +2,11 @@ package org.jenkinsci.plugins.jvctg.config;
 
 import java.io.Serializable;
 
-import javax.annotation.Nonnull;
-
 import org.kohsuke.accmod.Restricted;
 import org.kohsuke.accmod.restrictions.NoExternalUse;
 import org.kohsuke.stapler.DataBoundConstructor;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.Extension;
 import hudson.model.AbstractDescribableImpl;
 import hudson.model.Descriptor;
@@ -112,7 +111,7 @@ public class ViolationConfig extends AbstractDescribableImpl<ViolationConfig>
 
   @Extension
   public static class DescriptorImpl extends Descriptor<ViolationConfig> {
-    @Nonnull
+    @NonNull
     @Override
     public String getDisplayName() {
       return "Violations Parser Config";

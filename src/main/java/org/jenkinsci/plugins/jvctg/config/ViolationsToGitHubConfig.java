@@ -7,8 +7,6 @@ import static org.jenkinsci.plugins.jvctg.config.CredentialsHelper.migrateCreden
 import java.io.Serializable;
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
 import org.apache.commons.lang.StringUtils;
 import org.jenkinsci.plugins.jvctg.ViolationsToGitHubConfiguration;
 import org.kohsuke.accmod.Restricted;
@@ -16,6 +14,7 @@ import org.kohsuke.accmod.restrictions.NoExternalUse;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.Extension;
 import hudson.model.AbstractDescribableImpl;
 import hudson.model.Descriptor;
@@ -370,7 +369,7 @@ public class ViolationsToGitHubConfig extends AbstractDescribableImpl<Violations
 
   @Extension
   public static class DescriptorImpl extends Descriptor<ViolationsToGitHubConfig> {
-    @Nonnull
+    @NonNull
     @Override
     public String getDisplayName() {
       return "Violations To GitHub Server Config";
