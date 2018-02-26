@@ -1,95 +1,107 @@
 package org.jenkinsci.plugins.jvctg.config;
 
-import static com.cloudbees.plugins.credentials.CredentialsMatchers.allOf;
-import static com.cloudbees.plugins.credentials.CredentialsMatchers.firstOrNull;
-import static com.cloudbees.plugins.credentials.CredentialsMatchers.withId;
-import static com.cloudbees.plugins.credentials.CredentialsProvider.lookupCredentials;
 import static com.google.common.base.Optional.absent;
 import static com.google.common.base.Optional.fromNullable;
 import static com.google.common.base.Strings.isNullOrEmpty;
-import static hudson.security.ACL.SYSTEM;
 
 import java.util.List;
 
-import org.acegisecurity.Authentication;
 import org.apache.commons.lang.StringUtils;
 import org.jenkinsci.plugins.plaincredentials.StringCredentials;
+import org.jenkinsci.plugins.plaincredentials.impl.StringCredentialsImpl;
 
-import com.cloudbees.plugins.credentials.Credentials;
 import com.cloudbees.plugins.credentials.CredentialsMatchers;
 import com.cloudbees.plugins.credentials.CredentialsProvider;
 import com.cloudbees.plugins.credentials.CredentialsScope;
 import com.cloudbees.plugins.credentials.SystemCredentialsProvider;
-import com.cloudbees.plugins.credentials.common.AbstractIdCredentialsListBoxModel;
+import com.cloudbees.plugins.credentials.common.StandardCredentials;
 import com.cloudbees.plugins.credentials.common.StandardListBoxModel;
-import com.cloudbees.plugins.credentials.common.StandardUsernameCredentials;
-import com.cloudbees.plugins.credentials.common.StandardUsernameListBoxModel;
 import com.cloudbees.plugins.credentials.common.StandardUsernamePasswordCredentials;
 import com.cloudbees.plugins.credentials.domains.DomainRequirement;
+import com.cloudbees.plugins.credentials.domains.URIRequirementBuilder;
 import com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl;
 import com.google.common.base.Optional;
 
-import hudson.model.ItemGroup;
+import hudson.model.Item;
+import hudson.model.Queue;
+import hudson.model.queue.Tasks;
 import hudson.security.ACL;
+import hudson.util.FormValidation;
 import hudson.util.ListBoxModel;
 import hudson.util.Secret;
 import jenkins.model.Jenkins;
 
 public class CredentialsHelper {
 
-  public static ListBoxModel doFillOAuth2TokenCredentialsIdItems() {
-    final List<StringCredentials> credentials = getAllCredentials(StringCredentials.class);
-    final ListBoxModel listBoxModel =
-        new StandardListBoxModel() //
-            .includeEmptyValue() //
-            .withAll(credentials);
-    return listBoxModel;
-  }
-
-  public static ListBoxModel doFillUsernamePasswordCredentialsIdItems() {
-    final List<StandardUsernamePasswordCredentials> credentials =
-        getAllCredentials(StandardUsernamePasswordCredentials.class);
-    final AbstractIdCredentialsListBoxModel<
-            StandardUsernameListBoxModel, StandardUsernameCredentials>
-        listBoxModel = new StandardUsernameListBoxModel().includeEmptyValue();
-    for (final StandardUsernamePasswordCredentials credential : credentials) {
-      listBoxModel.with(credential);
+  public static ListBoxModel doFillCredentialsIdItems(Item item, String credentialsId, String uri) {
+    StandardListBoxModel result = new StandardListBoxModel();
+    if (item == null) {
+      if (!Jenkins.getInstance().hasPermission(Jenkins.ADMINISTER)) {
+        return result.includeCurrentValue(credentialsId);
+      }
+    } else {
+      if (!item.hasPermission(Item.EXTENDED_READ)
+          && !item.hasPermission(CredentialsProvider.USE_ITEM)) {
+        return result.includeCurrentValue(credentialsId);
+      }
     }
-    return listBoxModel;
+    return result //
+        .includeEmptyValue() //
+        .includeMatchingAs(
+            item instanceof Queue.Task ? Tasks.getAuthenticationOf((Queue.Task) item) : ACL.SYSTEM,
+            item,
+            StandardCredentials.class,
+            URIRequirementBuilder.fromUri(uri).build(),
+            CredentialsMatchers.anyOf(
+                CredentialsMatchers.instanceOf(StandardUsernamePasswordCredentials.class),
+                CredentialsMatchers.instanceOf(StringCredentials.class)))
+        .includeCurrentValue(credentialsId);
   }
 
-  public static Optional<StringCredentials> findOAuth2TokenCredentials(
-      final String oAuth2TokenCredentialsId) {
-    if (isNullOrEmpty(oAuth2TokenCredentialsId)) {
+  public static FormValidation doCheckFillCredentialsId(
+      Item item, String credentialsId, String uri) {
+    if (item == null) {
+      if (!Jenkins.getInstance().hasPermission(Jenkins.ADMINISTER)) {
+        return FormValidation.ok();
+      }
+    } else {
+      if (!item.hasPermission(Item.EXTENDED_READ)
+          && !item.hasPermission(CredentialsProvider.USE_ITEM)) {
+        return FormValidation.ok();
+      }
+    }
+    if (isNullOrEmpty(credentialsId)) {
+      return FormValidation.ok();
+    }
+    if (!(findCredentials(item, credentialsId, uri).isPresent())) {
+      return FormValidation.error("Cannot find currently selected credentials");
+    }
+    return FormValidation.ok();
+  }
+
+  public static Optional<StandardCredentials> findCredentials(
+      Item item, String credentialsId, String uri) {
+    if (isNullOrEmpty(credentialsId)) {
       return absent();
     }
-
     return fromNullable(
-        firstOrNull(
-            getAllCredentials(StringCredentials.class), allOf(withId(oAuth2TokenCredentialsId))));
+        CredentialsMatchers.firstOrNull(
+            CredentialsProvider.lookupCredentials(
+                StandardCredentials.class,
+                item,
+                item instanceof Queue.Task
+                    ? Tasks.getAuthenticationOf((Queue.Task) item)
+                    : ACL.SYSTEM,
+                URIRequirementBuilder.fromUri(uri).build()),
+            CredentialsMatchers.allOf(
+                CredentialsMatchers.withId(credentialsId),
+                CredentialsMatchers.anyOf(
+                    CredentialsMatchers.instanceOf(StandardUsernamePasswordCredentials.class),
+                    CredentialsMatchers.instanceOf(StringCredentials.class)))));
   }
 
-  public static Optional<StandardUsernamePasswordCredentials> findUsernamePasswordCredentials(
-      final String usernamePasswordCredentialsId) {
-    if (isNullOrEmpty(usernamePasswordCredentialsId)) {
-      return absent();
-    }
-
-    return fromNullable(
-        firstOrNull(
-            getAllCredentials(StandardUsernamePasswordCredentials.class),
-            allOf(withId(usernamePasswordCredentialsId))));
-  }
-
-  private static <C extends Credentials> List<C> getAllCredentials(final Class<C> type) {
-    final ItemGroup<?> itemGroup = null;
-    final Authentication authentication = SYSTEM;
-    final DomainRequirement domainRequirement = null;
-
-    return lookupCredentials(type, itemGroup, authentication, domainRequirement);
-  }
-
-  public static String migrateCredentials(final String username, final String password) {
+  public static String migrateUsernamePasswordCredentials(
+      final String username, final String password) {
     String credentialsId = null;
     final DomainRequirement domainRequirement = null;
     final List<StandardUsernamePasswordCredentials> credentials =
@@ -120,10 +132,24 @@ public class CredentialsHelper {
       SystemCredentialsProvider.getInstance().getCredentials().add(newCredentials);
       credentialsId = newCredentials.getId();
     }
-    if (StringUtils.isNotEmpty(credentialsId)) {
-      return credentialsId;
-    } else {
-      return null;
+    return credentialsId;
+  }
+
+  public static String checkCredentials(
+      String credentialsId,
+      String oAuth2TokenCredentialsId,
+      String usernamePasswordCredentialsId,
+      String username,
+      String password) {
+    if (StringUtils.isBlank(credentialsId)) {
+      if (oAuth2TokenCredentialsId != null) {
+        credentialsId = oAuth2TokenCredentialsId;
+      } else if (usernamePasswordCredentialsId != null) {
+        credentialsId = usernamePasswordCredentialsId;
+      } else if (username != null && password != null) {
+        credentialsId = migrateUsernamePasswordCredentials(username, password);
+      }
     }
+    return credentialsId;
   }
 }

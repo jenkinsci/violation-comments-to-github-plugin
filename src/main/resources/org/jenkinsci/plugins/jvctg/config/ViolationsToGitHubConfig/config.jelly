@@ -8,30 +8,17 @@
          xmlns:t="/lib/hudson"
          xmlns:c="/lib/credentials">
 
-  <f:optionalBlock checked="${!empty instance.usernamePasswordCredentialsId}" title="${usernamePasswordCredentialsId}Specify username/password from credentials" inline="true">
-    <f:entry title="Username / Password Crendential" field="usernamePasswordCredentialsId">
-        <c:select />
-        <f:description>
-            Will default to global config.
-        </f:description>
-    </f:entry>
-  </f:optionalBlock>
-
-  <f:optionalBlock checked="${!empty instance.oAuth2TokenCredentialsId}" title="Specify OAuth2 token from credentials" inline="true">
-    <f:entry title="OAuth2 token Crendential" field="oAuth2TokenCredentialsId">
-        <c:select />
-        <f:description>
-            Will default to global config.
-        </f:description>
+  <f:optionalBlock checked="${!empty instance.credentialsId}" title="Specify credentials" inline="true">
+    <f:entry title="Credentials" field="credentialsId" description="Will default to global config."
+             help="/plugin/violation-comments-to-github/help/credentials.html">
+      <c:select />
     </f:entry>
   </f:optionalBlock>
 
   <f:optionalBlock checked="${!empty instance.oAuth2Token}" title="Specify OAuth2 token here" inline="true">
-    <f:entry title="OAuth2 token" field="oAuth2Token">
-        <f:textbox />
-        <f:description>
-          Will default to global config.
-        </f:description>
+    <f:entry title="OAuth2 token" field="oAuth2Token" description="Will default to global config."
+             help="/plugin/violation-comments-to-github/help/oauth.html">
+      <f:textbox />
     </f:entry>
   </f:optionalBlock>
 

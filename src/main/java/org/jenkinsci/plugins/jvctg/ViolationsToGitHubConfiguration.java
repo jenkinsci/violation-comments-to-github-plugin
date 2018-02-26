@@ -1,17 +1,18 @@
 package org.jenkinsci.plugins.jvctg;
 
-import static org.jenkinsci.plugins.jvctg.config.CredentialsHelper.migrateCredentials;
-
 import java.io.Serializable;
 
-import org.apache.commons.lang.StringUtils;
 import org.jenkinsci.plugins.jvctg.config.CredentialsHelper;
 import org.kohsuke.accmod.Restricted;
 import org.kohsuke.accmod.restrictions.NoExternalUse;
+import org.kohsuke.stapler.AncestorInPath;
 import org.kohsuke.stapler.DataBoundSetter;
+import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.StaplerRequest;
 
 import hudson.Extension;
+import hudson.model.Item;
+import hudson.util.FormValidation;
 import hudson.util.ListBoxModel;
 import jenkins.model.GlobalConfiguration;
 import net.sf.json.JSONObject;
@@ -31,13 +32,14 @@ public class ViolationsToGitHubConfiguration extends GlobalConfiguration impleme
     return GlobalConfiguration.all().get(ViolationsToGitHubConfiguration.class);
   }
 
-  public String gitHubUrl;
-  public String oAuth2Token;
-  @Deprecated public transient String password;
-  public String repositoryOwner;
-  @Deprecated public transient String username;
-  private String oAuth2TokenCredentialsId;
-  private String usernamePasswordCredentialsId;
+  private String gitHubUrl;
+  private String oAuth2Token;
+  private String credentialsId;
+  private String repositoryOwner;
+  @Deprecated private transient String username;
+  @Deprecated private transient String password;
+  @Deprecated private transient String oAuth2TokenCredentialsId;
+  @Deprecated private transient String usernamePasswordCredentialsId;
   private SEVERITY minSeverity = SEVERITY.INFO;
 
   public ViolationsToGitHubConfiguration() {
@@ -60,12 +62,18 @@ public class ViolationsToGitHubConfiguration extends GlobalConfiguration impleme
     return items;
   }
 
-  public ListBoxModel doFillOAuth2TokenCredentialsIdItems() {
-    return CredentialsHelper.doFillOAuth2TokenCredentialsIdItems();
+  @SuppressWarnings("unused") // Used by stapler
+  public ListBoxModel doFillCredentialsIdItems(
+      @AncestorInPath Item item,
+      @QueryParameter String credentialsId,
+      @QueryParameter String gitHubUrl) {
+    return CredentialsHelper.doFillCredentialsIdItems(item, credentialsId, gitHubUrl);
   }
 
-  public ListBoxModel doFillUsernamePasswordCredentialsIdItems() {
-    return CredentialsHelper.doFillUsernamePasswordCredentialsIdItems();
+  @SuppressWarnings("unused") // Used by stapler
+  public FormValidation doCheckCredentialsId(
+      @AncestorInPath Item item, @QueryParameter String value, @QueryParameter String gitHubUrl) {
+    return CredentialsHelper.doCheckFillCredentialsId(item, value, gitHubUrl);
   }
 
   public String getGitHubUrl() {
@@ -76,16 +84,12 @@ public class ViolationsToGitHubConfiguration extends GlobalConfiguration impleme
     return this.oAuth2Token;
   }
 
-  public String getOAuth2TokenCredentialsId() {
-    return this.oAuth2TokenCredentialsId;
-  }
-
   public String getRepositoryOwner() {
     return this.repositoryOwner;
   }
 
-  public String getUsernamePasswordCredentialsId() {
-    return this.usernamePasswordCredentialsId;
+  public String getCredentialsId() {
+    return this.credentialsId;
   }
 
   public SEVERITY getMinSeverity() {
@@ -108,26 +112,23 @@ public class ViolationsToGitHubConfiguration extends GlobalConfiguration impleme
   }
 
   @DataBoundSetter
-  public void setoAuth2TokenCredentialsId(final String oAuth2TokenCredentialsId) {
-    this.oAuth2TokenCredentialsId = oAuth2TokenCredentialsId;
-  }
-
-  @DataBoundSetter
   public void setRepositoryOwner(final String repositoryOwner) {
     this.repositoryOwner = repositoryOwner;
   }
 
   @DataBoundSetter
-  public void setUsernamePasswordCredentialsId(final String usernamePasswordCredentialsId) {
-    this.usernamePasswordCredentialsId = usernamePasswordCredentialsId;
+  public void setCredentialsId(final String credentialsId) {
+    this.credentialsId = credentialsId;
   }
 
   private Object readResolve() {
-    if (StringUtils.isBlank(usernamePasswordCredentialsId)
-        && username != null
-        && password != null) {
-      usernamePasswordCredentialsId = migrateCredentials(username, password);
-    }
+    credentialsId =
+        CredentialsHelper.checkCredentials(
+            credentialsId,
+            oAuth2TokenCredentialsId,
+            usernamePasswordCredentialsId,
+            username,
+            password);
     return this;
   }
 
@@ -138,15 +139,8 @@ public class ViolationsToGitHubConfiguration extends GlobalConfiguration impleme
     result = prime * result + (gitHubUrl == null ? 0 : gitHubUrl.hashCode());
     result = prime * result + (minSeverity == null ? 0 : minSeverity.hashCode());
     result = prime * result + (oAuth2Token == null ? 0 : oAuth2Token.hashCode());
-    result =
-        prime * result
-            + (oAuth2TokenCredentialsId == null ? 0 : oAuth2TokenCredentialsId.hashCode());
     result = prime * result + (repositoryOwner == null ? 0 : repositoryOwner.hashCode());
-    result =
-        prime * result
-            + (usernamePasswordCredentialsId == null
-                ? 0
-                : usernamePasswordCredentialsId.hashCode());
+    result = prime * result + (credentialsId == null ? 0 : credentialsId.hashCode());
     return result;
   }
 
@@ -179,13 +173,6 @@ public class ViolationsToGitHubConfiguration extends GlobalConfiguration impleme
     } else if (!oAuth2Token.equals(other.oAuth2Token)) {
       return false;
     }
-    if (oAuth2TokenCredentialsId == null) {
-      if (other.oAuth2TokenCredentialsId != null) {
-        return false;
-      }
-    } else if (!oAuth2TokenCredentialsId.equals(other.oAuth2TokenCredentialsId)) {
-      return false;
-    }
     if (repositoryOwner == null) {
       if (other.repositoryOwner != null) {
         return false;
@@ -193,11 +180,11 @@ public class ViolationsToGitHubConfiguration extends GlobalConfiguration impleme
     } else if (!repositoryOwner.equals(other.repositoryOwner)) {
       return false;
     }
-    if (usernamePasswordCredentialsId == null) {
-      if (other.usernamePasswordCredentialsId != null) {
+    if (credentialsId == null) {
+      if (other.credentialsId != null) {
         return false;
       }
-    } else if (!usernamePasswordCredentialsId.equals(other.usernamePasswordCredentialsId)) {
+    } else if (!credentialsId.equals(other.credentialsId)) {
       return false;
     }
     return true;
@@ -209,16 +196,10 @@ public class ViolationsToGitHubConfiguration extends GlobalConfiguration impleme
         + gitHubUrl
         + ", oAuth2Token="
         + oAuth2Token
-        + ", password="
-        + password
         + ", repositoryOwner="
         + repositoryOwner
-        + ", username="
-        + username
-        + ", oAuth2TokenCredentialsId="
-        + oAuth2TokenCredentialsId
-        + ", usernamePasswordCredentialsId="
-        + usernamePasswordCredentialsId
+        + ", credentialsId="
+        + credentialsId
         + ", minSeverity="
         + minSeverity
         + "]";
