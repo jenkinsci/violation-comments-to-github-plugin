@@ -5,11 +5,11 @@ import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.google.common.base.Throwables.propagate;
 import static com.google.common.collect.Lists.newArrayList;
 import static java.util.logging.Level.SEVERE;
-import static org.jenkinsci.plugins.jvctg.config.CredentialsHelper.findOAuth2TokenCredentials;
-import static org.jenkinsci.plugins.jvctg.config.CredentialsHelper.findUsernamePasswordCredentials;
+import static org.jenkinsci.plugins.jvctg.config.CredentialsHelper.findCredentials;
 import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.FIELD_COMMENTONLYCHANGEDCONTENT;
 import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.FIELD_CREATECOMMENTWITHALLSINGLEFILECOMMENTS;
 import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.FIELD_CREATESINGLEFILECOMMENTS;
+import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.FIELD_CREDENTIALSID;
 import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.FIELD_GITHUBURL;
 import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.FIELD_KEEP_OLD_COMMENTS;
 import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.FIELD_MINSEVERITY;
@@ -17,8 +17,6 @@ import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.
 import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.FIELD_PULLREQUESTID;
 import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.FIELD_REPOSITORYNAME;
 import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.FIELD_REPOSITORYOWNER;
-import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.FIELD_USEOAUTH2TOKENCREDENTIALS;
-import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.FIELD_USERNAMEPASSWORDCREDENTIALSID;
 import static se.bjurr.violations.comments.github.lib.ViolationCommentsToGitHubApi.violationCommentsToGitHubApi;
 import static se.bjurr.violations.lib.ViolationsApi.violationsApi;
 import static se.bjurr.violations.lib.parsers.FindbugsParser.setFindbugsMessagesXml;
@@ -38,6 +36,7 @@ import org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfig;
 import org.jenkinsci.plugins.plaincredentials.StringCredentials;
 import org.jenkinsci.remoting.RoleChecker;
 
+import com.cloudbees.plugins.credentials.common.StandardCredentials;
 import com.cloudbees.plugins.credentials.common.StandardUsernamePasswordCredentials;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Optional;
@@ -49,6 +48,8 @@ import hudson.FilePath.FileCallable;
 import hudson.model.Run;
 import hudson.model.TaskListener;
 import hudson.remoting.VirtualChannel;
+import hudson.util.Secret;
+import se.bjurr.violations.comments.github.lib.ViolationCommentsToGitHubApi;
 import se.bjurr.violations.lib.model.SEVERITY;
 import se.bjurr.violations.lib.model.Violation;
 import se.bjurr.violations.lib.reports.Parser;
@@ -61,8 +62,7 @@ public class JvctgPerformer {
   public static void doPerform(
       final ViolationsToGitHubConfig config,
       final File workspace,
-      final Optional<StandardUsernamePasswordCredentials> usernameCredentials,
-      final Optional<StringCredentials> oauth2Credentials,
+      final StandardCredentials credentials,
       final TaskListener listener)
       throws MalformedURLException {
     if (isNullOrEmpty(config.getPullRequestId())) {
@@ -95,24 +95,6 @@ public class JvctgPerformer {
       }
     }
 
-    String username = null;
-    String password = null;
-    String oAuth2Token = config.getOAuth2Token();
-    if (isNullOrEmpty(oAuth2Token) && oauth2Credentials.isPresent()) {
-      oAuth2Token = oauth2Credentials.get().getSecret().getPlainText();
-    } else if (isNullOrEmpty(oAuth2Token) && usernameCredentials.isPresent()) {
-      username = usernameCredentials.get().getUsername();
-      password = usernameCredentials.get().getPassword().getPlainText();
-    }
-
-    if (!isNullOrEmpty(oAuth2Token)) {
-      listener.getLogger().println("Using OAuth2Token");
-    } else if (!isNullOrEmpty(username) && !isNullOrEmpty(password)) {
-      listener.getLogger().println("Using username / password");
-    } else {
-      throw new IllegalStateException("No credentials found!");
-    }
-
     listener
         .getLogger()
         .println(
@@ -125,10 +107,23 @@ public class JvctgPerformer {
                 + (isNullOrEmpty(config.getGitHubUrl()) ? "" : " on " + config.getGitHubUrl()));
 
     try {
-      violationCommentsToGitHubApi() //
-          .withoAuth2Token(oAuth2Token) //
-          .withUsername(username) //
-          .withPassword(password) //
+      final ViolationCommentsToGitHubApi g = violationCommentsToGitHubApi();
+
+      if (!isNullOrEmpty(config.getoAuth2Token())) {
+        g //
+            .withoAuth2Token(config.getoAuth2Token());
+      } else if (credentials instanceof StringCredentials) {
+        StringCredentials token = (StringCredentials) credentials;
+        g //
+            .withoAuth2Token(Secret.toString(token.getSecret()));
+      } else if (credentials instanceof StandardUsernamePasswordCredentials) {
+        StandardUsernamePasswordCredentials usernamePassword =
+            (StandardUsernamePasswordCredentials) credentials;
+        g //
+            .withUsername(usernamePassword.getUsername()) //
+            .withPassword(Secret.toString(usernamePassword.getPassword()));
+      }
+      g //
           .withGitHubUrl(config.getGitHubUrl()) //
           .withPullRequestId(pullRequestIdInt) //
           .withRepositoryName(config.getRepositoryName()) //
@@ -165,10 +160,8 @@ public class JvctgPerformer {
 
     expanded.setMinSeverity(config.getMinSeverity());
 
-    expanded.setUsernamePasswordCredentialsId(config.getUsernamePasswordCredentialsId());
-
-    expanded.setoAuth2Token(environment.expand(config.getOAuth2Token()));
-    expanded.setoAuth2TokenCredentialsId(config.getOAuth2TokenCredentialsId());
+    expanded.setCredentialsId(config.getCredentialsId());
+    expanded.setoAuth2Token(environment.expand(config.getoAuth2Token()));
     expanded.setKeepOldComments(config.isKeepOldComments());
     for (final ViolationConfig violationConfig : config.getViolationConfigs()) {
       final String pattern = environment.expand(violationConfig.getPattern());
@@ -192,21 +185,34 @@ public class JvctgPerformer {
       final FilePath fp,
       final Run<?, ?> build,
       final TaskListener listener) {
+    final PrintStream logger = listener.getLogger();
     try {
       final EnvVars env = build.getEnvironment(listener);
       final ViolationsToGitHubConfig configExpanded = expand(configUnexpanded, env);
-      listener.getLogger().println("---");
-      listener.getLogger().println("--- Jenkins Violation Comments to GitHub ---");
-      listener.getLogger().println("---");
+      logger.println("---");
+      logger.println("--- Jenkins Violation Comments to GitHub ---");
+      logger.println("---");
       logConfiguration(configExpanded, build, listener);
 
-      final Optional<StandardUsernamePasswordCredentials> usernameCredentials =
-          findUsernamePasswordCredentials(configExpanded.getUsernamePasswordCredentialsId());
-      final Optional<StringCredentials> oauth2Credentials =
-          findOAuth2TokenCredentials(configExpanded.getOAuth2TokenCredentialsId());
+      final Optional<StandardCredentials> credentials =
+          findCredentials(
+              build.getParent(), configExpanded.getCredentialsId(), configExpanded.getGitHubUrl());
 
-      listener.getLogger().println("Running Jenkins Violation Comments To GitHub");
-      listener.getLogger().println("PR " + configExpanded.getPullRequestId());
+      if (!isNullOrEmpty(configExpanded.getoAuth2Token())) {
+        logger.println("Using OAuth2Token");
+      } else if (credentials.isPresent()) {
+        StandardCredentials standardCredentials = credentials.get();
+        if (standardCredentials instanceof StandardUsernamePasswordCredentials) {
+          logger.println("Using username / password");
+        } else if (standardCredentials instanceof StringCredentials) {
+          logger.println("Using OAuth2Token credential style");
+        }
+      } else {
+        throw new IllegalStateException("No credentials found!");
+      }
+
+      logger.println("Running Jenkins Violation Comments To GitHub");
+      logger.println("PR " + configExpanded.getPullRequestId());
 
       fp.act(
           new FileCallable<Void>() {
@@ -220,9 +226,8 @@ public class JvctgPerformer {
             public Void invoke(final File workspace, final VirtualChannel channel)
                 throws IOException, InterruptedException {
               setupFindBugsMessages();
-              listener.getLogger().println("Workspace: " + workspace.getAbsolutePath());
-              doPerform(
-                  configExpanded, workspace, usernameCredentials, oauth2Credentials, listener);
+              logger.println("Workspace: " + workspace.getAbsolutePath());
+              doPerform(configExpanded, workspace, credentials.orNull(), listener);
               return null;
             }
           });
@@ -230,7 +235,7 @@ public class JvctgPerformer {
       Logger.getLogger(JvctgPerformer.class.getName()).log(SEVERE, "", e);
       final StringWriter sw = new StringWriter();
       e.printStackTrace(new PrintWriter(sw));
-      listener.getLogger().println(sw.toString());
+      logger.println(sw.toString());
       return;
     }
   }
@@ -243,15 +248,8 @@ public class JvctgPerformer {
     logger.println(FIELD_REPOSITORYNAME + ": " + config.getRepositoryName());
     logger.println(FIELD_PULLREQUESTID + ": " + config.getPullRequestId());
 
-    logger.println(
-        FIELD_USERNAMEPASSWORDCREDENTIALSID
-            + ": "
-            + !isNullOrEmpty(config.getUsernamePasswordCredentialsId()));
-    logger.println(
-        FIELD_USEOAUTH2TOKENCREDENTIALS
-            + ": "
-            + !isNullOrEmpty(config.getOAuth2TokenCredentialsId()));
-    logger.println(FIELD_OAUTH2TOKEN + ": " + !isNullOrEmpty(config.getOAuth2Token()));
+    logger.println(FIELD_CREDENTIALSID + ": " + !isNullOrEmpty(config.getCredentialsId()));
+    logger.println(FIELD_OAUTH2TOKEN + ": " + !isNullOrEmpty(config.getoAuth2Token()));
 
     logger.println(FIELD_CREATESINGLEFILECOMMENTS + ": " + config.getCreateSingleFileComments());
     logger.println(

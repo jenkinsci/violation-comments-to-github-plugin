@@ -2,23 +2,24 @@ package org.jenkinsci.plugins.jvctg.config;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.google.common.collect.Lists.newArrayList;
-import static org.jenkinsci.plugins.jvctg.config.CredentialsHelper.migrateCredentials;
 
 import java.io.Serializable;
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
-import org.apache.commons.lang.StringUtils;
 import org.jenkinsci.plugins.jvctg.ViolationsToGitHubConfiguration;
 import org.kohsuke.accmod.Restricted;
 import org.kohsuke.accmod.restrictions.NoExternalUse;
+import org.kohsuke.stapler.AncestorInPath;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
+import org.kohsuke.stapler.QueryParameter;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.Extension;
 import hudson.model.AbstractDescribableImpl;
 import hudson.model.Descriptor;
+import hudson.model.Item;
+import hudson.util.FormValidation;
 import hudson.util.ListBoxModel;
 import se.bjurr.violations.lib.model.SEVERITY;
 
@@ -31,15 +32,16 @@ public class ViolationsToGitHubConfig extends AbstractDescribableImpl<Violations
   private boolean createSingleFileComments;
   private String gitHubUrl;
   private String oAuth2Token;
-  private String oAuth2TokenCredentialsId;
-  @Deprecated private transient String password;
   private String pullRequestId;
   private String repositoryName;
   private String repositoryOwner;
-  @Deprecated private transient String username;
-  private String usernamePasswordCredentialsId;
+  private String credentialsId;
   private List<ViolationConfig> violationConfigs = newArrayList();
   private SEVERITY minSeverity;
+  @Deprecated private transient String username;
+  @Deprecated private transient String password;
+  @Deprecated private transient String usernamePasswordCredentialsId;
+  @Deprecated private transient String oAuth2TokenCredentialsId;
 
   private boolean keepOldComments;
 
@@ -67,8 +69,7 @@ public class ViolationsToGitHubConfig extends AbstractDescribableImpl<Violations
     this.pullRequestId = rhs.pullRequestId;
     this.gitHubUrl = rhs.gitHubUrl;
     this.commentOnlyChangedContent = rhs.commentOnlyChangedContent;
-    this.usernamePasswordCredentialsId = rhs.usernamePasswordCredentialsId;
-    this.oAuth2TokenCredentialsId = rhs.oAuth2TokenCredentialsId;
+    this.credentialsId = rhs.credentialsId;
     this.minSeverity = rhs.minSeverity;
     this.keepOldComments = rhs.keepOldComments;
   }
@@ -78,12 +79,8 @@ public class ViolationsToGitHubConfig extends AbstractDescribableImpl<Violations
       this.gitHubUrl = defaults.getGitHubUrl();
     }
 
-    if (isNullOrEmpty(this.usernamePasswordCredentialsId)) {
-      this.usernamePasswordCredentialsId = defaults.getUsernamePasswordCredentialsId();
-    }
-
-    if (isNullOrEmpty(this.oAuth2TokenCredentialsId)) {
-      this.oAuth2TokenCredentialsId = defaults.getOAuth2TokenCredentialsId();
+    if (isNullOrEmpty(this.credentialsId)) {
+      this.credentialsId = defaults.getCredentialsId();
     }
 
     if (isNullOrEmpty(this.oAuth2Token)) {
@@ -118,14 +115,6 @@ public class ViolationsToGitHubConfig extends AbstractDescribableImpl<Violations
     return this.oAuth2Token;
   }
 
-  public String getOAuth2Token() {
-    return this.oAuth2Token;
-  }
-
-  public String getOAuth2TokenCredentialsId() {
-    return this.oAuth2TokenCredentialsId;
-  }
-
   public String getPullRequestId() {
     return this.pullRequestId;
   }
@@ -138,8 +127,8 @@ public class ViolationsToGitHubConfig extends AbstractDescribableImpl<Violations
     return this.repositoryOwner;
   }
 
-  public String getUsernamePasswordCredentialsId() {
-    return this.usernamePasswordCredentialsId;
+  public String getCredentialsId() {
+    return this.credentialsId;
   }
 
   public SEVERITY getMinSeverity() {
@@ -180,11 +169,6 @@ public class ViolationsToGitHubConfig extends AbstractDescribableImpl<Violations
     this.oAuth2Token = oAuth2Token;
   }
 
-  @DataBoundSetter
-  public void setoAuth2TokenCredentialsId(final String oAuth2TokenCredentialsId) {
-    this.oAuth2TokenCredentialsId = oAuth2TokenCredentialsId;
-  }
-
   public void setPullRequestId(final String string) {
     this.pullRequestId = string;
   }
@@ -198,8 +182,8 @@ public class ViolationsToGitHubConfig extends AbstractDescribableImpl<Violations
   }
 
   @DataBoundSetter
-  public void setUsernamePasswordCredentialsId(final String usernamePasswordCredentialsId) {
-    this.usernamePasswordCredentialsId = usernamePasswordCredentialsId;
+  public void setCredentialsId(final String credentialsId) {
+    this.credentialsId = credentialsId;
   }
 
   @DataBoundSetter
@@ -208,11 +192,13 @@ public class ViolationsToGitHubConfig extends AbstractDescribableImpl<Violations
   }
 
   private Object readResolve() {
-    if (StringUtils.isBlank(usernamePasswordCredentialsId)
-        && username != null
-        && password != null) {
-      usernamePasswordCredentialsId = migrateCredentials(username, password);
-    }
+    credentialsId =
+        CredentialsHelper.checkCredentials(
+            credentialsId,
+            oAuth2TokenCredentialsId,
+            usernamePasswordCredentialsId,
+            username,
+            password);
     return this;
   }
 
@@ -228,16 +214,14 @@ public class ViolationsToGitHubConfig extends AbstractDescribableImpl<Violations
         + gitHubUrl
         + ", oAuth2Token="
         + oAuth2Token
-        + ", oAuth2TokenCredentialsId="
-        + oAuth2TokenCredentialsId
         + ", pullRequestId="
         + pullRequestId
         + ", repositoryName="
         + repositoryName
         + ", repositoryOwner="
         + repositoryOwner
-        + ", usernamePasswordCredentialsId="
-        + usernamePasswordCredentialsId
+        + ", credentialsId="
+        + credentialsId
         + ", violationConfigs="
         + violationConfigs
         + ", minSeverity="
@@ -258,17 +242,10 @@ public class ViolationsToGitHubConfig extends AbstractDescribableImpl<Violations
     result = prime * result + (keepOldComments ? 1231 : 1237);
     result = prime * result + (minSeverity == null ? 0 : minSeverity.hashCode());
     result = prime * result + (oAuth2Token == null ? 0 : oAuth2Token.hashCode());
-    result =
-        prime * result
-            + (oAuth2TokenCredentialsId == null ? 0 : oAuth2TokenCredentialsId.hashCode());
     result = prime * result + (pullRequestId == null ? 0 : pullRequestId.hashCode());
     result = prime * result + (repositoryName == null ? 0 : repositoryName.hashCode());
     result = prime * result + (repositoryOwner == null ? 0 : repositoryOwner.hashCode());
-    result =
-        prime * result
-            + (usernamePasswordCredentialsId == null
-                ? 0
-                : usernamePasswordCredentialsId.hashCode());
+    result = prime * result + (credentialsId == null ? 0 : credentialsId.hashCode());
     result = prime * result + (violationConfigs == null ? 0 : violationConfigs.hashCode());
     return result;
   }
@@ -314,13 +291,6 @@ public class ViolationsToGitHubConfig extends AbstractDescribableImpl<Violations
     } else if (!oAuth2Token.equals(other.oAuth2Token)) {
       return false;
     }
-    if (oAuth2TokenCredentialsId == null) {
-      if (other.oAuth2TokenCredentialsId != null) {
-        return false;
-      }
-    } else if (!oAuth2TokenCredentialsId.equals(other.oAuth2TokenCredentialsId)) {
-      return false;
-    }
     if (pullRequestId == null) {
       if (other.pullRequestId != null) {
         return false;
@@ -342,11 +312,11 @@ public class ViolationsToGitHubConfig extends AbstractDescribableImpl<Violations
     } else if (!repositoryOwner.equals(other.repositoryOwner)) {
       return false;
     }
-    if (usernamePasswordCredentialsId == null) {
-      if (other.usernamePasswordCredentialsId != null) {
+    if (credentialsId == null) {
+      if (other.credentialsId != null) {
         return false;
       }
-    } else if (!usernamePasswordCredentialsId.equals(other.usernamePasswordCredentialsId)) {
+    } else if (!credentialsId.equals(other.credentialsId)) {
       return false;
     }
     if (violationConfigs == null) {
@@ -370,7 +340,7 @@ public class ViolationsToGitHubConfig extends AbstractDescribableImpl<Violations
 
   @Extension
   public static class DescriptorImpl extends Descriptor<ViolationsToGitHubConfig> {
-    @Nonnull
+    @NonNull
     @Override
     public String getDisplayName() {
       return "Violations To GitHub Server Config";
@@ -386,12 +356,18 @@ public class ViolationsToGitHubConfig extends AbstractDescribableImpl<Violations
       return items;
     }
 
-    public ListBoxModel doFillUsernamePasswordCredentialsIdItems() {
-      return CredentialsHelper.doFillUsernamePasswordCredentialsIdItems();
+    @SuppressWarnings("unused") // Used by stapler
+    public ListBoxModel doFillCredentialsIdItems(
+        @AncestorInPath Item item,
+        @QueryParameter String credentialsId,
+        @QueryParameter String gitHubUrl) {
+      return CredentialsHelper.doFillCredentialsIdItems(item, credentialsId, gitHubUrl);
     }
 
-    public ListBoxModel doFillOAuth2TokenCredentialsIdItems() {
-      return CredentialsHelper.doFillOAuth2TokenCredentialsIdItems();
+    @SuppressWarnings("unused") // Used by stapler
+    public FormValidation doCheckCredentialsId(
+        @AncestorInPath Item item, @QueryParameter String value, @QueryParameter String gitHubUrl) {
+      return CredentialsHelper.doCheckFillCredentialsId(item, value, gitHubUrl);
     }
   }
 }
