@@ -149,8 +149,7 @@ job('GitHub_PR_Builder') {
 
     // Only specify one of these!
     oAuth2Token("")
-    oAuth2TokenCredentialsId("githubtoken")
-    usernamePasswordCredentialsId("")
+    credentialsId("githubtoken")
     
     createSingleFileComments(true)
     createCommentWithAllSingleFileComments(true)
@@ -278,8 +277,7 @@ job('GitHub_PR_Builder Generic') {
 
     // Only specify one of these!
     oAuth2Token("oh no!")
-    oAuth2TokenCredentialsId("githubtoken")
-    usernamePasswordCredentialsId("")
+    credentialsId("githubtoken")
 
     createSingleFileComments(true)
     createCommentWithAllSingleFileComments(true)
@@ -335,8 +333,7 @@ node {
 
     // Only specify one of these!
     oAuth2Token: '',
-    oAuth2TokenCredentialsId: '',
-    usernamePasswordCredentialsId: 'githubtoken',
+    credentialsId: '',
 
     createCommentWithAllSingleFileComments: true, 
     createSingleFileComments: true, 

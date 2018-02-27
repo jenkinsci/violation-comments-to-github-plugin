@@ -1,6 +1,6 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
-## Unreleased
+## 1.58
 ### GitHub [#19](https://github.com/jenkinsci/violation-comments-to-github-plugin/issues/19) Jenkins Config - Unable to choose credential from non-default credential store - CredentialsHelper.java
 
 **combined credentials and provide item context which fixes #19**
@@ -10,6 +10,11 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 
 
 ### No issue
+
+**Updating doc on credentials**
+
+
+[aab7ec2890f2b3b](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/aab7ec2890f2b3b) Tomas Bjerre *2018-02-27 16:18:29*
 
 **ignore .idea**
 
