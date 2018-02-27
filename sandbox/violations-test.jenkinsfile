@@ -23,13 +23,10 @@ node {
     repositoryOwner: 'tomasbjerre', 
     repositoryName: 'violations-test', 
     pullRequestId: '2', 
-    useOAuth2Token: true, 
+
     oAuth2Token: 'asdasdasd', 
-    useUsernamePassword: false, 
-    username: 'admin', 
-    password: 'admin', 
-    useUsernamePasswordCredentials: false, 
-    usernamePasswordCredentialsId: '',
+    credentialsId: 'githubtoken',
+
     createCommentWithAllSingleFileComments: true, 
     createSingleFileComments: true, 
     commentOnlyChangedContent: true, 

@@ -1,6 +1,47 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
 ## Unreleased
+### GitHub [#19](https://github.com/jenkinsci/violation-comments-to-github-plugin/issues/19) Jenkins Config - Unable to choose credential from non-default credential store - CredentialsHelper.java
+
+**combined credentials and provide item context which fixes #19**
+
+
+[ec4ca5820556f18](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/ec4ca5820556f18) Joseph Petersen *2018-02-26 14:49:37*
+
+
+### No issue
+
+**ignore .idea**
+
+
+[88a1700dbd890ba](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/88a1700dbd890ba) Joseph Petersen *2018-02-24 22:40:20*
+
+**avoid commit nightmare on windows due to formatter**
+
+
+[570ae4b9f79f73a](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/570ae4b9f79f73a) Joseph Petersen *2018-02-24 22:40:20*
+
+**Javax Nonnull is bad for licensing**
+
+
+[3f966ac2a6232cf](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/3f966ac2a6232cf) Joseph Petersen *2018-02-24 22:40:20*
+
+**Update Jenkinsfile**
+
+
+[d63c4547a82ea8a](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/d63c4547a82ea8a) Joseph Petersen *2018-02-24 15:13:06*
+
+
+## 1.57
+### No issue
+
+**PCLint**
+
+
+[072cb29d3d08c1d](https://github.com/repos/jenkinsci/violation-comments-to-github-plugin/072cb29d3d08c1d) Tomas Bjerre *2018-02-13 20:00:58*
+
+
+## 1.56
 ### No issue
 
 **PCLint**

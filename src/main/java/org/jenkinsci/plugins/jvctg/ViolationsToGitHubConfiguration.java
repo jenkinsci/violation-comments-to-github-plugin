@@ -1,6 +1,14 @@
 package org.jenkinsci.plugins.jvctg;
 
+import hudson.Extension;
+import hudson.model.Item;
+import hudson.util.FormValidation;
+import hudson.util.ListBoxModel;
+
 import java.io.Serializable;
+
+import jenkins.model.GlobalConfiguration;
+import net.sf.json.JSONObject;
 
 import org.jenkinsci.plugins.jvctg.config.CredentialsHelper;
 import org.kohsuke.accmod.Restricted;
@@ -10,12 +18,6 @@ import org.kohsuke.stapler.DataBoundSetter;
 import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.StaplerRequest;
 
-import hudson.Extension;
-import hudson.model.Item;
-import hudson.util.FormValidation;
-import hudson.util.ListBoxModel;
-import jenkins.model.GlobalConfiguration;
-import net.sf.json.JSONObject;
 import se.bjurr.violations.lib.model.SEVERITY;
 
 @Extension
@@ -64,15 +66,17 @@ public class ViolationsToGitHubConfiguration extends GlobalConfiguration impleme
 
   @SuppressWarnings("unused") // Used by stapler
   public ListBoxModel doFillCredentialsIdItems(
-      @AncestorInPath Item item,
-      @QueryParameter String credentialsId,
-      @QueryParameter String gitHubUrl) {
+      @AncestorInPath final Item item,
+      @QueryParameter final String credentialsId,
+      @QueryParameter final String gitHubUrl) {
     return CredentialsHelper.doFillCredentialsIdItems(item, credentialsId, gitHubUrl);
   }
 
   @SuppressWarnings("unused") // Used by stapler
   public FormValidation doCheckCredentialsId(
-      @AncestorInPath Item item, @QueryParameter String value, @QueryParameter String gitHubUrl) {
+      @AncestorInPath final Item item,
+      @QueryParameter final String value,
+      @QueryParameter final String gitHubUrl) {
     return CredentialsHelper.doCheckFillCredentialsId(item, value, gitHubUrl);
   }
 
@@ -82,6 +86,10 @@ public class ViolationsToGitHubConfiguration extends GlobalConfiguration impleme
 
   public String getoAuth2Token() {
     return this.oAuth2Token;
+  }
+
+  public String getOAuth2Token() {
+    return oAuth2Token;
   }
 
   public String getRepositoryOwner() {

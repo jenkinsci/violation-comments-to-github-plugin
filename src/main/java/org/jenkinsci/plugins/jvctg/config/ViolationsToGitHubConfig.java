@@ -2,6 +2,12 @@ package org.jenkinsci.plugins.jvctg.config;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.google.common.collect.Lists.newArrayList;
+import hudson.Extension;
+import hudson.model.AbstractDescribableImpl;
+import hudson.model.Item;
+import hudson.model.Descriptor;
+import hudson.util.FormValidation;
+import hudson.util.ListBoxModel;
 
 import java.io.Serializable;
 import java.util.List;
@@ -14,14 +20,8 @@ import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
 import org.kohsuke.stapler.QueryParameter;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
-import hudson.Extension;
-import hudson.model.AbstractDescribableImpl;
-import hudson.model.Descriptor;
-import hudson.model.Item;
-import hudson.util.FormValidation;
-import hudson.util.ListBoxModel;
 import se.bjurr.violations.lib.model.SEVERITY;
+import edu.umd.cs.findbugs.annotations.NonNull;
 
 public class ViolationsToGitHubConfig extends AbstractDescribableImpl<ViolationsToGitHubConfig>
     implements Serializable {
@@ -113,6 +113,10 @@ public class ViolationsToGitHubConfig extends AbstractDescribableImpl<Violations
 
   public String getoAuth2Token() {
     return this.oAuth2Token;
+  }
+
+  public String getOAuth2Token() {
+    return oAuth2Token;
   }
 
   public String getPullRequestId() {
@@ -358,15 +362,17 @@ public class ViolationsToGitHubConfig extends AbstractDescribableImpl<Violations
 
     @SuppressWarnings("unused") // Used by stapler
     public ListBoxModel doFillCredentialsIdItems(
-        @AncestorInPath Item item,
-        @QueryParameter String credentialsId,
-        @QueryParameter String gitHubUrl) {
+        @AncestorInPath final Item item,
+        @QueryParameter final String credentialsId,
+        @QueryParameter final String gitHubUrl) {
       return CredentialsHelper.doFillCredentialsIdItems(item, credentialsId, gitHubUrl);
     }
 
     @SuppressWarnings("unused") // Used by stapler
     public FormValidation doCheckCredentialsId(
-        @AncestorInPath Item item, @QueryParameter String value, @QueryParameter String gitHubUrl) {
+        @AncestorInPath final Item item,
+        @QueryParameter final String value,
+        @QueryParameter final String gitHubUrl) {
       return CredentialsHelper.doCheckFillCredentialsId(item, value, gitHubUrl);
     }
   }
