@@ -20,6 +20,13 @@ import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.
 import static se.bjurr.violations.comments.github.lib.ViolationCommentsToGitHubApi.violationCommentsToGitHubApi;
 import static se.bjurr.violations.lib.ViolationsApi.violationsApi;
 import static se.bjurr.violations.lib.parsers.FindbugsParser.setFindbugsMessagesXml;
+import hudson.EnvVars;
+import hudson.FilePath;
+import hudson.FilePath.FileCallable;
+import hudson.model.TaskListener;
+import hudson.model.Run;
+import hudson.remoting.VirtualChannel;
+import hudson.util.Secret;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,24 +43,17 @@ import org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfig;
 import org.jenkinsci.plugins.plaincredentials.StringCredentials;
 import org.jenkinsci.remoting.RoleChecker;
 
-import com.cloudbees.plugins.credentials.common.StandardCredentials;
-import com.cloudbees.plugins.credentials.common.StandardUsernamePasswordCredentials;
-import com.google.common.annotations.VisibleForTesting;
-import com.google.common.base.Optional;
-import com.google.common.io.CharStreams;
-
-import hudson.EnvVars;
-import hudson.FilePath;
-import hudson.FilePath.FileCallable;
-import hudson.model.Run;
-import hudson.model.TaskListener;
-import hudson.remoting.VirtualChannel;
-import hudson.util.Secret;
 import se.bjurr.violations.comments.github.lib.ViolationCommentsToGitHubApi;
 import se.bjurr.violations.lib.model.SEVERITY;
 import se.bjurr.violations.lib.model.Violation;
 import se.bjurr.violations.lib.reports.Parser;
 import se.bjurr.violations.lib.util.Filtering;
+
+import com.cloudbees.plugins.credentials.common.StandardCredentials;
+import com.cloudbees.plugins.credentials.common.StandardUsernamePasswordCredentials;
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Optional;
+import com.google.common.io.CharStreams;
 
 public class JvctgPerformer {
   private static Logger LOG = Logger.getLogger(JvctgPerformer.class.getSimpleName());
@@ -113,11 +113,11 @@ public class JvctgPerformer {
         g //
             .withoAuth2Token(config.getoAuth2Token());
       } else if (credentials instanceof StringCredentials) {
-        StringCredentials token = (StringCredentials) credentials;
+        final StringCredentials token = (StringCredentials) credentials;
         g //
             .withoAuth2Token(Secret.toString(token.getSecret()));
       } else if (credentials instanceof StandardUsernamePasswordCredentials) {
-        StandardUsernamePasswordCredentials usernamePassword =
+        final StandardUsernamePasswordCredentials usernamePassword =
             (StandardUsernamePasswordCredentials) credentials;
         g //
             .withUsername(usernamePassword.getUsername()) //
@@ -201,7 +201,7 @@ public class JvctgPerformer {
       if (!isNullOrEmpty(configExpanded.getoAuth2Token())) {
         logger.println("Using OAuth2Token");
       } else if (credentials.isPresent()) {
-        StandardCredentials standardCredentials = credentials.get();
+        final StandardCredentials standardCredentials = credentials.get();
         if (standardCredentials instanceof StandardUsernamePasswordCredentials) {
           logger.println("Using username / password");
         } else if (standardCredentials instanceof StringCredentials) {
@@ -226,7 +226,7 @@ public class JvctgPerformer {
             public Void invoke(final File workspace, final VirtualChannel channel)
                 throws IOException, InterruptedException {
               setupFindBugsMessages();
-              logger.println("Workspace: " + workspace.getAbsolutePath());
+              listener.getLogger().println("Workspace: " + workspace.getAbsolutePath());
               doPerform(configExpanded, workspace, credentials.orNull(), listener);
               return null;
             }
