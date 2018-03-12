@@ -185,13 +185,12 @@ public class JvctgPerformer {
       final FilePath fp,
       final Run<?, ?> build,
       final TaskListener listener) {
-    final PrintStream logger = listener.getLogger();
     try {
       final EnvVars env = build.getEnvironment(listener);
       final ViolationsToGitHubConfig configExpanded = expand(configUnexpanded, env);
-      logger.println("---");
-      logger.println("--- Jenkins Violation Comments to GitHub ---");
-      logger.println("---");
+      listener.getLogger().println("---");
+      listener.getLogger().println("--- Jenkins Violation Comments to GitHub ---");
+      listener.getLogger().println("---");
       logConfiguration(configExpanded, build, listener);
 
       final Optional<StandardCredentials> credentials =
@@ -199,20 +198,20 @@ public class JvctgPerformer {
               build.getParent(), configExpanded.getCredentialsId(), configExpanded.getGitHubUrl());
 
       if (!isNullOrEmpty(configExpanded.getoAuth2Token())) {
-        logger.println("Using OAuth2Token");
+        listener.getLogger().println("Using OAuth2Token");
       } else if (credentials.isPresent()) {
         StandardCredentials standardCredentials = credentials.get();
         if (standardCredentials instanceof StandardUsernamePasswordCredentials) {
-          logger.println("Using username / password");
+          listener.getLogger().println("Using username / password");
         } else if (standardCredentials instanceof StringCredentials) {
-          logger.println("Using OAuth2Token credential style");
+          listener.getLogger().println("Using OAuth2Token credential style");
         }
       } else {
         throw new IllegalStateException("No credentials found!");
       }
 
-      logger.println("Running Jenkins Violation Comments To GitHub");
-      logger.println("PR " + configExpanded.getPullRequestId());
+      listener.getLogger().println("Running Jenkins Violation Comments To GitHub");
+      listener.getLogger().println("PR " + configExpanded.getPullRequestId());
 
       fp.act(
           new FileCallable<Void>() {
@@ -226,7 +225,7 @@ public class JvctgPerformer {
             public Void invoke(final File workspace, final VirtualChannel channel)
                 throws IOException, InterruptedException {
               setupFindBugsMessages();
-              logger.println("Workspace: " + workspace.getAbsolutePath());
+              listener.getLogger().println("Workspace: " + workspace.getAbsolutePath());
               doPerform(configExpanded, workspace, credentials.orNull(), listener);
               return null;
             }
@@ -235,35 +234,34 @@ public class JvctgPerformer {
       Logger.getLogger(JvctgPerformer.class.getName()).log(SEVERE, "", e);
       final StringWriter sw = new StringWriter();
       e.printStackTrace(new PrintWriter(sw));
-      logger.println(sw.toString());
+      listener.getLogger().println(sw.toString());
       return;
     }
   }
 
   private static void logConfiguration(
       final ViolationsToGitHubConfig config, final Run<?, ?> build, final TaskListener listener) {
-    final PrintStream logger = listener.getLogger();
-    logger.println(FIELD_GITHUBURL + ": " + config.getGitHubUrl());
-    logger.println(FIELD_REPOSITORYOWNER + ": " + config.getRepositoryOwner());
-    logger.println(FIELD_REPOSITORYNAME + ": " + config.getRepositoryName());
-    logger.println(FIELD_PULLREQUESTID + ": " + config.getPullRequestId());
+    listener.getLogger().println(FIELD_GITHUBURL + ": " + config.getGitHubUrl());
+    listener.getLogger().println(FIELD_REPOSITORYOWNER + ": " + config.getRepositoryOwner());
+    listener.getLogger().println(FIELD_REPOSITORYNAME + ": " + config.getRepositoryName());
+    listener.getLogger().println(FIELD_PULLREQUESTID + ": " + config.getPullRequestId());
 
-    logger.println(FIELD_CREDENTIALSID + ": " + !isNullOrEmpty(config.getCredentialsId()));
-    logger.println(FIELD_OAUTH2TOKEN + ": " + !isNullOrEmpty(config.getoAuth2Token()));
+    listener.getLogger().println(FIELD_CREDENTIALSID + ": " + !isNullOrEmpty(config.getCredentialsId()));
+    listener.getLogger().println(FIELD_OAUTH2TOKEN + ": " + !isNullOrEmpty(config.getoAuth2Token()));
 
-    logger.println(FIELD_CREATESINGLEFILECOMMENTS + ": " + config.getCreateSingleFileComments());
-    logger.println(
+    listener.getLogger().println(FIELD_CREATESINGLEFILECOMMENTS + ": " + config.getCreateSingleFileComments());
+    listener.getLogger().println(
         FIELD_CREATECOMMENTWITHALLSINGLEFILECOMMENTS
             + ": "
             + config.getCreateCommentWithAllSingleFileComments());
-    logger.println(FIELD_COMMENTONLYCHANGEDCONTENT + ": " + config.getCommentOnlyChangedContent());
+    listener.getLogger().println(FIELD_COMMENTONLYCHANGEDCONTENT + ": " + config.getCommentOnlyChangedContent());
 
-    logger.println(FIELD_MINSEVERITY + ": " + config.getMinSeverity());
+    listener.getLogger().println(FIELD_MINSEVERITY + ": " + config.getMinSeverity());
 
-    logger.println(FIELD_KEEP_OLD_COMMENTS + ": " + config.isKeepOldComments());
+    listener.getLogger().println(FIELD_KEEP_OLD_COMMENTS + ": " + config.isKeepOldComments());
 
     for (final ViolationConfig violationConfig : config.getViolationConfigs()) {
-      logger.println(
+      listener.getLogger().println(
           violationConfig.getReporter() + " with pattern " + violationConfig.getPattern());
     }
   }
