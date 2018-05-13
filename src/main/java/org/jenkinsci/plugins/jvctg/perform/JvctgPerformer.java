@@ -20,13 +20,6 @@ import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.
 import static se.bjurr.violations.comments.github.lib.ViolationCommentsToGitHubApi.violationCommentsToGitHubApi;
 import static se.bjurr.violations.lib.ViolationsApi.violationsApi;
 import static se.bjurr.violations.lib.parsers.FindbugsParser.setFindbugsMessagesXml;
-import hudson.EnvVars;
-import hudson.FilePath;
-import hudson.FilePath.FileCallable;
-import hudson.model.TaskListener;
-import hudson.model.Run;
-import hudson.remoting.VirtualChannel;
-import hudson.util.Secret;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,17 +36,24 @@ import org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfig;
 import org.jenkinsci.plugins.plaincredentials.StringCredentials;
 import org.jenkinsci.remoting.RoleChecker;
 
-import se.bjurr.violations.comments.github.lib.ViolationCommentsToGitHubApi;
-import se.bjurr.violations.lib.model.SEVERITY;
-import se.bjurr.violations.lib.model.Violation;
-import se.bjurr.violations.lib.reports.Parser;
-import se.bjurr.violations.lib.util.Filtering;
-
 import com.cloudbees.plugins.credentials.common.StandardCredentials;
 import com.cloudbees.plugins.credentials.common.StandardUsernamePasswordCredentials;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Optional;
 import com.google.common.io.CharStreams;
+
+import hudson.EnvVars;
+import hudson.FilePath;
+import hudson.FilePath.FileCallable;
+import hudson.model.Run;
+import hudson.model.TaskListener;
+import hudson.remoting.VirtualChannel;
+import hudson.util.Secret;
+import se.bjurr.violations.comments.github.lib.ViolationCommentsToGitHubApi;
+import se.bjurr.violations.lib.model.SEVERITY;
+import se.bjurr.violations.lib.model.Violation;
+import se.bjurr.violations.lib.reports.Parser;
+import se.bjurr.violations.lib.util.Filtering;
 
 public class JvctgPerformer {
   private static Logger LOG = Logger.getLogger(JvctgPerformer.class.getSimpleName());
@@ -123,6 +123,7 @@ public class JvctgPerformer {
             .withUsername(usernamePassword.getUsername()) //
             .withPassword(Secret.toString(usernamePassword.getPassword()));
       }
+      final String commentTemplate = config.getCommentTemplate();
       g //
           .withGitHubUrl(config.getGitHubUrl()) //
           .withPullRequestId(pullRequestIdInt) //
@@ -134,6 +135,7 @@ public class JvctgPerformer {
           .withCreateSingleFileComments(config.getCreateSingleFileComments()) //
           .withCommentOnlyChangedContent(config.getCommentOnlyChangedContent()) //
           .withKeepOldComments(config.isKeepOldComments()) //
+          .withCommentTemplate(commentTemplate) //
           .toPullRequest();
     } catch (final Exception e) {
       Logger.getLogger(JvctgPerformer.class.getName()).log(SEVERE, "", e);
@@ -163,6 +165,7 @@ public class JvctgPerformer {
     expanded.setCredentialsId(config.getCredentialsId());
     expanded.setoAuth2Token(environment.expand(config.getoAuth2Token()));
     expanded.setKeepOldComments(config.isKeepOldComments());
+    expanded.setCommentTemplate(config.getCommentTemplate());
     for (final ViolationConfig violationConfig : config.getViolationConfigs()) {
       final String pattern = environment.expand(violationConfig.getPattern());
       final String reporter = violationConfig.getReporter();
@@ -261,6 +264,8 @@ public class JvctgPerformer {
     logger.println(FIELD_MINSEVERITY + ": " + config.getMinSeverity());
 
     logger.println(FIELD_KEEP_OLD_COMMENTS + ": " + config.isKeepOldComments());
+
+    logger.println("commentTemplate: " + config.getCommentTemplate());
 
     for (final ViolationConfig violationConfig : config.getViolationConfigs()) {
       logger.println(

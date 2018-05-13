@@ -1,5 +1,14 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
+## Unreleased
+### GitHub #33 
+
+**NullAway #33**
+
+
+[c3cbc8af3f15c4c](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/c3cbc8af3f15c4c) Tomas Bjerre *2018-04-14 05:12:30*
+
+
 ## 1.59
 ### GitHub [#23](https://github.com/jenkinsci/violation-comments-to-github-plugin/issues/23) Jenkins regression with 1.58 release
 

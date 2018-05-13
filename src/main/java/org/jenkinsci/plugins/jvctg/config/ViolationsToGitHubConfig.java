@@ -2,12 +2,6 @@ package org.jenkinsci.plugins.jvctg.config;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.google.common.collect.Lists.newArrayList;
-import hudson.Extension;
-import hudson.model.AbstractDescribableImpl;
-import hudson.model.Item;
-import hudson.model.Descriptor;
-import hudson.util.FormValidation;
-import hudson.util.ListBoxModel;
 
 import java.io.Serializable;
 import java.util.List;
@@ -20,8 +14,14 @@ import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
 import org.kohsuke.stapler.QueryParameter;
 
-import se.bjurr.violations.lib.model.SEVERITY;
 import edu.umd.cs.findbugs.annotations.NonNull;
+import hudson.Extension;
+import hudson.model.AbstractDescribableImpl;
+import hudson.model.Descriptor;
+import hudson.model.Item;
+import hudson.util.FormValidation;
+import hudson.util.ListBoxModel;
+import se.bjurr.violations.lib.model.SEVERITY;
 
 public class ViolationsToGitHubConfig extends AbstractDescribableImpl<ViolationsToGitHubConfig>
     implements Serializable {
@@ -44,6 +44,7 @@ public class ViolationsToGitHubConfig extends AbstractDescribableImpl<Violations
   @Deprecated private transient String oAuth2TokenCredentialsId;
 
   private boolean keepOldComments;
+  private String commentTemplate;
 
   public ViolationsToGitHubConfig() {}
 
@@ -72,6 +73,7 @@ public class ViolationsToGitHubConfig extends AbstractDescribableImpl<Violations
     this.credentialsId = rhs.credentialsId;
     this.minSeverity = rhs.minSeverity;
     this.keepOldComments = rhs.keepOldComments;
+    this.commentTemplate = rhs.commentTemplate;
   }
 
   public void applyDefaults(final ViolationsToGitHubConfiguration defaults) {
@@ -193,6 +195,15 @@ public class ViolationsToGitHubConfig extends AbstractDescribableImpl<Violations
   @DataBoundSetter
   public void setViolationConfigs(final List<ViolationConfig> parsers) {
     this.violationConfigs = parsers;
+  }
+
+  public String getCommentTemplate() {
+    return commentTemplate;
+  }
+
+  @DataBoundSetter
+  public void setCommentTemplate(final String commentTemplate) {
+    this.commentTemplate = commentTemplate;
   }
 
   private Object readResolve() {
