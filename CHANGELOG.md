@@ -1,6 +1,6 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
-## Unreleased
+## 1.61
 ### GitHub [#27](https://github.com/jenkinsci/violation-comments-to-github-plugin/issues/27) Missing license file
 
 **License #27**
@@ -10,6 +10,11 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 
 
 ### No issue
+
+**GCC, ARM GCC and Doxygen**
+
+
+[18e292e764304ec](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/18e292e764304ec) Tomas Bjerre *2018-07-04 18:40:09*
 
 **Correcting license**
 
