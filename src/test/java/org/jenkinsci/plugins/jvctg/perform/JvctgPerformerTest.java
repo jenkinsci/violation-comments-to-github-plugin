@@ -1,11 +1,10 @@
 package org.jenkinsci.plugins.jvctg.perform;
 
 import static org.junit.Assert.assertEquals;
-import hudson.EnvVars;
 
+import hudson.EnvVars;
 import org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfig;
 import org.junit.Test;
-
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 public class JvctgPerformerTest {

@@ -3,7 +3,6 @@ package org.jenkinsci.plugins.jvctg.config;
 import static com.google.common.collect.Lists.newArrayList;
 
 import java.util.List;
-
 import se.bjurr.violations.lib.reports.Parser;
 
 public class ViolationsToGitHubConfigHelper {

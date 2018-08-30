@@ -4,12 +4,9 @@ import hudson.Extension;
 import hudson.model.Item;
 import hudson.util.FormValidation;
 import hudson.util.ListBoxModel;
-
 import java.io.Serializable;
-
 import jenkins.model.GlobalConfiguration;
 import net.sf.json.JSONObject;
-
 import org.jenkinsci.plugins.jvctg.config.CredentialsHelper;
 import org.kohsuke.accmod.Restricted;
 import org.kohsuke.accmod.restrictions.NoExternalUse;
@@ -17,7 +14,6 @@ import org.kohsuke.stapler.AncestorInPath;
 import org.kohsuke.stapler.DataBoundSetter;
 import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.StaplerRequest;
-
 import se.bjurr.violations.lib.model.SEVERITY;
 
 @Extension

@@ -21,6 +21,18 @@ import static se.bjurr.violations.comments.github.lib.ViolationCommentsToGitHubA
 import static se.bjurr.violations.lib.ViolationsApi.violationsApi;
 import static se.bjurr.violations.lib.parsers.FindbugsParser.setFindbugsMessagesXml;
 
+import com.cloudbees.plugins.credentials.common.StandardCredentials;
+import com.cloudbees.plugins.credentials.common.StandardUsernamePasswordCredentials;
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Optional;
+import com.google.common.io.CharStreams;
+import hudson.EnvVars;
+import hudson.FilePath;
+import hudson.FilePath.FileCallable;
+import hudson.model.Run;
+import hudson.model.TaskListener;
+import hudson.remoting.VirtualChannel;
+import hudson.util.Secret;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -30,25 +42,10 @@ import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.util.List;
 import java.util.logging.Logger;
-
 import org.jenkinsci.plugins.jvctg.config.ViolationConfig;
 import org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfig;
 import org.jenkinsci.plugins.plaincredentials.StringCredentials;
 import org.jenkinsci.remoting.RoleChecker;
-
-import com.cloudbees.plugins.credentials.common.StandardCredentials;
-import com.cloudbees.plugins.credentials.common.StandardUsernamePasswordCredentials;
-import com.google.common.annotations.VisibleForTesting;
-import com.google.common.base.Optional;
-import com.google.common.io.CharStreams;
-
-import hudson.EnvVars;
-import hudson.FilePath;
-import hudson.FilePath.FileCallable;
-import hudson.model.Run;
-import hudson.model.TaskListener;
-import hudson.remoting.VirtualChannel;
-import hudson.util.Secret;
 import se.bjurr.violations.comments.github.lib.ViolationCommentsToGitHubApi;
 import se.bjurr.violations.lib.model.SEVERITY;
 import se.bjurr.violations.lib.model.Violation;

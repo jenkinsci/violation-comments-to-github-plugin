@@ -2,17 +2,16 @@ package org.jenkinsci.plugins.jvctg;
 
 import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.FIELD_MINSEVERITY;
 
-import org.apache.commons.lang.StringUtils;
-import org.jenkinsci.Symbol;
-import org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfig;
-import org.kohsuke.stapler.StaplerRequest;
-
 import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.Extension;
 import hudson.model.AbstractProject;
 import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.Publisher;
 import net.sf.json.JSONObject;
+import org.apache.commons.lang.StringUtils;
+import org.jenkinsci.Symbol;
+import org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfig;
+import org.kohsuke.stapler.StaplerRequest;
 
 @Extension
 @Symbol("ViolationsToGitHub")

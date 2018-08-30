@@ -3,11 +3,6 @@ package org.jenkinsci.plugins.jvctg;
 import static hudson.tasks.BuildStepMonitor.NONE;
 import static org.jenkinsci.plugins.jvctg.perform.JvctgPerformer.jvctsPerform;
 
-import java.io.IOException;
-
-import org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfig;
-import org.kohsuke.stapler.DataBoundConstructor;
-
 import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.FilePath;
 import hudson.Launcher;
@@ -17,7 +12,10 @@ import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.BuildStepMonitor;
 import hudson.tasks.Publisher;
 import hudson.tasks.Recorder;
+import java.io.IOException;
 import jenkins.tasks.SimpleBuildStep;
+import org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfig;
+import org.kohsuke.stapler.DataBoundConstructor;
 
 public class ViolationsToGitHubRecorder extends Recorder implements SimpleBuildStep {
 
