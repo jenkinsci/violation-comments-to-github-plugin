@@ -1,5 +1,24 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
+## Unreleased
+### No issue
+
+**Correcting ownerName and CPD**
+
+
+[82f54b5cde0b0a1](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/82f54b5cde0b0a1) Tomas Bjerre *2018-09-13 05:11:51*
+
+**Updating readme with parsers**
+
+
+[bd08c9b40edc621](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/bd08c9b40edc621) Tomas Bjerre *2018-09-12 17:07:44*
+
+**Updating fmt-maven-plugin**
+
+
+[529ce56fab07a0d](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/529ce56fab07a0d) Tomas Bjerre *2018-08-30 17:51:57*
+
+
 ## 1.61
 ### GitHub [#27](https://github.com/jenkinsci/violation-comments-to-github-plugin/issues/27) Missing license file
 
