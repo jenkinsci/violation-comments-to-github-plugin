@@ -1,5 +1,14 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
+## 1.64
+### No issue
+
+**Fix optional rule in YAMLLint**
+
+
+[5332e0245fff2b3](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/5332e0245fff2b3) Tomas Bjerre *2018-09-17 13:52:49*
+
+
 ## 1.63
 ### No issue
 
