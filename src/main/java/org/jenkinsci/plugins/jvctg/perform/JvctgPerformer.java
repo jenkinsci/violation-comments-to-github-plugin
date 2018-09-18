@@ -133,6 +133,7 @@ public class JvctgPerformer {
           .withCommentOnlyChangedContent(config.getCommentOnlyChangedContent()) //
           .withKeepOldComments(config.isKeepOldComments()) //
           .withCommentTemplate(commentTemplate) //
+          .withViolationsLogger(string -> listener.getLogger().println(string)) //
           .toPullRequest();
     } catch (final Exception e) {
       Logger.getLogger(JvctgPerformer.class.getName()).log(SEVERE, "", e);
