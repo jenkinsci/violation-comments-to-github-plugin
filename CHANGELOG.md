@@ -1,5 +1,14 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
+## 1.66
+### No issue
+
+**Exception logging in build job log**
+
+
+[ae0f528c9b5dc19](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/ae0f528c9b5dc19) Tomas Bjerre *2018-09-18 19:33:58*
+
+
 ## 1.65
 ### No issue
 

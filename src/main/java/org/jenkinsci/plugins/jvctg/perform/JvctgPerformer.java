@@ -136,19 +136,19 @@ public class JvctgPerformer {
           .withKeepOldComments(config.isKeepOldComments()) //
           .withCommentTemplate(commentTemplate) //
           .withViolationsLogger(
-                  new ViolationsLogger() {
-                    @Override
-                    public void log(final Level level, final String string) {
-                      listener.getLogger().println(level + " " + string);
-                    }
+              new ViolationsLogger() {
+                @Override
+                public void log(final Level level, final String string) {
+                  listener.getLogger().println(level + " " + string);
+                }
 
-                    @Override
-                    public void log(final Level level, final String string, final Throwable t) {
-                      final StringWriter sw = new StringWriter();
-                      t.printStackTrace(new PrintWriter(sw));
-                      listener.getLogger().println(level + " " + sw.toString());
-                    }
-                  }) //
+                @Override
+                public void log(final Level level, final String string, final Throwable t) {
+                  final StringWriter sw = new StringWriter();
+                  t.printStackTrace(new PrintWriter(sw));
+                  listener.getLogger().println(level + " " + sw.toString());
+                }
+              }) //
           .toPullRequest();
     } catch (final Exception e) {
       Logger.getLogger(JvctgPerformer.class.getName()).log(SEVERE, "", e);
