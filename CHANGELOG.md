@@ -1,5 +1,14 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
+## 1.67
+### No issue
+
+**Kotlin Maven and Gradle parsers**
+
+
+[63ca24adfb94e48](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/63ca24adfb94e48) Tomas Bjerre *2018-09-20 14:26:17*
+
+
 ## 1.66
 ### No issue
 

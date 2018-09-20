@@ -166,6 +166,18 @@ job('GitHub_PR_Builder') {
     minSeverity('INFO')
     keepOldComments(false)
     
+    commentTemplate("""
+    **Reporter**: {{violation.reporter}}{{#violation.rule}}
+    
+    **Rule**: {{violation.rule}}{{/violation.rule}}
+    **Severity**: {{violation.severity}}
+    **File**: {{violation.file}} L{{violation.startLine}}{{#violation.source}}
+    
+    **Source**: {{violation.source}}{{/violation.source}}
+    
+    {{violation.message}}
+    """)
+    
     violationConfigs {
      violationConfig {
       parser("FINDBUGS")
@@ -294,6 +306,18 @@ job('GitHub_PR_Builder Generic') {
     minSeverity('INFO')
     keepOldComments(false)
     
+    commentTemplate("""
+    **Reporter**: {{violation.reporter}}{{#violation.rule}}
+    
+    **Rule**: {{violation.rule}}{{/violation.rule}}
+    **Severity**: {{violation.severity}}
+    **File**: {{violation.file}} L{{violation.startLine}}{{#violation.source}}
+    
+    **Source**: {{violation.source}}{{/violation.source}}
+    
+    {{violation.message}}
+    """)
+    
     violationConfigs {
      violationConfig {
       parser("FINDBUGS")
@@ -349,6 +373,19 @@ node {
     commentOnlyChangedContent: true, 
     minSeverity: 'INFO',
     keepOldComments: false,
+ 
+    commentTemplate: """
+    **Reporter**: {{violation.reporter}}{{#violation.rule}}
+    
+    **Rule**: {{violation.rule}}{{/violation.rule}}
+    **Severity**: {{violation.severity}}
+    **File**: {{violation.file}} L{{violation.startLine}}{{#violation.source}}
+    
+    **Source**: {{violation.source}}{{/violation.source}}
+    
+    {{violation.message}}
+    """,
+
     violationConfigs: [
      [ pattern: '.*/checkstyle-result\\.xml$', parser: 'CHECKSTYLE', reporter: 'Checkstyle' ], 
      [ pattern: '.*/findbugsXml\\.xml$', parser: 'FINDBUGS', reporter: 'Findbugs' ], 
