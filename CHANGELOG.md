@@ -1,5 +1,14 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
+## 1.68
+### No issue
+
+**Correcting Kotlin parsers**
+
+
+[78203adf57bede9](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/78203adf57bede9) Tomas Bjerre *2018-09-21 00:03:33*
+
+
 ## 1.67
 ### No issue
 
