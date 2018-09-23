@@ -1,5 +1,14 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
+## Unreleased
+### No issue
+
+**Automatically stepping dependencies**
+
+
+[b3a0caf1e2662bd](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/b3a0caf1e2662bd) Tomas Bjerre *2018-09-23 15:23:38*
+
+
 ## 1.69
 ### No issue
 
