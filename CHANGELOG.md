@@ -1,7 +1,17 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
-## Unreleased
+## 1.69
 ### No issue
+
+**Clarifying parsers**
+
+
+[adcce493396bf7b](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/adcce493396bf7b) Tomas Bjerre *2018-09-23 13:41:14*
+
+**Automating reporters in readme**
+
+
+[21f1c6f7aae332c](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/21f1c6f7aae332c) Tomas Bjerre *2018-09-23 12:56:29*
 
 **Doc**
 
