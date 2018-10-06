@@ -1,12 +1,17 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
-## Unreleased
+## 1.70
 ### No issue
+
+**Including entire rule in Flake8**
+
+
+[dcc2bae047cbb2d](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/dcc2bae047cbb2d) Tomas Bjerre *2018-10-06 06:55:42*
 
 **Automatically stepping dependencies**
 
 
-[b3a0caf1e2662bd](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/b3a0caf1e2662bd) Tomas Bjerre *2018-09-23 15:23:38*
+[23df03e9b83ad6c](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/23df03e9b83ad6c) Tomas Bjerre *2018-09-23 19:03:56*
 
 
 ## 1.69
