@@ -1,5 +1,24 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
+## 1.71
+### No issue
+
+**Correcting AnsibleLint parsing**
+
+
+[90047b3d7b9f50c](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/90047b3d7b9f50c) Tomas Bjerre *2019-01-03 17:54:49*
+
+**Repository and PluginRepository updated. And fixed SCM URL**
+
+
+[268bfae711c6afc](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/268bfae711c6afc) Manuel Recena *2018-11-18 19:18:58*
+
+**Stepping lib**
+
+
+[a5c987728092357](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/a5c987728092357) Tomas Bjerre *2018-10-08 17:04:35*
+
+
 ## 1.70
 ### No issue
 
