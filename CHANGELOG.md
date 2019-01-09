@@ -1,5 +1,14 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
+## 1.72
+### No issue
+
+**Making CodeNarc respect source directory**
+
+
+[7c5e784a77af83b](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/7c5e784a77af83b) Tomas Bjerre *2019-01-09 19:49:47*
+
+
 ## 1.71
 ### No issue
 
