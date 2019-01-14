@@ -1,5 +1,14 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
+## 1.73
+### No issue
+
+**Avoiding faulty slash with CodeNarc**
+
+
+[d6eca741b971760](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/d6eca741b971760) Tomas Bjerre *2019-01-14 17:56:13*
+
+
 ## 1.72
 ### No issue
 
