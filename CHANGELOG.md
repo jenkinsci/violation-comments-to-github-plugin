@@ -1,5 +1,14 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
+## 1.74
+### No issue
+
+**MSCPP and IAR**
+
+
+[e7246b226c2c1d8](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/e7246b226c2c1d8) Tomas Bjerre *2019-01-29 17:31:01*
+
+
 ## 1.73
 ### No issue
 
