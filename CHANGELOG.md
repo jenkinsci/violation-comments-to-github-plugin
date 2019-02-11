@@ -1,5 +1,14 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
+## 1.75
+### No issue
+
+**Fixing Flake8 parser**
+
+
+[1092bacf602e0c4](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/1092bacf602e0c4) Tomas Bjerre *2019-02-11 19:58:30*
+
+
 ## 1.74
 ### No issue
 
