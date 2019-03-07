@@ -1,5 +1,14 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
+## 1.76
+### No issue
+
+**golangci-lint**
+
+
+[7a6f016eb50bdc9](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/7a6f016eb50bdc9) Tomas Bjerre *2019-03-07 16:05:02*
+
+
 ## 1.75
 ### No issue
 
