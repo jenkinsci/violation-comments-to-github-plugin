@@ -1,5 +1,14 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
+## 1.77
+### No issue
+
+**Klocwork line numbers**
+
+
+[5a5d76728d44c12](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/5a5d76728d44c12) Tomas Bjerre *2019-03-13 19:23:08*
+
+
 ## 1.76
 ### No issue
 
