@@ -14,8 +14,8 @@
 		<findbugs.failOnError>false</findbugs.failOnError>
 		<maven.javadoc.skip>true</maven.javadoc.skip>
 		<changelog>1.59</changelog>
-		<violations-maven.version>1.17</violations-maven.version>
-		<violations-lib>1.70</violations-lib>
+		<violations-maven.version>1.18</violations-maven.version>
+		<violations-lib>1.71</violations-lib>
 		<fmt>2.8</fmt>
 	</properties>
 
