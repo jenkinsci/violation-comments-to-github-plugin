@@ -1,5 +1,14 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
+## 1.78
+### No issue
+
+**Sonar Report**
+
+
+[256cac99dbf797c](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/256cac99dbf797c) Tomas Bjerre *2019-03-23 15:08:16*
+
+
 ## 1.77
 ### No issue
 
