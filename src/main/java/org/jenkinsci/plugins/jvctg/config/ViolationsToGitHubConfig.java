@@ -44,6 +44,8 @@ public class ViolationsToGitHubConfig extends AbstractDescribableImpl<Violations
   private boolean keepOldComments;
   private String commentTemplate;
 
+  private Integer maxNumberOfViolations;
+
   public ViolationsToGitHubConfig() {}
 
   @DataBoundConstructor
@@ -72,6 +74,7 @@ public class ViolationsToGitHubConfig extends AbstractDescribableImpl<Violations
     this.minSeverity = rhs.minSeverity;
     this.keepOldComments = rhs.keepOldComments;
     this.commentTemplate = rhs.commentTemplate;
+    this.maxNumberOfViolations = rhs.maxNumberOfViolations;
   }
 
   public void applyDefaults(final ViolationsToGitHubConfiguration defaults) {
@@ -202,6 +205,15 @@ public class ViolationsToGitHubConfig extends AbstractDescribableImpl<Violations
   @DataBoundSetter
   public void setCommentTemplate(final String commentTemplate) {
     this.commentTemplate = commentTemplate;
+  }
+
+  @DataBoundSetter
+  public void setMaxNumberOfViolations(final Integer maxNumberOfViolations) {
+    this.maxNumberOfViolations = maxNumberOfViolations;
+  }
+
+  public Integer getMaxNumberOfViolations() {
+    return maxNumberOfViolations;
   }
 
   private Object readResolve() {

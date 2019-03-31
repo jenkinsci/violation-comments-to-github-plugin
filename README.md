@@ -175,6 +175,7 @@ job('GitHub_PR_Builder') {
     createCommentWithAllSingleFileComments(true)
     commentOnlyChangedContent(true)
     minSeverity('INFO')
+    maxNumberOfViolations(99999)
     keepOldComments(false)
     
     commentTemplate("""
@@ -315,6 +316,7 @@ job('GitHub_PR_Builder Generic') {
     createCommentWithAllSingleFileComments(true)
     commentOnlyChangedContent(true)
     minSeverity('INFO')
+    maxNumberOfViolations(99999)
     keepOldComments(false)
     
     commentTemplate("""
@@ -383,6 +385,7 @@ node {
     createSingleFileComments: true, 
     commentOnlyChangedContent: true, 
     minSeverity: 'INFO',
+    maxNumberOfViolations: 99999,
     keepOldComments: false,
  
     commentTemplate: """

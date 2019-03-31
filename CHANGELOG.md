@@ -1,5 +1,14 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
+## Unreleased
+### No issue
+
+**maxNumberOfViolations**
+
+
+[f8d44e96e69ecfb](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/f8d44e96e69ecfb) Tomas Bjerre *2019-03-31 13:26:55*
+
+
 ## 1.78
 ### No issue
 

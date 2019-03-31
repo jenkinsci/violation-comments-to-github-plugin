@@ -135,6 +135,7 @@ public class JvctgPerformer {
           .withCommentOnlyChangedContent(config.getCommentOnlyChangedContent()) //
           .withKeepOldComments(config.isKeepOldComments()) //
           .withCommentTemplate(commentTemplate) //
+          .withMaxNumberOfViolations(config.getMaxNumberOfViolations()) //
           .withViolationsLogger(
               new ViolationsLogger() {
                 @Override
@@ -146,7 +147,7 @@ public class JvctgPerformer {
                 public void log(final Level level, final String string, final Throwable t) {
                   final StringWriter sw = new StringWriter();
                   t.printStackTrace(new PrintWriter(sw));
-                  listener.getLogger().println(level + " " + sw.toString());
+                  listener.getLogger().println(level + " " + string + "\n" + sw.toString());
                 }
               }) //
           .toPullRequest();
@@ -179,6 +180,7 @@ public class JvctgPerformer {
     expanded.setoAuth2Token(environment.expand(config.getoAuth2Token()));
     expanded.setKeepOldComments(config.isKeepOldComments());
     expanded.setCommentTemplate(config.getCommentTemplate());
+    expanded.setMaxNumberOfViolations(config.getMaxNumberOfViolations());
     for (final ViolationConfig violationConfig : config.getViolationConfigs()) {
       final String pattern = environment.expand(violationConfig.getPattern());
       final String reporter = violationConfig.getReporter();
@@ -279,6 +281,7 @@ public class JvctgPerformer {
     logger.println(FIELD_KEEP_OLD_COMMENTS + ": " + config.isKeepOldComments());
 
     logger.println("commentTemplate: " + config.getCommentTemplate());
+    logger.println("maxNumberOfViolations: " + config.getMaxNumberOfViolations());
 
     for (final ViolationConfig violationConfig : config.getViolationConfigs()) {
       logger.println(
