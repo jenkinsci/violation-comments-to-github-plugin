@@ -1,5 +1,14 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
+## 1.80
+### No issue
+
+**Cpplint correction to handle line None**
+
+
+[8258a5fe310898e](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/8258a5fe310898e) Tomas Bjerre *2019-04-24 16:40:39*
+
+
 ## 1.79
 ### No issue
 
