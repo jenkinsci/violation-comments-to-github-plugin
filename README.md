@@ -8,6 +8,8 @@ It uses [Violation Comments to GitHub Lib](https://github.com/tomasbjerre/violat
 
 Example of supported reports are available [here](https://github.com/tomasbjerre/violations-lib/tree/master/src/test/resources).
 
+You can also do this with a [command line tool](https://www.npmjs.com/package/violation-comments-to-github-command-line).
+
 A number of **parsers** have been implemented. Some **parsers** can parse output from several **reporters**.
 
 | Reporter | Parser | Notes
