@@ -13,10 +13,10 @@
 		<jenkins.version>2.7.4</jenkins.version>
 		<findbugs.failOnError>false</findbugs.failOnError>
 		<maven.javadoc.skip>true</maven.javadoc.skip>
-		<changelog>1.59</changelog>
+		<changelog>1.60</changelog>
 		<violations-maven.version>1.19</violations-maven.version>
-		<violations-lib>1.76</violations-lib>
-		<fmt>2.8</fmt>
+		<violations-lib>1.77</violations-lib>
+		<fmt>2.9</fmt>
 	</properties>
 
 	<artifactId>violation-comments-to-github</artifactId>

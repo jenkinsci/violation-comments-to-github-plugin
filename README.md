@@ -127,7 +127,7 @@ The pull request will be commented like this.
 
 This plugin can be used with the Job DSL Plugin. In this example the [GitHub Pull Request Builder Plugin](https://wiki.jenkins-ci.org/display/JENKINS/GitHub+pull+request+builder+plugin) is used to trigger, merge and provide environment variables needed.
 
-```
+```groovy
 job('GitHub_PR_Builder') {
  concurrentBuild()
  quietPeriod(0)
@@ -176,6 +176,7 @@ job('GitHub_PR_Builder') {
     createSingleFileComments(true)
     createCommentWithAllSingleFileComments(true)
     commentOnlyChangedContent(true)
+    commentOnlyChangedFiles(true)
     minSeverity('INFO')
     maxNumberOfViolations(99999)
     keepOldComments(false)
@@ -212,7 +213,7 @@ job('GitHub_PR_Builder') {
 
 Here is another example using [Generic Webhook Trigger plugin](https://github.com/jenkinsci/generic-webhook-trigger-plugin). You will need to add a webhook in GitHub and point it to `http://JENKINS_URL/generic-webhook-trigger/invoke`. You may want to combine this with [HTTP Request Plugin](https://wiki.jenkins-ci.org/display/JENKINS/HTTP+Request+Plugin) to comment the pull requests with a link to the job. And also [Conditional BuildStep Plugin](https://wiki.jenkins-ci.org/display/JENKINS/Conditional+BuildStep+Plugin) to have different comments depending on build status.
 
-```
+```groovy
 job('GitHub_PR_Builder Generic') {
  concurrentBuild()
  quietPeriod(0)
@@ -317,6 +318,7 @@ job('GitHub_PR_Builder Generic') {
     createSingleFileComments(true)
     createCommentWithAllSingleFileComments(true)
     commentOnlyChangedContent(true)
+    commentOnlyChangedFiles(true)
     minSeverity('INFO')
     maxNumberOfViolations(99999)
     keepOldComments(false)
@@ -355,7 +357,7 @@ job('GitHub_PR_Builder Generic') {
 
 This plugin can be used with the Pipeline Plugin:
 
-```
+```groovy
 node {
  def mvnHome = tool 'Maven 3.3.9'
  deleteDir()
@@ -386,6 +388,7 @@ node {
     createCommentWithAllSingleFileComments: true, 
     createSingleFileComments: true, 
     commentOnlyChangedContent: true, 
+    commentOnlyChangedFiles: true,
     minSeverity: 'INFO',
     maxNumberOfViolations: 99999,
     keepOldComments: false,

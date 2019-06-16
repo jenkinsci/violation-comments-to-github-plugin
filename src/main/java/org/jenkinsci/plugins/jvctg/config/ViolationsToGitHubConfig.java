@@ -26,6 +26,7 @@ public class ViolationsToGitHubConfig extends AbstractDescribableImpl<Violations
   private static final long serialVersionUID = 4851568645021422528L;
 
   private boolean commentOnlyChangedContent;
+  private boolean commentOnlyChangedFiles = true;
   private boolean createCommentWithAllSingleFileComments;
   private boolean createSingleFileComments;
   private String gitHubUrl;
@@ -75,6 +76,7 @@ public class ViolationsToGitHubConfig extends AbstractDescribableImpl<Violations
     this.keepOldComments = rhs.keepOldComments;
     this.commentTemplate = rhs.commentTemplate;
     this.maxNumberOfViolations = rhs.maxNumberOfViolations;
+    this.commentOnlyChangedFiles = rhs.commentOnlyChangedFiles;
   }
 
   public void applyDefaults(final ViolationsToGitHubConfiguration defaults) {
@@ -231,6 +233,8 @@ public class ViolationsToGitHubConfig extends AbstractDescribableImpl<Violations
   public String toString() {
     return "ViolationsToGitHubConfig [commentOnlyChangedContent="
         + commentOnlyChangedContent
+        + "commentOnlyChangedFiles="
+        + commentOnlyChangedFiles
         + ", createCommentWithAllSingleFileComments="
         + createCommentWithAllSingleFileComments
         + ", createSingleFileComments="
@@ -261,6 +265,7 @@ public class ViolationsToGitHubConfig extends AbstractDescribableImpl<Violations
     final int prime = 31;
     int result = 1;
     result = prime * result + (commentOnlyChangedContent ? 1231 : 1237);
+    result = prime * result + (commentOnlyChangedFiles ? 1231 : 1237);
     result = prime * result + (createCommentWithAllSingleFileComments ? 1231 : 1237);
     result = prime * result + (createSingleFileComments ? 1231 : 1237);
     result = prime * result + (gitHubUrl == null ? 0 : gitHubUrl.hashCode());
@@ -288,6 +293,9 @@ public class ViolationsToGitHubConfig extends AbstractDescribableImpl<Violations
     }
     final ViolationsToGitHubConfig other = (ViolationsToGitHubConfig) obj;
     if (commentOnlyChangedContent != other.commentOnlyChangedContent) {
+      return false;
+    }
+    if (commentOnlyChangedFiles != other.commentOnlyChangedFiles) {
       return false;
     }
     if (createCommentWithAllSingleFileComments != other.createCommentWithAllSingleFileComments) {
@@ -396,5 +404,14 @@ public class ViolationsToGitHubConfig extends AbstractDescribableImpl<Violations
         @QueryParameter final String gitHubUrl) {
       return CredentialsHelper.doCheckFillCredentialsId(item, value, gitHubUrl);
     }
+  }
+
+  public boolean getCommentOnlyChangedFiles() {
+    return commentOnlyChangedFiles;
+  }
+
+  @DataBoundSetter
+  public void setCommentOnlyChangedFiles(final boolean commentOnlyChangedFiles) {
+    this.commentOnlyChangedFiles = commentOnlyChangedFiles;
   }
 }

@@ -133,6 +133,7 @@ public class JvctgPerformer {
               config.getCreateCommentWithAllSingleFileComments()) //
           .withCreateSingleFileComments(config.getCreateSingleFileComments()) //
           .withCommentOnlyChangedContent(config.getCommentOnlyChangedContent()) //
+          .withCommentOnlyChangedFiles(config.getCommentOnlyChangedFiles()) //
           .withKeepOldComments(config.isKeepOldComments()) //
           .withCommentTemplate(commentTemplate) //
           .withMaxNumberOfViolations(config.getMaxNumberOfViolations()) //
@@ -173,6 +174,7 @@ public class JvctgPerformer {
         config.getCreateCommentWithAllSingleFileComments());
     expanded.setCreateSingleFileComments(config.getCreateSingleFileComments());
     expanded.setCommentOnlyChangedContent(config.getCommentOnlyChangedContent());
+    expanded.setCommentOnlyChangedFiles(config.getCommentOnlyChangedFiles());
 
     expanded.setMinSeverity(config.getMinSeverity());
 
@@ -275,6 +277,7 @@ public class JvctgPerformer {
             + ": "
             + config.getCreateCommentWithAllSingleFileComments());
     logger.println(FIELD_COMMENTONLYCHANGEDCONTENT + ": " + config.getCommentOnlyChangedContent());
+    logger.println("commentOnlyChangedFiles: " + config.getCommentOnlyChangedFiles());
 
     logger.println(FIELD_MINSEVERITY + ": " + config.getMinSeverity());
 
