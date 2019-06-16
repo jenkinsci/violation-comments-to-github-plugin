@@ -1,5 +1,14 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
+## 1.82
+### No issue
+
+**junit**
+
+
+[d6c4d9a6f3e7670](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/d6c4d9a6f3e7670) Tomas Bjerre *2019-06-16 16:38:49*
+
+
 ## 1.81
 ### No issue
 
