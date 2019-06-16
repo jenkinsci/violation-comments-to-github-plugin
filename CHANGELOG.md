@@ -1,7 +1,12 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
-## Unreleased
+## 1.81
 ### No issue
+
+**commentOnlyChangedFiles**
+
+
+[32be8a3fbc06120](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/32be8a3fbc06120) Tomas Bjerre *2019-06-16 16:07:40*
 
 **doc**
 
