@@ -15,7 +15,7 @@
 		<maven.javadoc.skip>true</maven.javadoc.skip>
 		<changelog>1.60</changelog>
 		<violations-maven.version>1.19</violations-maven.version>
-		<violations-lib>1.78</violations-lib>
+		<violations-lib>1.79</violations-lib>
 		<fmt>2.9</fmt>
 	</properties>
 
