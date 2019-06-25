@@ -1,5 +1,15 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
+## 1.83
+### GitHub [#32](https://github.com/jenkinsci/violation-comments-to-github-plugin/issues/32) Not working with HTTP GitHub API
+
+**Allowing HTTP and HTTPS to be used #32**
+
+ * Was always using HTTPS 
+
+[9a90f1ace1799d2](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/9a90f1ace1799d2) Tomas Bjerre *2019-06-25 18:06:30*
+
+
 ## 1.82
 ### No issue
 
