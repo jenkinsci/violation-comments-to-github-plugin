@@ -1,5 +1,14 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
+## 1.84
+### No issue
+
+**Changing name of JSHINT parser to JSLINT**
+
+
+[af3ca259a3ec347](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/af3ca259a3ec347) Tomas Bjerre *2019-08-03 11:25:38*
+
+
 ## 1.83
 ### GitHub [#32](https://github.com/jenkinsci/violation-comments-to-github-plugin/issues/32) Not working with HTTP GitHub API
 
