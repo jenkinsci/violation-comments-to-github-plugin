@@ -15,7 +15,8 @@
 		<maven.javadoc.skip>true</maven.javadoc.skip>
 		<changelog>1.60</changelog>
 		<violations-maven.version>1.19</violations-maven.version>
-		<violations-lib>1.79</violations-lib>
+		<violations-lib>1.96</violations-lib>
+		<violation-comments-lib>1.79</violation-comments-lib>
 		<fmt>2.9</fmt>
 	</properties>
 
@@ -192,6 +193,11 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 		<dependency>
 			<groupId>se.bjurr.violations</groupId>
 			<artifactId>violation-comments-to-github-lib</artifactId>
+			<version>${violation-comments-lib}</version>
+		</dependency>
+		<dependency>
+			<groupId>se.bjurr.violations</groupId>
+			<artifactId>violations-lib</artifactId>
 			<version>${violations-lib}</version>
 		</dependency>
 		<dependency>
