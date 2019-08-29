@@ -1,5 +1,14 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
+## 1.85
+### No issue
+
+**Removing newline before fingerprint**
+
+
+[22ef2dfe9d9a590](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/22ef2dfe9d9a590) Tomas Bjerre *2019-08-29 18:44:32*
+
+
 ## 1.84
 ### No issue
 
@@ -289,7 +298,7 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 [9a58d1a059a0825](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/9a58d1a059a0825) Tomas Bjerre *2018-05-13 13:46:06*
 
 
-### GitHub #33 
+### GitHub [#33](https://github.com/jenkinsci/violation-comments-to-github-plugin/issues/33) Comment only changed files: commented on some_file.py when the error affected file.py
 
 **NullAway #33**
 
