@@ -1,7 +1,12 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
-## Unreleased
+## 1.86
 ### No issue
+
+**Hadolint**
+
+
+[36f2c6401fb8a27](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/36f2c6401fb8a27) Tomas Bjerre *2019-10-14 15:35:44*
 
 **Create FUNDING.yml**
 
