@@ -1,5 +1,14 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
+## 1.87
+### GitHub #79 
+
+**Protolint tomasbjerre/violations-lib#79**
+
+
+[1e3eef14cba7827](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/1e3eef14cba7827) Tomas Bjerre *2019-10-22 03:32:23*
+
+
 ## 1.86
 ### No issue
 
