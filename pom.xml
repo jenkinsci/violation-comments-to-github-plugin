@@ -14,7 +14,7 @@
 		<findbugs.failOnError>false</findbugs.failOnError>
 		<maven.javadoc.skip>true</maven.javadoc.skip>
 		<changelog>1.60</changelog>
-		<violations-maven.version>1.29</violations-maven.version>
+		<violations-maven.version>1.30</violations-maven.version>
 		<violations-lib>1.107</violations-lib>
 		<violation-comments-lib>1.80</violation-comments-lib>
 		<fmt>2.9</fmt>
@@ -25,7 +25,7 @@
 	<packaging>hpi</packaging>
 	<name>Jenkins Violation Comments to GitHub Plugin</name>
 	<description>Finds violations reported by code analyzers and comments GitHub pull requests with them.</description>
-	<url>https://wiki.jenkins-ci.org/display/JENKINS/Violation+Comments+to+GitHub+Plugin</url>
+	<url>https://github.com/jenkinsci/violation-comments-to-github-plugin</url>
 
 	<licenses>
 		<license>
