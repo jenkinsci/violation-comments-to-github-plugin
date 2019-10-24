@@ -1,5 +1,14 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
+## 1.88
+### No issue
+
+**Setting URL to README.md to update plugins.jenkins.io**
+
+
+[de2df2d627668f0](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/de2df2d627668f0) Tomas Bjerre *2019-10-24 18:40:13*
+
+
 ## 1.87
 ### GitHub #79 
 
