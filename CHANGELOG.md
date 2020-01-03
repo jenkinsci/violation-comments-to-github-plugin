@@ -1,5 +1,14 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
+## 1.89
+### GitHub #80 
+
+**Add support for sonar issue report formats >= v7.5 tomasbjerre/violations-lib#80**
+
+
+[8741a8338df6c84](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/8741a8338df6c84) Tomas Bjerre *2020-01-03 07:36:07*
+
+
 ## 1.88
 ### No issue
 
