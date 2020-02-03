@@ -1,5 +1,14 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
+## 1.90
+### GitHub #82 
+
+**CPPCheckParser with auto closed <error/> tags tomasbjerre/violations-lib#82**
+
+
+[962d71252b0c62a](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/962d71252b0c62a) Tomas Bjerre *2020-02-03 16:34:30*
+
+
 ## 1.89
 ### GitHub #80 
 
