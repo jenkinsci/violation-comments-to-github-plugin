@@ -1,5 +1,14 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
+## 1.91
+### GitHub [#9](https://github.com/jenkinsci/violation-comments-to-github-plugin/issues/9) Malformed URL Exception if gitHubUrl not included in config
+
+**Correcting line in single file comments tomasbjerre/violation-comments-to-github-lib#9**
+
+
+[65b327ee8194139](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/65b327ee8194139) Tomas Bjerre *2020-04-28 17:08:23*
+
+
 ## 1.90
 ### GitHub #82 
 
