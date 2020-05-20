@@ -1,5 +1,14 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
+## 1.92
+### Jira SECURITY-1854 
+
+**Fixing SECURITY-1854**
+
+
+[50568b543f67268](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/50568b543f67268) Tomas Bjerre *2020-05-20 14:45:39*
+
+
 ## 1.91
 ### GitHub [#9](https://github.com/jenkinsci/violation-comments-to-github-plugin/issues/9) Malformed URL Exception if gitHubUrl not included in config
 
