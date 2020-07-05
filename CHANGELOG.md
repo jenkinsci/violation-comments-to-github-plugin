@@ -1,5 +1,14 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
+## 1.93
+### No issue
+
+**New: custom logging in violations-lib**
+
+
+[9337ca5aef0f264](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/9337ca5aef0f264) Tomas Bjerre *2020-07-05 14:15:55*
+
+
 ## 1.92
 ### Jira SECURITY-1854 
 
