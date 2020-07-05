@@ -15,8 +15,8 @@
 		<maven.javadoc.skip>true</maven.javadoc.skip>
 		<changelog>1.61</changelog>
 		<violations-maven.version>1.36</violations-maven.version>
-		<violations-lib>1.116</violations-lib>
-		<violation-comments-lib>1.81</violation-comments-lib>
+		<violations-lib>1.120</violations-lib>
+		<violation-comments-lib>1.82</violation-comments-lib>
 		<fmt>2.9</fmt>
 	</properties>
 
@@ -140,7 +140,7 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 			<plugin>
 				<groupId>com.coveo</groupId>
 				<artifactId>fmt-maven-plugin</artifactId>
-				<version>${fmt}</version>
+				<version>2.9</version>
 				<executions>
 					<execution>
 						<goals>

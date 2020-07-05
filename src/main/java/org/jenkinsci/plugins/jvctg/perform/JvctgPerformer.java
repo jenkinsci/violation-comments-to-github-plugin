@@ -3,7 +3,6 @@ package org.jenkinsci.plugins.jvctg.perform;
 import static com.google.common.base.Charsets.UTF_8;
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.google.common.base.Throwables.propagate;
-import static com.google.common.collect.Lists.newArrayList;
 import static java.util.logging.Level.SEVERE;
 import static org.jenkinsci.plugins.jvctg.config.CredentialsHelper.findCredentials;
 import static org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfigHelper.FIELD_COMMENTONLYCHANGEDCONTENT;
@@ -40,7 +39,8 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.MalformedURLException;
-import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jenkinsci.plugins.jvctg.config.ViolationConfig;
@@ -48,7 +48,7 @@ import org.jenkinsci.plugins.jvctg.config.ViolationsToGitHubConfig;
 import org.jenkinsci.plugins.plaincredentials.StringCredentials;
 import org.jenkinsci.remoting.RoleChecker;
 import se.bjurr.violations.comments.github.lib.ViolationCommentsToGitHubApi;
-import se.bjurr.violations.comments.lib.ViolationsLogger;
+import se.bjurr.violations.lib.ViolationsLogger;
 import se.bjurr.violations.lib.model.SEVERITY;
 import se.bjurr.violations.lib.model.Violation;
 import se.bjurr.violations.lib.reports.Parser;
@@ -72,11 +72,31 @@ public class JvctgPerformer {
     }
     final Integer pullRequestIdInt = Integer.valueOf(config.getPullRequestId());
 
-    final List<Violation> allParsedViolations = newArrayList();
+    final ViolationsLogger violationsLogger =
+        new ViolationsLogger() {
+          @Override
+          public void log(final Level level, final String string, final Throwable e) {
+            Logger.getLogger(JvctgPerformer.class.getName()).log(level, string, e);
+            final StringWriter sw = new StringWriter();
+            e.printStackTrace(new PrintWriter(sw));
+            listener.getLogger().println(string + "\n" + sw.toString());
+          }
+
+          @Override
+          public void log(final Level level, final String string) {
+            Logger.getLogger(JvctgPerformer.class.getName()).log(level, string);
+            if (level != Level.FINE) {
+              listener.getLogger().println(string);
+            }
+          }
+        };
+
+    final Set<Violation> allParsedViolations = new TreeSet<>();
     for (final ViolationConfig violationConfig : config.getViolationConfigs()) {
       if (!isNullOrEmpty(violationConfig.getPattern())) {
-        List<Violation> parsedViolations =
-            violationsApi() //
+        Set<Violation> parsedViolations =
+            violationsApi()
+                .withViolationsLogger(violationsLogger)
                 .findAll(violationConfig.getParser()) //
                 .withReporter(violationConfig.getReporter()) //
                 .inFolder(workspace.getAbsolutePath()) //
@@ -124,6 +144,7 @@ public class JvctgPerformer {
       }
       final String commentTemplate = config.getCommentTemplate();
       g //
+          .withViolationsLogger(violationsLogger)
           .withGitHubUrl(config.getGitHubUrl()) //
           .withPullRequestId(pullRequestIdInt) //
           .withRepositoryName(config.getRepositoryName()) //
