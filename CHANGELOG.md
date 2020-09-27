@@ -1,12 +1,12 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
-## Unreleased
+## 1.94
 ### No issue
 
 **Find Security Bugs messages**
 
 
-[40f42a7d4bbdccc](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/40f42a7d4bbdccc) Tomas Bjerre *2020-09-27 17:34:28*
+[21876eedb522c2a](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/21876eedb522c2a) Tomas Bjerre *2020-09-27 17:35:02*
 
 **Remove unneeded configuration in buildPlugin**
 
