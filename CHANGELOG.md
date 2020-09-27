@@ -1,5 +1,20 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
+## Unreleased
+### No issue
+
+**Find Security Bugs messages**
+
+
+[40f42a7d4bbdccc](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/40f42a7d4bbdccc) Tomas Bjerre *2020-09-27 17:34:28*
+
+**Remove unneeded configuration in buildPlugin**
+
+ * Spotbugs reporting is being enabled by default in https://github.com/jenkins-infra/pipeline-library/pull/121, update to parent pom 4.x to use spotbugs instead of findbugs. 
+
+[5ad3af31c2a376b](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/5ad3af31c2a376b) Tim Jacomb *2020-07-25 14:42:19*
+
+
 ## 1.93
 ### No issue
 

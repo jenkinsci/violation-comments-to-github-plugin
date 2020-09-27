@@ -20,7 +20,7 @@ A number of **parsers** have been implemented. Some **parsers** can parse output
 | [_Bandit_](https://github.com/PyCQA/bandit)                                           | `CLANG`              | With `bandit -r examples/ -f custom -o bandit.out --msg-template "{abspath}:{line}: {severity}: {test_id}: {msg}"`
 | [_CLang_](https://clang-analyzer.llvm.org/)                                           | `CLANG`              | 
 | [_CPD_](http://pmd.sourceforge.net/pmd-4.3.0/cpd.html)                                | `CPD`                | 
-| [_CPPCheck_](http://cppcheck.sourceforge.net/)                                        | `CPPCHECK`           | 
+| [_CPPCheck_](http://cppcheck.sourceforge.net/)                                        | `CPPCHECK`           | With `cppcheck test.cpp --output-file=cppcheck.xml --xml`
 | [_CPPLint_](https://github.com/theandrewdavis/cpplint)                                | `CPPLINT`            | 
 | [_CSSLint_](https://github.com/CSSLint/csslint)                                       | `CSSLINT`            | 
 | [_Checkstyle_](http://checkstyle.sourceforge.net/)                                    | `CHECKSTYLE`         | 
@@ -36,6 +36,7 @@ A number of **parsers** have been implemented. Some **parsers** can parse output
 | [_FxCop_](https://en.wikipedia.org/wiki/FxCop)                                        | `FXCOP`              | 
 | [_GCC_](https://gcc.gnu.org/)                                                         | `CLANG`              | 
 | [_Gendarme_](http://www.mono-project.com/docs/tools+libraries/tools/gendarme/)        | `GENDARME`           | 
+| [_Generic reporter_]()                                                                | `GENERIC`            | Will create one single violation with all the content as message.
 | [_GoLint_](https://github.com/golang/lint)                                            | `GOLINT`             | 
 | [_GoVet_](https://golang.org/cmd/vet/)                                                | `GOLINT`             | Same format as GoLint.
 | [_GolangCI-Lint_](https://github.com/golangci/golangci-lint/)                         | `CHECKSTYLE`         | With `--out-format=checkstyle`.

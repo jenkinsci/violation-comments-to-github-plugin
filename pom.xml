@@ -13,9 +13,9 @@
 		<jenkins.version>2.7.4</jenkins.version>
 		<findbugs.failOnError>false</findbugs.failOnError>
 		<maven.javadoc.skip>true</maven.javadoc.skip>
-		<changelog>1.61</changelog>
-		<violations-maven.version>1.36</violations-maven.version>
-		<violations-lib>1.120</violations-lib>
+		<changelog>1.62</changelog>
+		<violations-maven.version>1.40</violations-maven.version>
+		<violations-lib>1.132</violations-lib>
 		<violation-comments-lib>1.82</violation-comments-lib>
 		<fmt>2.9</fmt>
 	</properties>
@@ -160,10 +160,10 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 					<printViolations>true</printViolations>
 					<violations>
 						<violation>
-							<parser>FINDBUGS</parser>
-							<reporter>Findbugs</reporter>
-							<folder>.</folder>
-							<pattern>.*/findbugsXml.*\.xml$</pattern>
+                                                        <parser>FINDBUGS</parser>
+                                                        <reporter>Spotbugs</reporter>
+                                                        <folder>.</folder>
+                                                        <pattern>.*/spotbugsXml.*\.xml$</pattern>
 						</violation>
 					</violations>
 				</configuration>
