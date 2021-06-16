@@ -13,10 +13,10 @@
 		<jenkins.version>2.7.4</jenkins.version>
 		<findbugs.failOnError>false</findbugs.failOnError>
 		<maven.javadoc.skip>true</maven.javadoc.skip>
-		<changelog>1.62</changelog>
-		<violations-maven.version>1.40</violations-maven.version>
-		<violations-lib>1.132</violations-lib>
-		<violation-comments-lib>1.82</violation-comments-lib>
+		<changelog>1.77</changelog>
+		<violations-maven.version>1.43</violations-maven.version>
+		<violations-lib>1.144.5</violations-lib>
+		<violation-comments-lib>1.83.1</violation-comments-lib>
 		<fmt>2.9</fmt>
 	</properties>
 
@@ -94,6 +94,7 @@
 							<goal>git-changelog</goal>
 						</goals>
 						<configuration>
+							<ignoreCommitsIfMessageMatches>^\[maven-release-plugin\].*</ignoreCommitsIfMessageMatches>
 							<filePath>CHANGELOG.md</filePath>
 							<readableTagName>-([^-]+?)$</readableTagName>
 							<gitHubApi>https://api.github.com/repos/jenkinsci/violation-comments-to-github-plugin</gitHubApi>
