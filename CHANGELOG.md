@@ -1,6 +1,6 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
-## Unreleased
+## 1.95
 ### GitHub [#38](https://github.com/jenkinsci/violation-comments-to-github-plugin/pull/38) Bump junit from 4.12 to 4.13.1
 
 **Merge pull request #38 from jenkinsci/dependabot/maven/junit-junit-4.13.1**
@@ -20,6 +20,11 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 
 
 ### No issue
+
+**feat: MSBuild parser**
+
+
+[992090e864605eb](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/992090e864605eb) Tomas Bjerre *2021-06-16 17:31:53*
 
 **Bump junit from 4.12 to 4.13.1**
 
