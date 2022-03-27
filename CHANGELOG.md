@@ -1,5 +1,14 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
+## 1.96
+### No issue
+
+**feat: stepping lib versions**
+
+
+[dad8e9c11c6b07c](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/dad8e9c11c6b07c) Tomas Bjerre *2022-03-27 07:14:27*
+
+
 ## 1.95
 ### No issue
 
