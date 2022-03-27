@@ -1,30 +1,18 @@
 # Violation Comments to GitHub changelog
 Changelog of Violation Comments to GitHub plugin for Jenkins.
 ## 1.95
-### GitHub [#38](https://github.com/jenkinsci/violation-comments-to-github-plugin/pull/38) Bump junit from 4.12 to 4.13.1
-
-**Merge pull request #38 from jenkinsci/dependabot/maven/junit-junit-4.13.1**
-
- * Bump junit from 4.12 to 4.13.1 
-
-[18a7193198e3b1e](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/18a7193198e3b1e) Tomas Bjerre *2020-10-13 03:05:03*
-
-
-### Jira junit-4 
-
-**Merge pull request #38 from jenkinsci/dependabot/maven/junit-junit-4.13.1**
-
- * Bump junit from 4.12 to 4.13.1 
-
-[18a7193198e3b1e](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/18a7193198e3b1e) Tomas Bjerre *2020-10-13 03:05:03*
-
-
 ### No issue
 
 **feat: MSBuild parser**
 
 
 [992090e864605eb](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/992090e864605eb) Tomas Bjerre *2021-06-16 17:31:53*
+
+**Merge pull request #38 from jenkinsci/dependabot/maven/junit-junit-4.13.1**
+
+ * Bump junit from 4.12 to 4.13.1 
+
+[18a7193198e3b1e](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/18a7193198e3b1e) Tomas Bjerre *2020-10-13 03:05:03*
 
 **Bump junit from 4.12 to 4.13.1**
 
@@ -38,30 +26,18 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 
 
 ## 1.94
-### GitHub [#37](https://github.com/jenkinsci/violation-comments-to-github-plugin/pull/37) Remove unneeded configuration in buildPlugin
-
-**Merge pull request #37 from timja/patch-1**
-
- * Remove unneeded configuration in buildPlugin 
-
-[f79093989775ae7](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/f79093989775ae7) Tomas Bjerre *2020-07-26 06:27:44*
-
-
-### Jira patch-1 
-
-**Merge pull request #37 from timja/patch-1**
-
- * Remove unneeded configuration in buildPlugin 
-
-[f79093989775ae7](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/f79093989775ae7) Tomas Bjerre *2020-07-26 06:27:44*
-
-
 ### No issue
 
 **Find Security Bugs messages**
 
 
 [21876eedb522c2a](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/21876eedb522c2a) Tomas Bjerre *2020-09-27 17:35:02*
+
+**Merge pull request #37 from timja/patch-1**
+
+ * Remove unneeded configuration in buildPlugin 
+
+[f79093989775ae7](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/f79093989775ae7) Tomas Bjerre *2020-07-26 06:27:44*
 
 **Remove unneeded configuration in buildPlugin**
 
@@ -80,7 +56,7 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 
 
 ## 1.92
-### Jira SECURITY-1854 
+### No issue
 
 **Fixing SECURITY-1854**
 
@@ -89,7 +65,7 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 
 
 ## 1.91
-### GitHub [#9](https://github.com/jenkinsci/violation-comments-to-github-plugin/issues/9) Malformed URL Exception if gitHubUrl not included in config
+### No issue
 
 **Correcting line in single file comments tomasbjerre/violation-comments-to-github-lib#9**
 
@@ -98,7 +74,7 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 
 
 ## 1.90
-### GitHub #82 
+### No issue
 
 **CPPCheckParser with auto closed <error/> tags tomasbjerre/violations-lib#82**
 
@@ -107,7 +83,7 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 
 
 ## 1.89
-### GitHub #80 
+### No issue
 
 **Add support for sonar issue report formats >= v7.5 tomasbjerre/violations-lib#80**
 
@@ -125,7 +101,7 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 
 
 ## 1.87
-### GitHub #79 
+### No issue
 
 **Protolint tomasbjerre/violations-lib#79**
 
@@ -134,16 +110,13 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 
 
 ## 1.86
-### GitHub [#35](https://github.com/jenkinsci/violation-comments-to-github-plugin/pull/35) Hadolint
+### No issue
 
 **Merge pull request #35 from jenkinsci/feature/hadolint**
 
  * Hadolint 
 
 [104da92173d454d](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/104da92173d454d) Tomas Bjerre *2019-10-14 15:37:36*
-
-
-### No issue
 
 **Hadolint**
 
@@ -175,7 +148,7 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 
 
 ## 1.83
-### GitHub [#32](https://github.com/jenkinsci/violation-comments-to-github-plugin/issues/32) Not working with HTTP GitHub API
+### No issue
 
 **Allowing HTTP and HTTPS to be used #32**
 
@@ -289,21 +262,18 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 
 
 ## 1.71
-### GitHub [#29](https://github.com/jenkinsci/violation-comments-to-github-plugin/pull/29) Repository and PluginRepository updated. And fixed SCM URL
-
-**Merge pull request #29 from recena/polished**
-
- * Repository and PluginRepository updated. And fixed SCM URL 
-
-[62ddef367fe534d](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/62ddef367fe534d) Tomas Bjerre *2018-11-18 19:20:49*
-
-
 ### No issue
 
 **Correcting AnsibleLint parsing**
 
 
 [90047b3d7b9f50c](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/90047b3d7b9f50c) Tomas Bjerre *2019-01-03 17:54:49*
+
+**Merge pull request #29 from recena/polished**
+
+ * Repository and PluginRepository updated. And fixed SCM URL 
+
+[62ddef367fe534d](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/62ddef367fe534d) Tomas Bjerre *2018-11-18 19:20:49*
 
 **Repository and PluginRepository updated. And fixed SCM URL**
 
@@ -433,14 +403,6 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 
 
 ## 1.61
-### GitHub [#27](https://github.com/jenkinsci/violation-comments-to-github-plugin/issues/27) Missing license file
-
-**License #27**
-
-
-[aab1a1caefd2bb5](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/aab1a1caefd2bb5) Tomas Bjerre *2018-06-14 15:26:53*
-
-
 ### No issue
 
 **GCC, ARM GCC and Doxygen**
@@ -453,17 +415,19 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 
 [e25170ed8560d3a](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/e25170ed8560d3a) Tomas Bjerre *2018-06-21 17:22:17*
 
+**License #27**
+
+
+[aab1a1caefd2bb5](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/aab1a1caefd2bb5) Tomas Bjerre *2018-06-14 15:26:53*
+
 
 ## 1.60
-### GitHub [#26](https://github.com/jenkinsci/violation-comments-to-github-plugin/issues/26) Template for Github comments
+### No issue
 
 **Custom commenting template #26**
 
 
 [9a58d1a059a0825](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/9a58d1a059a0825) Tomas Bjerre *2018-05-13 13:46:06*
-
-
-### GitHub [#33](https://github.com/jenkinsci/violation-comments-to-github-plugin/issues/33) Comment only changed files: commented on some_file.py when the error affected file.py
 
 **NullAway #33**
 
@@ -472,7 +436,7 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 
 
 ## 1.59
-### GitHub [#23](https://github.com/jenkinsci/violation-comments-to-github-plugin/issues/23) Jenkins regression with 1.58 release
+### No issue
 
 **Avoiding crash on agents #23**
 
@@ -481,24 +445,12 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 
 
 ## 1.58
-### GitHub [#19](https://github.com/jenkinsci/violation-comments-to-github-plugin/issues/19) Jenkins Config - Unable to choose credential from non-default credential store - CredentialsHelper.java
+### No issue
 
-**combined credentials and provide item context which fixes #19**
-
-
-[ec4ca5820556f18](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/ec4ca5820556f18) Joseph Petersen *2018-02-26 14:49:37*
+**Updating doc on credentials**
 
 
-### GitHub [#20](https://github.com/jenkinsci/violation-comments-to-github-plugin/pull/20) Update Jenkinsfile
-
-**Merge pull request #20 from casz/patch-1**
-
- * Update Jenkinsfile 
-
-[09ff6e7bbee44ba](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/09ff6e7bbee44ba) Tomas Bjerre *2018-02-24 18:19:51*
-
-
-### GitHub [#21](https://github.com/jenkinsci/violation-comments-to-github-plugin/pull/21) Combined credentials, Provide item context
+[aab7ec2890f2b3b](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/aab7ec2890f2b3b) Tomas Bjerre *2018-02-27 16:18:29*
 
 **Merge pull request #21 from casz/master**
 
@@ -506,22 +458,10 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 
 [bd79c1e850b1156](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/bd79c1e850b1156) Tomas Bjerre *2018-02-27 15:32:51*
 
-
-### Jira patch-1 
-
-**Merge pull request #20 from casz/patch-1**
-
- * Update Jenkinsfile 
-
-[09ff6e7bbee44ba](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/09ff6e7bbee44ba) Tomas Bjerre *2018-02-24 18:19:51*
+**combined credentials and provide item context which fixes #19**
 
 
-### No issue
-
-**Updating doc on credentials**
-
-
-[aab7ec2890f2b3b](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/aab7ec2890f2b3b) Tomas Bjerre *2018-02-27 16:18:29*
+[ec4ca5820556f18](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/ec4ca5820556f18) Joseph Petersen *2018-02-26 14:49:37*
 
 **ignore .idea**
 
@@ -537,6 +477,12 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 
 
 [3f966ac2a6232cf](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/3f966ac2a6232cf) Joseph Petersen *2018-02-24 22:40:20*
+
+**Merge pull request #20 from casz/patch-1**
+
+ * Update Jenkinsfile 
+
+[09ff6e7bbee44ba](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/09ff6e7bbee44ba) Tomas Bjerre *2018-02-24 18:19:51*
 
 **Update Jenkinsfile**
 
@@ -574,30 +520,18 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 
 
 ## 1.54
-### GitHub [#17](https://github.com/jenkinsci/violation-comments-to-github-plugin/pull/17) Update README.md
-
-**Merge pull request #17 from Mokto/patch-1**
-
- * Update README.md 
-
-[b7b2d55fc213186](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/b7b2d55fc213186) Tomas Bjerre *2018-01-12 15:53:07*
-
-
-### Jira patch-1 
-
-**Merge pull request #17 from Mokto/patch-1**
-
- * Update README.md 
-
-[b7b2d55fc213186](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/b7b2d55fc213186) Tomas Bjerre *2018-01-12 15:53:07*
-
-
 ### No issue
 
 **Google error-prone**
 
 
 [6af5cf757ee7264](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/6af5cf757ee7264) Tomas Bjerre *2018-01-14 12:13:32*
+
+**Merge pull request #17 from Mokto/patch-1**
+
+ * Update README.md 
+
+[b7b2d55fc213186](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/b7b2d55fc213186) Tomas Bjerre *2018-01-12 15:53:07*
 
 **Update README.md**
 
@@ -647,20 +581,17 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 
 
 ## 1.49
-### GitHub [#12](https://github.com/jenkinsci/violation-comments-to-github-plugin/issues/12) release notes haven&#x27;t been updated
-
-**Doc #12**
-
-
-[8b0981ad78f8f28](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/8b0981ad78f8f28) Tomas Bjerre *2017-12-07 16:19:59*
-
-
-### GitHub [#15](https://github.com/jenkinsci/violation-comments-to-github-plugin/issues/15) Didn&#x27;t find pmd violation while has pmd.xml
+### No issue
 
 **Accepting PMD files without ruleset-tag #15**
 
 
 [bab0cbdb72832d8](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/bab0cbdb72832d8) Tomas Bjerre *2017-12-07 16:20:05*
+
+**Doc #12**
+
+
+[8b0981ad78f8f28](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/8b0981ad78f8f28) Tomas Bjerre *2017-12-07 16:19:59*
 
 
 ## 1.48
@@ -802,25 +733,13 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 
 
 ## 1.38
-### GitHub [#10](https://github.com/jenkinsci/violation-comments-to-github-plugin/issues/10) Specify minimum severity to comment
-
-**Allowing filter comments on severity #10**
-
- * Also defaulting to api.github.com if field is empty. #9 
-
-[5958d9a80ddf1b2](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/5958d9a80ddf1b2) Tomas Bjerre *2017-03-17 18:02:47*
-
-
-### GitHub [#9](https://github.com/jenkinsci/violation-comments-to-github-plugin/issues/9) Malformed URL Exception if gitHubUrl not included in config
-
-**Allowing filter comments on severity #10**
-
- * Also defaulting to api.github.com if field is empty. #9 
-
-[5958d9a80ddf1b2](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/5958d9a80ddf1b2) Tomas Bjerre *2017-03-17 18:02:47*
-
-
 ### No issue
+
+**Allowing filter comments on severity #10**
+
+ * Also defaulting to api.github.com if field is empty. #9 
+
+[5958d9a80ddf1b2](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/5958d9a80ddf1b2) Tomas Bjerre *2017-03-17 18:02:47*
 
 **Jenkinsfile**
 
@@ -876,7 +795,7 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 
 
 ## 1.31
-### GitHub #195 
+### No issue
 
 **Clarifying 'state' option in notification GUI #195**
 
@@ -1017,15 +936,12 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 
 
 ## 1.17
-### GitHub [#6](https://github.com/jenkinsci/violation-comments-to-github-plugin/issues/6) Use OAuth2 token from credentials
+### No issue
 
 **Enabling using OAuth2 token from credentials #6**
 
 
 [3a5cc413a172fb5](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/3a5cc413a172fb5) Tomas Bjerre *2016-09-25 08:31:43*
-
-
-### No issue
 
 **doc**
 
@@ -1085,15 +1001,12 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 
 
 ## 1.11
-### GitHub [#4](https://github.com/jenkinsci/violation-comments-to-github-plugin/issues/4) Integrate Credentials Product
+### No issue
 
 **Credentials plugin #4**
 
 
 [7d0b7e29d250ee7](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/7d0b7e29d250ee7) Tomas Bjerre *2016-08-02 05:29:32*
-
-
-### No issue
 
 **Reformat of Java code**
 
@@ -1130,15 +1043,6 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 
 
 ## 1.8
-### GitHub [#3](https://github.com/jenkinsci/violation-comments-to-github-plugin/pull/3) Various changes to support use of plugin within Jenkins workflow
-
-**Merge pull request #3 from magnayn/master**
-
- * Various changes to support use of plugin within Jenkins workflow 
-
-[b72d0074774fe80](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/b72d0074774fe80) Tomas Bjerre *2016-04-07 16:54:08*
-
-
 ### No issue
 
 **git-changelog-lib 1.6, improved FindBugs parsing**
@@ -1147,6 +1051,12 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
  * And formatting some code after merge of PR. 
 
 [d6b9c6b15b4a3a7](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/d6b9c6b15b4a3a7) Tomas Bjerre *2016-04-07 17:33:36*
+
+**Merge pull request #3 from magnayn/master**
+
+ * Various changes to support use of plugin within Jenkins workflow 
+
+[b72d0074774fe80](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/b72d0074774fe80) Tomas Bjerre *2016-04-07 16:54:08*
 
 **Add some readme text about workflow.**
 
@@ -1182,7 +1092,7 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 
 
 ## 1.7
-### GitHub [#5](https://github.com/jenkinsci/violation-comments-to-github-plugin/issues/5) Use hudson.util.Secret
+### No issue
 
 **Using comment only changed part of content correctly #5**
 
@@ -1193,16 +1103,13 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 
 
 ## 1.6
-### GitHub [#2](https://github.com/jenkinsci/violation-comments-to-github-plugin/pull/2) Ability to execute plugin on remote slaves
+### No issue
 
 **Merge pull request #2 from anomalizer/remote-workspace**
 
  * Ability to execute plugin on remote slaves 
 
 [3928d1ffbcfa977](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/3928d1ffbcfa977) Tomas Bjerre *2016-04-05 15:10:53*
-
-
-### No issue
 
 **Ability to execute plugin on remote slaves**
 
@@ -1277,5 +1184,14 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 
 
 [0cf33a158c76844](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/0cf33a158c76844) Tomas Bjerre *2016-03-07 19:15:25*
+
+
+## 1.0
+### No issue
+
+**Initial**
+
+
+[f8b2993bc4d3a0c](https://github.com/jenkinsci/violation-comments-to-github-plugin/commit/f8b2993bc4d3a0c) Tomas Bjerre *2016-03-07 18:46:48*
 
 
