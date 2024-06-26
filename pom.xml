@@ -204,7 +204,7 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 		<dependency>
 			<groupId>org.jenkins-ci.plugins</groupId>
 			<artifactId>structs</artifactId>
-			<version>1.10</version>
+			<version>338.v848422169819</version>
 		</dependency>
 
 		<dependency>
