@@ -189,7 +189,7 @@ Changelog of Violation Comments to GitHub plugin for Jenkins.
 		<dependency>
 			<groupId>org.jenkins-ci.plugins</groupId>
 			<artifactId>plain-credentials</artifactId>
-			<version>1.2</version>
+			<version>183.va_de8f1dd5a_2b_</version>
 		</dependency>
 		<dependency>
 			<groupId>se.bjurr.violations</groupId>
